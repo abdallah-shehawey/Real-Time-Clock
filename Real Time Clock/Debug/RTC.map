@@ -11,7 +11,7 @@ c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodsi4.o)
                               ./HAL_Layer/CLCD/CLCD_prog.o (__divmodsi4)
 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                              c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o (exit)
+                              c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o (exit)
 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
                               ./HAL_Layer/KPD/KPD_prog.o (__do_copy_data)
 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
@@ -80,7 +80,7 @@ signature        0x00840000         0x00000400         rw !x
 
 Linker script and memory map
 
-LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
 LOAD ./MCAL_Layer/TIMER/TIMER_program.o
 LOAD ./MCAL_Layer/GIE/GIE_prog.o
 LOAD ./MCAL_Layer/DIO/DIO_prog.o
@@ -185,9 +185,9 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x72ee
+.text           0x00000000     0x73b4
  *(.vectors)
- .vectors       0x00000000       0x54 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+ .vectors       0x00000000       0x54 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
                 0x00000000                __vectors
                 0x00000000                __vector_default
  *(.vectors)
@@ -212,13 +212,13 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  SORT(*)(.ctors)
  SORT(*)(.dtors)
  *(.init0)
- .init0         0x00000054        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+ .init0         0x00000054        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
                 0x00000054                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x00000054        0xc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+ .init2         0x00000054        0xc c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
  *(.init2)
  *(.init3)
  *(.init3)
@@ -237,10 +237,10 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x00000086        0x8 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+ .init9         0x00000086        0x8 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
  *(.init9)
  *(.text)
- .text          0x0000008e        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+ .text          0x0000008e        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
                 0x0000008e                __vector_1
                 0x0000008e                __vector_12
                 0x0000008e                __bad_interrupt
@@ -562,45 +562,45 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .text.SSD_vDisable
                 0x0000466e       0x66 ./HAL_Layer/BCD_To_SSD/BCD_To_SSD_prog.o
                 0x0000466e                SSD_vDisable
- .text.main     0x000046d4     0x18d6 ./APP_Layer/Real Time Clock.o
+ .text.main     0x000046d4     0x18d8 ./APP_Layer/Real Time Clock.o
                 0x000046d4                main
  .text.Set_Time
-                0x00005faa      0x700 ./APP_Layer/Real Time Clock.o
-                0x00005faa                Set_Time
+                0x00005fac      0x730 ./APP_Layer/Real Time Clock.o
+                0x00005fac                Set_Time
  .text.Select_Mode
-                0x000066aa      0x26a ./APP_Layer/Real Time Clock.o
-                0x000066aa                Select_Mode
+                0x000066dc      0x29e ./APP_Layer/Real Time Clock.o
+                0x000066dc                Select_Mode
  .text.Set_Alarm
-                0x00006914      0x594 ./APP_Layer/Real Time Clock.o
-                0x00006914                Set_Alarm
+                0x0000697a      0x5c4 ./APP_Layer/Real Time Clock.o
+                0x0000697a                Set_Alarm
  .text.Get_Temp
-                0x00006ea8      0x1f0 ./APP_Layer/Real Time Clock.o
-                0x00006ea8                Get_Temp
+                0x00006f3e      0x220 ./APP_Layer/Real Time Clock.o
+                0x00006f3e                Get_Temp
  .text.ISR_TIMER2_OVF_MODE
-                0x00007098       0xec ./APP_Layer/Real Time Clock.o
-                0x00007098                ISR_TIMER2_OVF_MODE
- .text.libgcc   0x00007184       0x3e c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mulsi3.o)
-                0x00007184                __mulsi3
- .text.libgcc   0x000071c2       0x18 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodqi4.o)
-                0x000071c2                __udivmodqi4
- .text.libgcc   0x000071da       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
-                0x000071da                __udivmodhi4
- .text.libgcc   0x00007202       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
-                0x00007202                __udivmodsi4
- .text.libgcc   0x00007246       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodsi4.o)
-                0x00007246                __divmodsi4
- .text.libgcc   0x0000727c        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
- .text.libgcc   0x0000727c        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
- .text.libgcc   0x0000727c        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
- .text.libgcc   0x0000727c       0x38 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
-                0x0000727c                __prologue_saves__
- .text.libgcc   0x000072b4       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
-                0x000072b4                __epilogue_restores__
-                0x000072ea                . = ALIGN (0x2)
+                0x0000715e       0xec ./APP_Layer/Real Time Clock.o
+                0x0000715e                ISR_TIMER2_OVF_MODE
+ .text.libgcc   0x0000724a       0x3e c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mulsi3.o)
+                0x0000724a                __mulsi3
+ .text.libgcc   0x00007288       0x18 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodqi4.o)
+                0x00007288                __udivmodqi4
+ .text.libgcc   0x000072a0       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+                0x000072a0                __udivmodhi4
+ .text.libgcc   0x000072c8       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
+                0x000072c8                __udivmodsi4
+ .text.libgcc   0x0000730c       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodsi4.o)
+                0x0000730c                __divmodsi4
+ .text.libgcc   0x00007342        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x00007342        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .text.libgcc   0x00007342        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x00007342       0x38 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+                0x00007342                __prologue_saves__
+ .text.libgcc   0x0000737a       0x36 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+                0x0000737a                __epilogue_restores__
+                0x000073b0                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000072ea        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x000072ea                exit
-                0x000072ea                _exit
+ .fini9         0x000073b0        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x000073b0                exit
+                0x000073b0                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -619,14 +619,14 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000072ea        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x000073b0        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000072ee                _etext = .
+                0x000073b4                _etext = .
 
-.data           0x00800060      0x2d6 load address 0x000072ee
+.data           0x00800060      0x2d6 load address 0x000073b4
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
- .data          0x00800060        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+ .data          0x00800060        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
  .data          0x00800060        0x0 ./MCAL_Layer/TIMER/TIMER_program.o
  .data          0x00800060        0x0 ./MCAL_Layer/GIE/GIE_prog.o
  .data          0x00800060        0x0 ./MCAL_Layer/DIO/DIO_prog.o
@@ -714,7 +714,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .bss            0x00800336       0x22
                 0x00800336                PROVIDE (__bss_start, .)
  *(.bss)
- .bss           0x00800336        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+ .bss           0x00800336        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm16.o
  .bss           0x00800336        0x0 ./MCAL_Layer/TIMER/TIMER_program.o
  .bss           0x00800336        0x0 ./MCAL_Layer/GIE/GIE_prog.o
  .bss           0x00800336        0x0 ./MCAL_Layer/DIO/DIO_prog.o
@@ -787,8 +787,8 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                 0x00800356                press
                 0x00800357                day_time
                 0x00800358                PROVIDE (__bss_end, .)
-                0x000072ee                __data_load_start = LOADADDR (.data)
-                0x000075c4                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000073b4                __data_load_start = LOADADDR (.data)
+                0x0000768a                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800358        0x0
                 0x00800358                PROVIDE (__noinit_start, .)
@@ -813,7 +813,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .signature
  *(.signature*)
 
-.stab           0x00000000     0x6984
+.stab           0x00000000     0x6ab0
  *(.stab)
  .stab          0x00000000      0xaa4 ./MCAL_Layer/TIMER/TIMER_program.o
  .stab          0x00000aa4      0x1c8 ./MCAL_Layer/GIE/GIE_prog.o
@@ -832,8 +832,8 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                                 0x300 (size before relaxing)
  .stab          0x0000414c      0x378 ./HAL_Layer/BCD_To_SSD/BCD_To_SSD_prog.o
                                 0x384 (size before relaxing)
- .stab          0x000044c4     0x24c0 ./APP_Layer/Real Time Clock.o
-                               0x2658 (size before relaxing)
+ .stab          0x000044c4     0x25ec ./APP_Layer/Real Time Clock.o
+                               0x2784 (size before relaxing)
 
 .stabstr        0x00000000     0x21f9
  *(.stabstr)

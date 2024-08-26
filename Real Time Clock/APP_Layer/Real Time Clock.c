@@ -163,7 +163,7 @@ void main(void)
 						break;
 					}
 				}
-			}while (press == NOTPRESSED && press != '*' );
+			}while (press != '*' );
 
 		}
 		/* Display time on seven-segment displays using POV theorem */
@@ -204,7 +204,7 @@ void main(void)
 		SSD_vSendNumber(seven_seg5, Hour /10);
 		_delay_ms(5);
 
-		if (Hour == Hours_Alarm && Minute == Minutes_Alarm && Second == 0)
+		if (Hour == Hours_Alarm && Minute == Minutes_Alarm && Second == 0 && Alarm_EN == 1)
 		{
 			CLCD_vClearScreen();
 			CLCD_vSetPosition(1, 8);
@@ -509,9 +509,15 @@ void Set_Time()
 	}
 	CLCD_vSendCommand(CLCD_DISPLAYON_CURSOROFF);
 	CLCD_vClearScreen();
-	CLCD_vSendString("Press ON to");
-	CLCD_vSetPosition(2, 1);
-	CLCD_vSendString("Show Option");
+	CLCD_vSendString("1 - set time");
+	CLCD_vSetPosition(2,1);
+	CLCD_vSendString("2 - select mode");
+	CLCD_vSetPosition(3, 1);
+	CLCD_vSendString("3 - Set Alarm");
+	CLCD_vSetPosition(4, 1);
+	CLCD_vSendString("4 - Weather");
+	CLCD_vSetPosition(4, 15);
+	CLCD_vSendString("X:EXIT");
 }
 
 //======================================================================================================================================//
@@ -593,9 +599,16 @@ void Select_Mode()
 	}while (mode == NOTPRESSED || (mode != '1' && mode != '2'));
 
 	CLCD_vClearScreen();
-	CLCD_vSendString("Press ON to");
-	CLCD_vSetPosition(2, 1);
-	CLCD_vSendString("Show Option");
+	CLCD_vClearScreen();
+	CLCD_vSendString("1 - set time");
+	CLCD_vSetPosition(2,1);
+	CLCD_vSendString("2 - select mode");
+	CLCD_vSetPosition(3, 1);
+	CLCD_vSendString("3 - Set Alarm");
+	CLCD_vSetPosition(4, 1);
+	CLCD_vSendString("4 - Weather");
+	CLCD_vSetPosition(4, 15);
+	CLCD_vSendString("X:EXIT");
 }
 
 //======================================================================================================================================//
@@ -625,7 +638,8 @@ void Set_Alarm()
 			CLCD_vSendString("2 - Disable");
 		}
 	}while(press == NOTPRESSED || (press != '1' && press != '2'));
-
+	/* Check if chosen alarm is enable or disaple */
+	/* if user choose alarm is enable */
 	if (press == '1')
 	{
 		switch(Alarm_EN)
@@ -740,12 +754,17 @@ void Set_Alarm()
 			CLCD_vSendData((Minutes_Alarm / 10) + 48);
 			CLCD_vSendData((Minutes_Alarm % 10) + 48);
 		}
+		/* Make Alarm Status : Alarm Enable  */
 		Alarm_EN = 1 ;
+		//=====================================
 	}
+	/* if user choose alarm is disaple */
 	else if (press == '2')
 	{
+		/* Make Alarm Status : Alarm Disaple  */
 		Hours_Alarm = NOTPRESSED;
 		Alarm_EN = 0;
+		//=====================================
 	}
 	else
 	{
@@ -753,11 +772,17 @@ void Set_Alarm()
 	}
 
 	_delay_ms(200);
-	CLCD_vClearScreen();
-	CLCD_vSendString("Press ON to");
-	CLCD_vSetPosition(2, 1);
-	CLCD_vSendString("Show Option");
 	CLCD_vSendCommand(CLCD_DISPLAYON_CURSOROFF);
+	CLCD_vClearScreen();
+	CLCD_vSendString("1 - set time");
+	CLCD_vSetPosition(2,1);
+	CLCD_vSendString("2 - select mode");
+	CLCD_vSetPosition(3, 1);
+	CLCD_vSendString("3 - Set Alarm");
+	CLCD_vSetPosition(4, 1);
+	CLCD_vSendString("4 - Weather");
+	CLCD_vSetPosition(4, 15);
+	CLCD_vSendString("X:EXIT");
 }
 
 //======================================================================================================================================//
@@ -775,9 +800,15 @@ void Get_Temp()
 		if (press_button != NOTPRESSED)
 		{
 			CLCD_vClearScreen();
-			CLCD_vSendString("Press ON to");
-			CLCD_vSetPosition(2, 1);
-			CLCD_vSendString("Show Option");
+			CLCD_vSendString("1 - set time");
+			CLCD_vSetPosition(2,1);
+			CLCD_vSendString("2 - select mode");
+			CLCD_vSetPosition(3, 1);
+			CLCD_vSendString("3 - Set Alarm");
+			CLCD_vSetPosition(4, 1);
+			CLCD_vSendString("4 - Weather");
+			CLCD_vSetPosition(4, 15);
+			CLCD_vSendString("X:EXIT");
 			break;
 		}
 		LM35_u8GetAnalogSignal(&LM350, &TEMP_volt);
