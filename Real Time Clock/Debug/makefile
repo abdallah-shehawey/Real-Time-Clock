@@ -70,7 +70,7 @@ main-build: RTC.elf secondary-outputs
 RTC.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: AVR C Linker'
-	avr-gcc -Wl,-Map,RTC.map -mmcu=atmega16 -o "RTC.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	avr-gcc -Wl,-Map,RTC.map -mmcu=atmega32 -o "RTC.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -88,7 +88,7 @@ RTC.hex: RTC.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 
 sizedummy: RTC.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: Print Size'
-	-avr-size --format=avr --mcu=atmega16 RTC.elf
+	-avr-size --format=avr --mcu=atmega32 RTC.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 

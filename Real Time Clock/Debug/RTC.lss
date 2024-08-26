@@ -61,7 +61,7 @@ Disassembly of section .text:
       54:	11 24       	eor	r1, r1
       56:	1f be       	out	0x3f, r1	; 63
       58:	cf e5       	ldi	r28, 0x5F	; 95
-      5a:	d4 e0       	ldi	r29, 0x04	; 4
+      5a:	d8 e0       	ldi	r29, 0x08	; 8
       5c:	de bf       	out	0x3e, r29	; 62
       5e:	cd bf       	out	0x3d, r28	; 61
 
@@ -427,35 +427,35 @@ Disassembly of section .text:
      334:	9c 91       	ld	r25, X
      336:	92 30       	cpi	r25, 0x02	; 2
      338:	08 f4       	brcc	.+2      	; 0x33c <_fpadd_parts+0x1a>
-     33a:	39 c1       	rjmp	.+626    	; 0x5ae <__stack+0x14f>
+     33a:	39 c1       	rjmp	.+626    	; 0x5ae <_fpadd_parts+0x28c>
      33c:	eb 01       	movw	r28, r22
      33e:	88 81       	ld	r24, Y
      340:	82 30       	cpi	r24, 0x02	; 2
      342:	08 f4       	brcc	.+2      	; 0x346 <_fpadd_parts+0x24>
-     344:	33 c1       	rjmp	.+614    	; 0x5ac <__stack+0x14d>
+     344:	33 c1       	rjmp	.+614    	; 0x5ac <_fpadd_parts+0x28a>
      346:	94 30       	cpi	r25, 0x04	; 4
      348:	69 f4       	brne	.+26     	; 0x364 <_fpadd_parts+0x42>
      34a:	84 30       	cpi	r24, 0x04	; 4
      34c:	09 f0       	breq	.+2      	; 0x350 <_fpadd_parts+0x2e>
-     34e:	2f c1       	rjmp	.+606    	; 0x5ae <__stack+0x14f>
+     34e:	2f c1       	rjmp	.+606    	; 0x5ae <_fpadd_parts+0x28c>
      350:	11 96       	adiw	r26, 0x01	; 1
      352:	9c 91       	ld	r25, X
      354:	11 97       	sbiw	r26, 0x01	; 1
      356:	89 81       	ldd	r24, Y+1	; 0x01
      358:	98 17       	cp	r25, r24
      35a:	09 f4       	brne	.+2      	; 0x35e <_fpadd_parts+0x3c>
-     35c:	28 c1       	rjmp	.+592    	; 0x5ae <__stack+0x14f>
+     35c:	28 c1       	rjmp	.+592    	; 0x5ae <_fpadd_parts+0x28c>
      35e:	a7 eb       	ldi	r26, 0xB7	; 183
      360:	b1 e0       	ldi	r27, 0x01	; 1
-     362:	25 c1       	rjmp	.+586    	; 0x5ae <__stack+0x14f>
+     362:	25 c1       	rjmp	.+586    	; 0x5ae <_fpadd_parts+0x28c>
      364:	84 30       	cpi	r24, 0x04	; 4
      366:	09 f4       	brne	.+2      	; 0x36a <_fpadd_parts+0x48>
-     368:	21 c1       	rjmp	.+578    	; 0x5ac <__stack+0x14d>
+     368:	21 c1       	rjmp	.+578    	; 0x5ac <_fpadd_parts+0x28a>
      36a:	82 30       	cpi	r24, 0x02	; 2
      36c:	a9 f4       	brne	.+42     	; 0x398 <_fpadd_parts+0x76>
      36e:	92 30       	cpi	r25, 0x02	; 2
      370:	09 f0       	breq	.+2      	; 0x374 <_fpadd_parts+0x52>
-     372:	1d c1       	rjmp	.+570    	; 0x5ae <__stack+0x14f>
+     372:	1d c1       	rjmp	.+570    	; 0x5ae <_fpadd_parts+0x28c>
      374:	9a 01       	movw	r18, r20
      376:	ad 01       	movw	r20, r26
      378:	88 e0       	ldi	r24, 0x08	; 8
@@ -473,10 +473,10 @@ Disassembly of section .text:
      390:	9c 91       	ld	r25, X
      392:	89 23       	and	r24, r25
      394:	81 83       	std	Z+1, r24	; 0x01
-     396:	08 c1       	rjmp	.+528    	; 0x5a8 <__stack+0x149>
+     396:	08 c1       	rjmp	.+528    	; 0x5a8 <_fpadd_parts+0x286>
      398:	92 30       	cpi	r25, 0x02	; 2
      39a:	09 f4       	brne	.+2      	; 0x39e <_fpadd_parts+0x7c>
-     39c:	07 c1       	rjmp	.+526    	; 0x5ac <__stack+0x14d>
+     39c:	07 c1       	rjmp	.+526    	; 0x5ac <_fpadd_parts+0x28a>
      39e:	12 96       	adiw	r26, 0x02	; 2
      3a0:	2d 90       	ld	r2, X+
      3a2:	3c 90       	ld	r3, X
@@ -507,7 +507,7 @@ Disassembly of section .text:
      3d4:	60 32       	cpi	r22, 0x20	; 32
      3d6:	71 05       	cpc	r23, r1
      3d8:	0c f0       	brlt	.+2      	; 0x3dc <_fpadd_parts+0xba>
-     3da:	61 c0       	rjmp	.+194    	; 0x49e <__stack+0x3f>
+     3da:	61 c0       	rjmp	.+194    	; 0x49e <_fpadd_parts+0x17c>
      3dc:	12 16       	cp	r1, r18
      3de:	13 06       	cpc	r1, r19
      3e0:	6c f5       	brge	.+90     	; 0x43c <_fpadd_parts+0x11a>
@@ -555,9 +555,9 @@ Disassembly of section .text:
      434:	f7 28       	or	r15, r7
      436:	08 29       	or	r16, r8
      438:	19 29       	or	r17, r9
-     43a:	3c c0       	rjmp	.+120    	; 0x4b4 <__stack+0x55>
+     43a:	3c c0       	rjmp	.+120    	; 0x4b4 <_fpadd_parts+0x192>
      43c:	23 2b       	or	r18, r19
-     43e:	d1 f1       	breq	.+116    	; 0x4b4 <__stack+0x55>
+     43e:	d1 f1       	breq	.+116    	; 0x4b4 <_fpadd_parts+0x192>
      440:	26 0e       	add	r2, r22
      442:	37 1e       	adc	r3, r23
      444:	35 01       	movw	r6, r10
@@ -574,13 +574,13 @@ Disassembly of section .text:
      45a:	30 e0       	ldi	r19, 0x00	; 0
      45c:	40 e0       	ldi	r20, 0x00	; 0
      45e:	50 e0       	ldi	r21, 0x00	; 0
-     460:	04 c0       	rjmp	.+8      	; 0x46a <__stack+0xb>
+     460:	04 c0       	rjmp	.+8      	; 0x46a <_fpadd_parts+0x148>
      462:	22 0f       	add	r18, r18
      464:	33 1f       	adc	r19, r19
      466:	44 1f       	adc	r20, r20
      468:	55 1f       	adc	r21, r21
      46a:	6a 95       	dec	r22
-     46c:	d2 f7       	brpl	.-12     	; 0x462 <__stack+0x3>
+     46c:	d2 f7       	brpl	.-12     	; 0x462 <_fpadd_parts+0x140>
      46e:	21 50       	subi	r18, 0x01	; 1
      470:	30 40       	sbci	r19, 0x00	; 0
      472:	40 40       	sbci	r20, 0x00	; 0
@@ -593,7 +593,7 @@ Disassembly of section .text:
      480:	31 05       	cpc	r19, r1
      482:	41 05       	cpc	r20, r1
      484:	51 05       	cpc	r21, r1
-     486:	21 f0       	breq	.+8      	; 0x490 <__stack+0x31>
+     486:	21 f0       	breq	.+8      	; 0x490 <_fpadd_parts+0x16e>
      488:	21 e0       	ldi	r18, 0x01	; 1
      48a:	30 e0       	ldi	r19, 0x00	; 0
      48c:	40 e0       	ldi	r20, 0x00	; 0
@@ -604,15 +604,15 @@ Disassembly of section .text:
      496:	b7 28       	or	r11, r7
      498:	c8 28       	or	r12, r8
      49a:	d9 28       	or	r13, r9
-     49c:	0b c0       	rjmp	.+22     	; 0x4b4 <__stack+0x55>
+     49c:	0b c0       	rjmp	.+22     	; 0x4b4 <_fpadd_parts+0x192>
      49e:	82 15       	cp	r24, r2
      4a0:	93 05       	cpc	r25, r3
-     4a2:	2c f0       	brlt	.+10     	; 0x4ae <__stack+0x4f>
+     4a2:	2c f0       	brlt	.+10     	; 0x4ae <_fpadd_parts+0x18c>
      4a4:	1c 01       	movw	r2, r24
      4a6:	aa 24       	eor	r10, r10
      4a8:	bb 24       	eor	r11, r11
      4aa:	65 01       	movw	r12, r10
-     4ac:	03 c0       	rjmp	.+6      	; 0x4b4 <__stack+0x55>
+     4ac:	03 c0       	rjmp	.+6      	; 0x4b4 <_fpadd_parts+0x192>
      4ae:	ee 24       	eor	r14, r14
      4b0:	ff 24       	eor	r15, r15
      4b2:	87 01       	movw	r16, r14
@@ -622,17 +622,17 @@ Disassembly of section .text:
      4ba:	11 96       	adiw	r26, 0x01	; 1
      4bc:	8c 91       	ld	r24, X
      4be:	98 17       	cp	r25, r24
-     4c0:	09 f4       	brne	.+2      	; 0x4c4 <__stack+0x65>
-     4c2:	45 c0       	rjmp	.+138    	; 0x54e <__stack+0xef>
+     4c0:	09 f4       	brne	.+2      	; 0x4c4 <_fpadd_parts+0x1a2>
+     4c2:	45 c0       	rjmp	.+138    	; 0x54e <_fpadd_parts+0x22c>
      4c4:	99 23       	and	r25, r25
-     4c6:	39 f0       	breq	.+14     	; 0x4d6 <__stack+0x77>
+     4c6:	39 f0       	breq	.+14     	; 0x4d6 <_fpadd_parts+0x1b4>
      4c8:	a8 01       	movw	r20, r16
      4ca:	97 01       	movw	r18, r14
      4cc:	2a 19       	sub	r18, r10
      4ce:	3b 09       	sbc	r19, r11
      4d0:	4c 09       	sbc	r20, r12
      4d2:	5d 09       	sbc	r21, r13
-     4d4:	06 c0       	rjmp	.+12     	; 0x4e2 <__stack+0x83>
+     4d4:	06 c0       	rjmp	.+12     	; 0x4e2 <_fpadd_parts+0x1c0>
      4d6:	a6 01       	movw	r20, r12
      4d8:	95 01       	movw	r18, r10
      4da:	2e 19       	sub	r18, r14
@@ -640,7 +640,7 @@ Disassembly of section .text:
      4de:	40 0b       	sbc	r20, r16
      4e0:	51 0b       	sbc	r21, r17
      4e2:	57 fd       	sbrc	r21, 7
-     4e4:	08 c0       	rjmp	.+16     	; 0x4f6 <__stack+0x97>
+     4e4:	08 c0       	rjmp	.+16     	; 0x4f6 <_fpadd_parts+0x1d4>
      4e6:	11 82       	std	Z+1, r1	; 0x01
      4e8:	33 82       	std	Z+3, r3	; 0x03
      4ea:	22 82       	std	Z+2, r2	; 0x02
@@ -648,7 +648,7 @@ Disassembly of section .text:
      4ee:	35 83       	std	Z+5, r19	; 0x05
      4f0:	46 83       	std	Z+6, r20	; 0x06
      4f2:	57 83       	std	Z+7, r21	; 0x07
-     4f4:	1d c0       	rjmp	.+58     	; 0x530 <__stack+0xd1>
+     4f4:	1d c0       	rjmp	.+58     	; 0x530 <_fpadd_parts+0x20e>
      4f6:	81 e0       	ldi	r24, 0x01	; 1
      4f8:	81 83       	std	Z+1, r24	; 0x01
      4fa:	33 82       	std	Z+3, r3	; 0x03
@@ -664,7 +664,7 @@ Disassembly of section .text:
      50e:	95 83       	std	Z+5, r25	; 0x05
      510:	a6 83       	std	Z+6, r26	; 0x06
      512:	b7 83       	std	Z+7, r27	; 0x07
-     514:	0d c0       	rjmp	.+26     	; 0x530 <__stack+0xd1>
+     514:	0d c0       	rjmp	.+26     	; 0x530 <_fpadd_parts+0x20e>
      516:	22 0f       	add	r18, r18
      518:	33 1f       	adc	r19, r19
      51a:	44 1f       	adc	r20, r20
@@ -691,8 +691,8 @@ Disassembly of section .text:
      544:	9f 4f       	sbci	r25, 0xFF	; 255
      546:	af 4f       	sbci	r26, 0xFF	; 255
      548:	bf 43       	sbci	r27, 0x3F	; 63
-     54a:	28 f3       	brcs	.-54     	; 0x516 <__stack+0xb7>
-     54c:	0b c0       	rjmp	.+22     	; 0x564 <__stack+0x105>
+     54a:	28 f3       	brcs	.-54     	; 0x516 <_fpadd_parts+0x1f4>
+     54c:	0b c0       	rjmp	.+22     	; 0x564 <_fpadd_parts+0x242>
      54e:	91 83       	std	Z+1, r25	; 0x01
      550:	33 82       	std	Z+3, r3	; 0x03
      552:	22 82       	std	Z+2, r2	; 0x02
@@ -711,7 +711,7 @@ Disassembly of section .text:
      56c:	46 81       	ldd	r20, Z+6	; 0x06
      56e:	57 81       	ldd	r21, Z+7	; 0x07
      570:	57 ff       	sbrs	r21, 7
-     572:	1a c0       	rjmp	.+52     	; 0x5a8 <__stack+0x149>
+     572:	1a c0       	rjmp	.+52     	; 0x5a8 <_fpadd_parts+0x286>
      574:	c9 01       	movw	r24, r18
      576:	aa 27       	eor	r26, r26
      578:	97 fd       	sbrc	r25, 7
@@ -739,7 +739,7 @@ Disassembly of section .text:
      5a4:	93 83       	std	Z+3, r25	; 0x03
      5a6:	82 83       	std	Z+2, r24	; 0x02
      5a8:	df 01       	movw	r26, r30
-     5aa:	01 c0       	rjmp	.+2      	; 0x5ae <__stack+0x14f>
+     5aa:	01 c0       	rjmp	.+2      	; 0x5ae <_fpadd_parts+0x28c>
      5ac:	d2 01       	movw	r26, r4
      5ae:	cd 01       	movw	r24, r26
      5b0:	cd b7       	in	r28, 0x3d	; 61
@@ -8095,8 +8095,8 @@ _delay_ms(double __ms)
     3388:	9e 85       	ldd	r25, Y+14	; 0x0e
     338a:	20 e0       	ldi	r18, 0x00	; 0
     338c:	30 e0       	ldi	r19, 0x00	; 0
-    338e:	4a e7       	ldi	r20, 0x7A	; 122
-    3390:	53 e4       	ldi	r21, 0x43	; 67
+    338e:	4a ef       	ldi	r20, 0xFA	; 250
+    3390:	54 e4       	ldi	r21, 0x44	; 68
     3392:	0e 94 3b 03 	call	0x676	; 0x676 <__mulsf3>
     3396:	dc 01       	movw	r26, r24
     3398:	cb 01       	movw	r24, r22
@@ -8156,7 +8156,7 @@ _delay_ms(double __ms)
     3400:	9e 83       	std	Y+6, r25	; 0x06
     3402:	8d 83       	std	Y+5, r24	; 0x05
     3404:	0f c0       	rjmp	.+30     	; 0x3424 <KPD_u8GetPressed+0xf6>
-    3406:	89 e1       	ldi	r24, 0x19	; 25
+    3406:	88 ec       	ldi	r24, 0xC8	; 200
     3408:	90 e0       	ldi	r25, 0x00	; 0
     340a:	9c 83       	std	Y+4, r25	; 0x04
     340c:	8b 83       	std	Y+3, r24	; 0x03
