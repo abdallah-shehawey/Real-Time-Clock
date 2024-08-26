@@ -7,10 +7,10 @@
  *
  */
 
-#include "../APP_Layer/STD_MACROS.h"
-#include "../APP_Layer/STD_TYPES.h"
+#include "../../APP_Layer/STD_MACROS.h"
+#include "../../APP_Layer/STD_TYPES.h"
 
-#include "../MCAL_Layer/DIO_interface.h"
+#include "../../MCAL_Layer/DIO/DIO_interface.h"
 
 #include "BUZ_interface.h"
 #include "BUZ_private.h"

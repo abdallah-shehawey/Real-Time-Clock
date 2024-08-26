@@ -21,6 +21,13 @@ C_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 APP_Layer \
-HAL_Layer \
-MCAL_Layer \
+HAL_Layer/BCD_To_SSD \
+HAL_Layer/BUZZ \
+HAL_Layer/CLCD \
+HAL_Layer/KPD \
+HAL_Layer/LM35 \
+MCAL_Layer/ADC \
+MCAL_Layer/DIO \
+MCAL_Layer/GIE \
+MCAL_Layer/TIMER \
 

@@ -8,17 +8,17 @@
 #include "STD_MACROS.h"
 #include "STD_TYPES.h"
 
-#include "../MCAL_Layer/TIMER_interface.h"
-#include "../MCAL_Layer/DIO_interface.h"
-#include "../MCAL_Layer/DIO_private.h"
-#include "../MCAL_Layer/GIE_interface.h"
-#include "../MCAL_Layer/ADC_interface.h"
+#include "../MCAL_Layer/TIMER/TIMER_interface.h"
+#include "../MCAL_Layer/DIO/DIO_interface.h"
+#include "../MCAL_Layer/DIO/DIO_private.h"
+#include "../MCAL_Layer/GIE/GIE_interface.h"
+#include "../MCAL_Layer/ADC/ADC_interface.h"
 
-#include "../HAL_Layer/BCD_To_SSD_interface.h"
-#include "../HAL_Layer/CLCD_interface.h"
-#include "../HAL_Layer/KPD_interface.h"
-#include "../HAL_Layer/LM35_interface.h"
-#include "../HAL_Layer/BUZ_interface.h"
+#include "../HAL_Layer/BCD_TO_SSD/BCD_To_SSD_interface.h"
+#include "../HAL_Layer/CLCD/CLCD_interface.h"
+#include "../HAL_Layer/KPD/KPD_interface.h"
+#include "../HAL_Layer/LM35/LM35_interface.h"
+#include "../HAL_Layer/BUZZ/BUZ_interface.h"
 
 #define F_CPU 8000000UL
 #include <util/delay.h>

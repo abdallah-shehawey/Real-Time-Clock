@@ -7,12 +7,12 @@
  *
  */
 
-#include "../APP_Layer/STD_MACROS.h"
-#include "../APP_Layer/STD_TYPES.h"
+#include "../../APP_Layer/STD_MACROS.h"
+#include "../../APP_Layer/STD_TYPES.h"
 
 #include <util/delay.h>
 
-#include "../MCAL_Layer/DIO_interface.h"
+#include "../../MCAL_Layer/DIO/DIO_interface.h"
 
 #include "KPD_interface.h"
 #include "KPD_config.h"

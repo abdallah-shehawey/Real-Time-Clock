@@ -10,10 +10,10 @@
 #define F_CPU 8000000UL
 #include <util/delay.h>
 
-#include "../APP_Layer/STD_Macros.h"
-#include "../APP_Layer/STD_TYPES.h"
+#include "../../APP_Layer/STD_Macros.h"
+#include "../../APP_Layer/STD_TYPES.h"
 
-#include "../MCAL_Layer/DIO_interface.h"
+#include "../../MCAL_Layer/DIO/DIO_interface.h"
 
 #include "CLCD_interface.h"
 #include "CLCD_config.h"

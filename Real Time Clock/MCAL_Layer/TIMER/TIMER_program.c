@@ -7,8 +7,8 @@
  *
  */
 
-#include "../APP_Layer/STD_TYPES.h"
-#include "../APP_Layer/STD_MACROS.h"
+#include "../../APP_Layer/STD_TYPES.h"
+#include "../../APP_Layer/STD_MACROS.h"
 
 #include "TIMER_interface.h"
 #include "TIMER_private.h" /*You have to include TIMER_private.h before TIMER_config.h*/

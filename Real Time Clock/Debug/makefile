@@ -8,8 +8,15 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include MCAL_Layer/subdir.mk
--include HAL_Layer/subdir.mk
+-include MCAL_Layer/TIMER/subdir.mk
+-include MCAL_Layer/GIE/subdir.mk
+-include MCAL_Layer/DIO/subdir.mk
+-include MCAL_Layer/ADC/subdir.mk
+-include HAL_Layer/LM35/subdir.mk
+-include HAL_Layer/KPD/subdir.mk
+-include HAL_Layer/CLCD/subdir.mk
+-include HAL_Layer/BUZZ/subdir.mk
+-include HAL_Layer/BCD_To_SSD/subdir.mk
 -include APP_Layer/subdir.mk
 -include subdir.mk
 -include objects.mk
