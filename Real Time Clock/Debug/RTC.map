@@ -835,9 +835,9 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  .stab          0x00004098     0x24c0 ./APP_Layer/Real Time Clock.o
                                0x2658 (size before relaxing)
 
-.stabstr        0x00000000     0x1e4f
+.stabstr        0x00000000     0x1e50
  *(.stabstr)
- .stabstr       0x00000000     0x1e4f ./MCAL_Layer/ADC_prog.o
+ .stabstr       0x00000000     0x1e50 ./MCAL_Layer/ADC_prog.o
 
 .stab.excl
  *(.stab.excl)
