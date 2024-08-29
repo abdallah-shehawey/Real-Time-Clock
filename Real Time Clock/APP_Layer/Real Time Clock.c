@@ -23,27 +23,26 @@
 #define F_CPU 8000000UL
 #include <util/delay.h>
 
-#define mode_12Hours '1'
-#define mode_24Hours '2'
+#define Time_Mode12Hours '1'
+#define Time_Mode24Hours '2'
 
-#define Alarm_DIS         0
-#define Alarm_EN          1
+#define Alarm_DIS 0
+#define Alarm_EN  1
 
 // Global variables
-volatile u8  Mode_Flag = 1, Alarm_Flag = 0 , Alarm_Mode = 0;
-volatile u8 Hours_Alarm, Minutes_Alarm;
+volatile u8 Alarm_DayTime = 0, Alarm_Status = Alarm_DIS;
+volatile u8 Alarm_Hour, Alarm_Minutes;
 
-volatile u8  Hour = 12, Minute = 0, Second = 0;
-volatile u8 press, day_time, mode = mode_12Hours;
-
+volatile u8 Time_ModeFlag = 1, Time_Hour = 12, Time_Minute = 0, Time_Second = 0;
+volatile u8 KPD_Press, Time_DayFlag, Time_Mode = Time_Mode12Hours;
 
 /* SSD Configuration */
-SSD_config seven_seg0 = {SSD_COMMON_ANODE, SSD_PORTB, SSD_PORTC, DIO_PIN0,SSD_LOW_NIBBLE};
-SSD_config seven_seg1 = {SSD_COMMON_ANODE, SSD_PORTB, SSD_PORTC, DIO_PIN1,SSD_LOW_NIBBLE };
-SSD_config seven_seg2 = {SSD_COMMON_ANODE, SSD_PORTB, SSD_PORTC, DIO_PIN2,SSD_LOW_NIBBLE };
-SSD_config seven_seg3 = {SSD_COMMON_ANODE, SSD_PORTB, SSD_PORTC, DIO_PIN3,SSD_LOW_NIBBLE };
-SSD_config seven_seg4 = {SSD_COMMON_ANODE, SSD_PORTB, SSD_PORTC, DIO_PIN4,SSD_LOW_NIBBLE };
-SSD_config seven_seg5 = {SSD_COMMON_ANODE, SSD_PORTB, SSD_PORTC, DIO_PIN5,SSD_LOW_NIBBLE };
+SSD_config seven_seg0 = {SSD_COMMON_ANODE, SSD_PORTB, SSD_PORTC, DIO_PIN0, SSD_LOW_NIBBLE};
+SSD_config seven_seg1 = {SSD_COMMON_ANODE, SSD_PORTB, SSD_PORTC, DIO_PIN1, SSD_LOW_NIBBLE};
+SSD_config seven_seg2 = {SSD_COMMON_ANODE, SSD_PORTB, SSD_PORTC, DIO_PIN2, SSD_LOW_NIBBLE};
+SSD_config seven_seg3 = {SSD_COMMON_ANODE, SSD_PORTB, SSD_PORTC, DIO_PIN3, SSD_LOW_NIBBLE};
+SSD_config seven_seg4 = {SSD_COMMON_ANODE, SSD_PORTB, SSD_PORTC, DIO_PIN4, SSD_LOW_NIBBLE};
+SSD_config seven_seg5 = {SSD_COMMON_ANODE, SSD_PORTB, SSD_PORTC, DIO_PIN5, SSD_LOW_NIBBLE};
 
 /* LM35 Configuration */
 LM35_Config LM350 = {ADC_ADC0_ADC1, 5, ADC_RES_10_BIT};
@@ -51,10 +50,11 @@ LM35_Config LM350 = {ADC_ADC0_ADC1, 5, ADC_RES_10_BIT};
 /* BUZZER Configuration */
 BUZ_config BUZ0 = {DIO_PORTB, DIO_PIN4, ACTIVE_HIGH};
 
-void Set_Time(void);
-void Select_Mode(void);
-void Set_Alarm(void);
-void Get_Temp(void);
+/* Functions Proto Type */
+void Set_Time                        (void);
+void Select_Mode                  (void);
+void Set_Alarm                      (void);
+void Get_Temp                      (void);
 void ISR_TIMER2_OVF_MODE(void);
 
 //======================================================================================================================================//
@@ -102,10 +102,10 @@ void main(void)
 	CLCD_vSendString("Press ON to");
 	CLCD_vSetPosition(2, 1);
 	CLCD_vSendString("Show Option");
-	while(1)
+	while (1)
 	{
-		press = KPD_u8GetPressed();
-		if (press == 'A')
+		KPD_Press = KPD_u8GetPressed();
+		if (KPD_Press == 'A')
 		{
 			// Display menu options on CLCD
 			CLCD_vClearScreen();
@@ -121,11 +121,11 @@ void main(void)
 
 			do
 			{
-				press = KPD_u8GetPressed();
-				if (press != NOTPRESSED)
+				KPD_Press = KPD_u8GetPressed();
+				if (KPD_Press != NOTPRESSED)
 				{
 					// Perform actions based on the pressed key
-					switch(press)
+					switch (KPD_Press)
 					{
 					case '1':
 						Set_Time();
@@ -135,7 +135,7 @@ void main(void)
 						Select_Mode();
 						break;
 
-					case '3' :
+					case '3':
 						Set_Alarm();
 						break;
 
@@ -143,7 +143,7 @@ void main(void)
 						Get_Temp();
 						break;
 
-					case '*' :
+					case '*':
 						CLCD_vClearScreen();
 						CLCD_vSendString("Press ON to");
 						CLCD_vSetPosition(2, 1);
@@ -157,7 +157,7 @@ void main(void)
 						_delay_ms(500);
 						CLCD_vClearScreen();
 						CLCD_vSendString("1 - set time");
-						CLCD_vSetPosition(2,1);
+						CLCD_vSetPosition(2, 1);
 						CLCD_vSendString("2 - select mode");
 						CLCD_vSetPosition(3, 1);
 						CLCD_vSendString("3 - Set Alarm");
@@ -168,61 +168,60 @@ void main(void)
 						break;
 					}
 				}
-			}while (press != '*' );
-
+			} while (KPD_Press != '*');
 		}
 		/* Display time on seven-segment displays using POV theorem */
 
 		// Display seconds (units)
 		SSD_vDisable(seven_seg5);
 		SSD_vEnable(seven_seg0);
-		SSD_vSendNumber(seven_seg0, Second%10);
+		SSD_vSendNumber(seven_seg0, Time_Second % 10);
 		_delay_ms(5);
 
 		// Display seconds (tens)
 		SSD_vDisable(seven_seg0);
 		SSD_vEnable(seven_seg1);
-		SSD_vSendNumber(seven_seg1, Second/10);
+		SSD_vSendNumber(seven_seg1, Time_Second / 10);
 		_delay_ms(5);
 
 		// Display minutes (units)
 		SSD_vDisable(seven_seg1);
 		SSD_vEnable(seven_seg2);
-		SSD_vSendNumber(seven_seg2, Minute%10);
+		SSD_vSendNumber(seven_seg2, Time_Minute % 10);
 		_delay_ms(5);
 
 		// Display minutes (tens)
 		SSD_vDisable(seven_seg2);
 		SSD_vEnable(seven_seg3);
-		SSD_vSendNumber(seven_seg3, Minute/10);
+		SSD_vSendNumber(seven_seg3, Time_Minute / 10);
 		_delay_ms(5);
 
 		// Display hours (units)
 		SSD_vDisable(seven_seg3);
 		SSD_vEnable(seven_seg4);
-		SSD_vSendNumber(seven_seg4, Hour %10);
+		SSD_vSendNumber(seven_seg4, Time_Hour % 10);
 		_delay_ms(5);
 
 		// Display hours (tens)
 		SSD_vDisable(seven_seg4);
 		SSD_vEnable(seven_seg5);
-		SSD_vSendNumber(seven_seg5, Hour /10);
+		SSD_vSendNumber(seven_seg5, Time_Hour / 10);
 		_delay_ms(5);
 
 		/* When Alarm is Ring */
-		if (Hour == Hours_Alarm && Minute == Minutes_Alarm && Second == 0 && Alarm_Mode == Alarm_EN && READ_BIT(PORTA_REG, DIO_PIN3) == Alarm_Flag)
+		if (Time_Hour == Alarm_Hour && Time_Minute == Alarm_Minutes && Time_Second == 0 && Alarm_Status == Alarm_EN && READ_BIT(PORTA_REG, DIO_PIN3) == Alarm_DayTime)
 		{
 			CLCD_vClearScreen();
 			CLCD_vSetPosition(1, 8);
 			CLCD_vSendString("Alarm");
 
 			CLCD_vSetPosition(2, 6);
-			CLCD_vSendData((Hours_Alarm / 10 ) + 48);
-			CLCD_vSendData((Hours_Alarm % 10 ) + 48);
+			CLCD_vSendData((Alarm_Hour / 10) + 48);
+			CLCD_vSendData((Alarm_Hour % 10) + 48);
 			CLCD_vSendString(" : ");
-			CLCD_vSendData((Minutes_Alarm / 10 ) + 48);
-			CLCD_vSendData((Minutes_Alarm % 10 ) + 48);
-			switch(Alarm_Flag)
+			CLCD_vSendData((Alarm_Minutes / 10) + 48);
+			CLCD_vSendData((Alarm_Minutes % 10) + 48);
+			switch (Alarm_DayTime)
 			{
 			case 1:
 				CLCD_vSendString(" AM");
@@ -236,10 +235,10 @@ void main(void)
 			CLCD_vSetPosition(4, 1);
 			CLCD_vSendString("to close");
 
-			while(1)
+			while (1)
 			{
-				press = KPD_u8GetPressed();
-				if (press != NOTPRESSED)
+				KPD_Press = KPD_u8GetPressed();
+				if (KPD_Press != NOTPRESSED)
 				{
 					break;
 				}
@@ -248,37 +247,37 @@ void main(void)
 				// Display seconds (units)
 				SSD_vDisable(seven_seg5);
 				SSD_vEnable(seven_seg0);
-				SSD_vSendNumber(seven_seg0, Second%10);
+				SSD_vSendNumber(seven_seg0, Time_Second % 10);
 				_delay_ms(5);
 
 				// Display seconds (tens)
 				SSD_vDisable(seven_seg0);
 				SSD_vEnable(seven_seg1);
-				SSD_vSendNumber(seven_seg1, Second/10);
+				SSD_vSendNumber(seven_seg1, Time_Second / 10);
 				_delay_ms(5);
 
 				// Display minutes (units)
 				SSD_vDisable(seven_seg1);
 				SSD_vEnable(seven_seg2);
-				SSD_vSendNumber(seven_seg2, Minute%10);
+				SSD_vSendNumber(seven_seg2, Time_Minute % 10);
 				_delay_ms(5);
 
 				// Display minutes (tens)
 				SSD_vDisable(seven_seg2);
 				SSD_vEnable(seven_seg3);
-				SSD_vSendNumber(seven_seg3, Minute/10);
+				SSD_vSendNumber(seven_seg3, Time_Minute / 10);
 				_delay_ms(5);
 
 				// Display hours (units)
 				SSD_vDisable(seven_seg3);
 				SSD_vEnable(seven_seg4);
-				SSD_vSendNumber(seven_seg4, Hour %10);
+				SSD_vSendNumber(seven_seg4, Time_Hour % 10);
 				_delay_ms(5);
 
 				// Display hours (tens)
 				SSD_vDisable(seven_seg4);
 				SSD_vEnable(seven_seg5);
-				SSD_vSendNumber(seven_seg5, Hour /10);
+				SSD_vSendNumber(seven_seg5, Time_Hour / 10);
 				_delay_ms(5);
 
 				BUZ_vTog(BUZ0);
@@ -306,9 +305,11 @@ void Set_Time()
 	/* Select time mode: 12 Hours or 24 Hours */
 	do
 	{
-		mode = KPD_u8GetPressed();
+		/*___________________________________________________________________________________________________________________*/
 
-		if (mode != NOTPRESSED && (mode != mode_12Hours && mode != mode_24Hours))
+		Time_Mode = KPD_u8GetPressed();
+
+		if (Time_Mode != NOTPRESSED && (Time_Mode != Time_Mode12Hours && Time_Mode != Time_Mode24Hours))
 		{
 			// Handle wrong input
 			CLCD_vClearScreen();
@@ -319,37 +320,43 @@ void Set_Time()
 			CLCD_vSetPosition(2, 1);
 			CLCD_vSendString("2 - 24-hour time");
 		}
-	}while (mode == NOTPRESSED || (mode != mode_12Hours && mode != mode_24Hours));
+	} while (Time_Mode == NOTPRESSED || (Time_Mode != Time_Mode12Hours && Time_Mode != Time_Mode24Hours));
+
+	/*___________________________________________________________________________________________________________________*/
 
 	// Set AM or PM flag based on selected mode
-	if (mode ==  mode_12Hours)
+	if (Time_Mode == Time_Mode12Hours)
 	{
-		Mode_Flag = 1;
+		Time_ModeFlag = 1;
 	}
-	else if (mode == mode_24Hours)
+	else if (Time_Mode == Time_Mode24Hours)
 	{
-		Mode_Flag = 0;
+		Time_ModeFlag = 0;
 	}
 	else
 	{
 
 	}
 
+	/*___________________________________________________________________________________________________________________*/
+
 	CLCD_vClearScreen();
 
+	/*___________________________________________________________________________________________________________________*/
+
 	// Display the current time on the CLCD
-	CLCD_vSendData(Hour /10 +48);
-	CLCD_vSendData(Hour %10 +48);
+	CLCD_vSendData(Time_Hour / 10 + 48);
+	CLCD_vSendData(Time_Hour % 10 + 48);
 	CLCD_vSendString(" : ");
-	CLCD_vSendData(Minute/10 + 48);
-	CLCD_vSendData(Minute%10 + 48);
+	CLCD_vSendData(Time_Minute / 10 + 48);
+	CLCD_vSendData(Time_Minute % 10 + 48);
 	CLCD_vSendString(" : ");
-	CLCD_vSendData(Second/10 + 48);
-	CLCD_vSendData(Second%10 + 48);
+	CLCD_vSendData(Time_Second / 10 + 48);
+	CLCD_vSendData(Time_Second % 10 + 48);
 	CLCD_vSendData(' ');
 
 	// Display AM/PM if in 12-hour mode
-	if (mode == mode_12Hours )
+	if (Time_Mode == Time_Mode12Hours)
 	{
 		if (READ_BIT(PORTA_REG, DIO_PIN3) == 1)
 		{
@@ -361,154 +368,162 @@ void Set_Time()
 		}
 	}
 
+	/*___________________________________________________________________________________________________________________*/
+
 	/* Change Time */
 	CLCD_vSendCommand(CLCD_DISPLAYON_CURSORON);
-	CLCD_vSetPosition(1,1);
+	CLCD_vSetPosition(1, 1);
 
 	/* Set hours */
 	// First Digit
 	do
 	{
-		press = KPD_u8GetPressed();
-	} while (press == NOTPRESSED);
-	CLCD_vSetPosition(1,1);
-	CLCD_vSendData( press );
-	Hour = (press - 48) * 10;
+		KPD_Press = KPD_u8GetPressed();
+	} while (KPD_Press == NOTPRESSED);
+	CLCD_vSetPosition(1, 1);
+	CLCD_vSendData(KPD_Press);
+	Time_Hour = (KPD_Press - 48) * 10;
 
 	// Second Digit
 	do
 	{
-		press = KPD_u8GetPressed();
-	} while (press == NOTPRESSED);
-	CLCD_vSendData(press);
+		KPD_Press = KPD_u8GetPressed();
+	} while (KPD_Press == NOTPRESSED);
+	CLCD_vSendData(KPD_Press);
 
 	// Calculate total hours
-	Hour += (press - 48) ;
+	Time_Hour += (KPD_Press - 48);
 
 	/* Check mode to change hour limit
 	 * ==> if mode is 24 hours --> hour is less than 24
 	 * ==> if mode is 12 hours --> hour is less than 12
 	 */
-	if (mode == mode_12Hours)
+
+	/*___________________________________________________________________________________________________________________*/
+
+	if (Time_Mode == Time_Mode12Hours)
 	{
-		if (Hour > 12 || Hour == 0)
+		if (Time_Hour > 12 || Time_Hour == 0)
 		{
-			Hour = 12;
+			Time_Hour = 12;
 			CLCD_vSetPosition(1, 1);
-			CLCD_vSendData(Hour /10 +48);
-			CLCD_vSendData(Hour %10 +48);
+			CLCD_vSendData(Time_Hour / 10 + 48);
+			CLCD_vSendData(Time_Hour % 10 + 48);
 		}
 		else
 		{
-
 		}
 	}
-	else if (mode == mode_24Hours)
+	else if (Time_Mode == Time_Mode24Hours)
 	{
-		if (Hour  > 23)
+		if (Time_Hour > 23)
 		{
-			Hour = 0;
+			Time_Hour = 0;
 			CLCD_vSetPosition(1, 1);
-			CLCD_vSendData(Hour /10 +48);
-			CLCD_vSendData(Hour %10 +48);
+			CLCD_vSendData(Time_Hour / 10 + 48);
+			CLCD_vSendData(Time_Hour % 10 + 48);
 		}
 		else
 		{
-
 		}
-		if (Hour == 12)
+		if (Time_Hour == 12)
 		{
 			CLR_BIT(PORTA_REG, DIO_PIN3);
 		}
 		else
 		{
-
 		}
 	}
 	else
 	{
-
 	}
+
+	/*___________________________________________________________________________________________________________________*/
+
 	/* Set minutes and seconds similar to hours */
 
 	// Set minutes
-	CLCD_vSetPosition(1,6);
+	CLCD_vSetPosition(1, 6);
 	do
 	{
-		press = KPD_u8GetPressed();
-	} while (press == NOTPRESSED);
-	CLCD_vSendData(press);
-	Minute = (press - 48) * 10;
+		KPD_Press = KPD_u8GetPressed();
+	} while (KPD_Press == NOTPRESSED);
+	CLCD_vSendData(KPD_Press);
+	Time_Minute = (KPD_Press - 48) * 10;
 
 	do
 	{
-		press = KPD_u8GetPressed();
+		KPD_Press = KPD_u8GetPressed();
 
-	} while (press == NOTPRESSED);
-	CLCD_vSendData(press);
+	} while (KPD_Press == NOTPRESSED);
+	CLCD_vSendData(KPD_Press);
 
-	Minute += (press - 48);
+	Time_Minute += (KPD_Press - 48);
 
-
-	if (Minute > 59)
+	if (Time_Minute > 59)
 	{
-		Minute = 0;
-		CLCD_vSetPosition(1,6);
-		CLCD_vSendData(Minute/10 + 48);
-		CLCD_vSendData(Minute%10 + 48);
+		Time_Minute = 0;
+		CLCD_vSetPosition(1, 6);
+		CLCD_vSendData(Time_Minute / 10 + 48);
+		CLCD_vSendData(Time_Minute % 10 + 48);
 	}
+
+	/*___________________________________________________________________________________________________________________*/
 
 	// Set seconds
-	CLCD_vSetPosition(1,11);
+	CLCD_vSetPosition(1, 11);
 	do
 	{
-		press = KPD_u8GetPressed();
+		KPD_Press = KPD_u8GetPressed();
 
-	} while (press == NOTPRESSED);
-	CLCD_vSendData(press);
-	Second = (press - 48) * 10;
+	} while (KPD_Press == NOTPRESSED);
+	CLCD_vSendData(KPD_Press);
+	Time_Second = (KPD_Press - 48) * 10;
 
 	do
 	{
-		press = KPD_u8GetPressed();
+		KPD_Press = KPD_u8GetPressed();
 
-	} while (press == NOTPRESSED);
-	CLCD_vSendData(press);
+	} while (KPD_Press == NOTPRESSED);
+	CLCD_vSendData(KPD_Press);
 
-	Second += (press - 48);
+	Time_Second += (KPD_Press - 48);
 
-	if (Second > 59)
+	if (Time_Second > 59)
 	{
-		Second = 0;
-		CLCD_vSetPosition(1,11);
-		CLCD_vSendData(Second/10 + 48);
-		CLCD_vSendData(Second%10 + 48);
+		Time_Second = 0;
+		CLCD_vSetPosition(1, 11);
+		CLCD_vSendData(Time_Second / 10 + 48);
+		CLCD_vSendData(Time_Second % 10 + 48);
 	}
 
-	if (mode == mode_12Hours)
+	/*___________________________________________________________________________________________________________________*/
+
+	//display AM or PM when mode is 12 Hour
+	if (Time_Mode == Time_Mode12Hours)
 	{
 		/* Select AM or PM if mode is 12-hour */
 		CLCD_vSetPosition(2, 1);
 		CLCD_vSendString("1 : AM    2 : PM");
 		do
 		{
-			day_time = KPD_u8GetPressed();
-
-			if (day_time != NOTPRESSED && (day_time != '1' && day_time != '2'))
+			Time_DayFlag = KPD_u8GetPressed();
+			// Handle wrong input
+			if (Time_DayFlag != NOTPRESSED && (Time_DayFlag != '1' && Time_DayFlag != '2'))
 			{
 				CLCD_vClearScreen();
 				CLCD_vSendString("Wrong Choise");
 				_delay_ms(500);
 				CLCD_vClearScreen();
 				CLCD_vSetPosition(1, 1);
-				CLCD_vSendData(Hour /10 +48);
-				CLCD_vSendData(Hour %10 +48);
+				CLCD_vSendData(Time_Hour / 10 + 48);
+				CLCD_vSendData(Time_Hour % 10 + 48);
 				CLCD_vSendString(" : ");
-				CLCD_vSendData(Minute/10 + 48);
-				CLCD_vSendData(Minute%10 + 48);
+				CLCD_vSendData(Time_Minute / 10 + 48);
+				CLCD_vSendData(Time_Minute % 10 + 48);
 				CLCD_vSendString(" : ");
-				CLCD_vSendData(Second/10 + 48);
-				CLCD_vSendData(Second%10 + 48);
+				CLCD_vSendData(Time_Second / 10 + 48);
+				CLCD_vSendData(Time_Second % 10 + 48);
 
 				if (READ_BIT(PORTA_REG, DIO_PIN3) == 1)
 				{
@@ -523,29 +538,28 @@ void Set_Time()
 			}
 			else
 			{
-
 			}
-		}while (day_time == NOTPRESSED || (day_time != '1' && day_time != '2'));
+		} while (Time_DayFlag == NOTPRESSED || (Time_DayFlag != '1' && Time_DayFlag != '2'));
 
-		//if day time is AM
-		if (day_time == '1')
+		// if day time is AM
+		if (Time_DayFlag == '1')
 		{
 			SET_BIT(PORTA_REG, DIO_PIN3);
 		}
-		//if day time is PM
-		else if (day_time == '2')
+		// if day time is PM
+		else if (Time_DayFlag == '2')
 		{
 			CLR_BIT(PORTA_REG, DIO_PIN3);
 		}
 		else
 		{
-
 		}
 	}
 	else
 	{
 
 	}
+	//to make sure that the user enter correct our or not to Re enter Clock again
 	CLCD_vClearScreen();
 	CLCD_vSendString("Set Time ?");
 	CLCD_vSetPosition(2, 1);
@@ -556,9 +570,9 @@ void Set_Time()
 	CLCD_vSendString("Time Again");
 	do
 	{
-		press = KPD_u8GetPressed();
-
-		if ( press != NOTPRESSED && (press != '1' && press != '2'))
+		KPD_Press = KPD_u8GetPressed();
+		//when input invalid val
+		if (KPD_Press != NOTPRESSED && (KPD_Press != '1' && KPD_Press != '2'))
 		{
 			CLCD_vClearScreen();
 			CLCD_vSendString("Wrong Choise");
@@ -572,14 +586,15 @@ void Set_Time()
 			CLCD_vSetPosition(4, 1);
 			CLCD_vSendString("Time Again");
 		}
-	}while(press != '1' && press != '2');
+	} while (KPD_Press != '1' && KPD_Press != '2');
 
-	if(press == '1')
+	//when enter correct clock
+	if (KPD_Press == '1')
 	{
 		CLCD_vSendCommand(CLCD_DISPLAYON_CURSOROFF);
 		CLCD_vClearScreen();
 		CLCD_vSendString("1 - set time");
-		CLCD_vSetPosition(2,1);
+		CLCD_vSetPosition(2, 1);
 		CLCD_vSendString("2 - select mode");
 		CLCD_vSetPosition(3, 1);
 		CLCD_vSendString("3 - Set Alarm");
@@ -588,7 +603,8 @@ void Set_Time()
 		CLCD_vSetPosition(4, 15);
 		CLCD_vSendString("X:EXIT");
 	}
-	else if (press == '2')
+	//when enter incorrect clock
+	else if (KPD_Press == '2')
 	{
 		Set_Time();
 	}
@@ -597,6 +613,7 @@ void Set_Time()
 //======================================================================================================================================//
 
 // Function to select time mode (12-hour or 24-hour)
+//it is created for Every possible scenario
 void Select_Mode()
 {
 
@@ -604,62 +621,59 @@ void Select_Mode()
 	CLCD_vSendString("1 - 12-hour time");
 	CLCD_vSetPosition(2, 1);
 	CLCD_vSendString("2 - 24-hour time");
-
+	//Get input from user
 	do
 	{
-
-		mode = KPD_u8GetPressed();
-		if (mode == '1')
+		Time_Mode = KPD_u8GetPressed();
+		//if Select 12 hour mode
+		if (Time_Mode == Time_Mode12Hours)
 		{
-			if (Mode_Flag == 0)
+			if (Time_ModeFlag == 0)
 			{
-				if (Hour > 12 )
+				if (Time_Hour > 12)
 				{
-					Hour -= 12;
+					Time_Hour -= 12;
 				}
-				else if (Hour == 0)
+				else if (Time_Hour)
 				{
-					Hour += 12;
+					Time_Hour += 12;
 				}
 				else
 				{
-
 				}
-				Mode_Flag = 1;
+				Time_ModeFlag = 1;
 			}
 			else
 			{
-
 			}
 		}
-		else if (mode == '2')
+		//if Select 24 hour mode
+		else if (Time_Mode == Time_Mode24Hours)
 		{
-			if (Mode_Flag == 1)
+			if (Time_ModeFlag == 1)
 			{
-				if (Hour == 12 && READ_BIT(PORTA_REG, DIO_PIN3) == 1)
+				if (Time_Hour == 12 && READ_BIT(PORTA_REG, DIO_PIN3) == 1)
 				{
-					Hour = 0;
+					Time_Hour = 0;
 				}
-				else if(Hour == 12 && READ_BIT(PORTA_REG, DIO_PIN3 == 0))
+				else if (Time_Hour == 12 && READ_BIT(PORTA_REG, DIO_PIN3 == 0))
 				{
-
 				}
 				else if (READ_BIT(PORTA_REG, DIO_PIN3) == 0)
 				{
-					Hour += 12;
+					Time_Hour += 12;
 				}
 				else
 				{
-
 				}
-				Mode_Flag = 0;
+				Time_ModeFlag = 0;
 			}
 			else
 			{
-
 			}
 		}
-		else if (mode != NOTPRESSED && (mode != '1' && mode != '2'))
+		//when inter invalid choose
+		else if (Time_Mode != NOTPRESSED && (Time_Mode != '1' && Time_Mode != '2'))
 		{
 			CLCD_vClearScreen();
 			CLCD_vSendString("Wrong choise");
@@ -670,12 +684,12 @@ void Select_Mode()
 			CLCD_vSendString("2 - 24-hour time");
 		}
 
-	}while (mode == NOTPRESSED || (mode != '1' && mode != '2'));
+	} while (Time_Mode == NOTPRESSED || (Time_Mode != '1' && Time_Mode != '2'));
 
-	CLCD_vClearScreen();
+	//when choose any of them
 	CLCD_vClearScreen();
 	CLCD_vSendString("1 - set time");
-	CLCD_vSetPosition(2,1);
+	CLCD_vSetPosition(2, 1);
 	CLCD_vSendString("2 - select mode");
 	CLCD_vSetPosition(3, 1);
 	CLCD_vSendString("3 - Set Alarm");
@@ -687,6 +701,7 @@ void Select_Mode()
 
 //======================================================================================================================================//
 
+/* Fuction To set the time when Alarm is Ringing */
 void Set_Alarm()
 {
 	CLCD_vClearScreen();
@@ -696,10 +711,11 @@ void Set_Alarm()
 	CLCD_vSetPosition(3, 1);
 	CLCD_vSendString("2 - Disable");
 
+	/* Get pressed to choose if Alarm Statsu IS Enable or Disaple */
 	do
 	{
-		press = KPD_u8GetPressed();
-		if (press != NOTPRESSED &&press != '1' && press != '2')
+		KPD_Press = KPD_u8GetPressed();
+		if (KPD_Press != NOTPRESSED && KPD_Press != '1' && KPD_Press != '2')
 		{
 			CLCD_vClearScreen();
 			CLCD_vSendString("Wrong Choise");
@@ -711,37 +727,45 @@ void Set_Alarm()
 			CLCD_vSetPosition(3, 1);
 			CLCD_vSendString("2 - Disable");
 		}
-	}while(press == NOTPRESSED || (press != '1' && press != '2'));
-	/* Check if chosen alarm is enable or disaple */
+	} while (KPD_Press == NOTPRESSED || (KPD_Press != '1' && KPD_Press != '2'));
+
+	/*___________________________________________________________________________________________________________________*/
+
+	/* Check if chosen Alarm Status is Enable or Disaple */
 	/* if user choose alarm is enable */
-	if (press == '1')
+	if (KPD_Press == '1')
 	{
-		switch(Alarm_Mode)
+		/* Check if Alarm was Enaple or Disaple */
+		switch (Alarm_Status)
 		{
+		//if Alarm was Disaple display Alarm is 12 : 00
 		case Alarm_DIS:
 			CLCD_vClearScreen();
 			CLCD_vSendString("Set Aalrm :");
 			CLCD_vSetPosition(2, 6);
 			CLCD_vSendString("12 : 00");
-			if (mode == mode_12Hours)
+			//if Time_Mode is 12 Hours Mode display AM or PM
+			if (Time_Mode == Time_Mode12Hours)
 			{
 				CLCD_vSetPosition(2, 14);
 				CLCD_vSendString("AM");
 			}
 			break;
-		case Alarm_EN :
+			//If Alarm was Enaple display Last Alarm
+		case Alarm_EN:
 			CLCD_vClearScreen();
 			CLCD_vSendString("Set Aalrm :");
 			CLCD_vSetPosition(2, 6);
-			CLCD_vSendData((Hours_Alarm / 10 ) + 48);
-			CLCD_vSendData((Hours_Alarm % 10 ) + 48);
+			CLCD_vSendData((Alarm_Hour / 10) + 48);
+			CLCD_vSendData((Alarm_Hour % 10) + 48);
 			CLCD_vSendString(" : ");
-			CLCD_vSendData((Minutes_Alarm / 10 ) + 48);
-			CLCD_vSendData((Minutes_Alarm % 10 ) + 48);
+			CLCD_vSendData((Alarm_Minutes / 10) + 48);
+			CLCD_vSendData((Alarm_Minutes % 10) + 48);
 
-			if (mode == mode_12Hours)
+			//if Time_Mode is 12 Hours Mode display AM or PM
+			if (Time_Mode == Time_Mode12Hours)
 			{
-				switch(Alarm_Flag)
+				switch (Alarm_DayTime)
 				{
 				case 1:
 					CLCD_vSendString(" AM");
@@ -751,65 +775,67 @@ void Set_Alarm()
 					break;
 				}
 			}
-
 		}
+
+		/*___________________________________________________________________________________________________________________*/
 
 		CLCD_vSetPosition(2, 6);
 
 		CLCD_vSendCommand(CLCD_DISPLAYON_CURSORON);
 
-		/* Set Hour Alarm */
+		/*___________________________________________________________________________________________________________________*/
+
+		/* Set Alarm_Hour */
 		do
 		{
-			press = KPD_u8GetPressed();
-		}while (press == NOTPRESSED);
+			KPD_Press = KPD_u8GetPressed();
+		} while (KPD_Press == NOTPRESSED);
 
-		CLCD_vSendData(press);
+		CLCD_vSendData(KPD_Press);
 
-		Hours_Alarm = (press - 48) * 10;
+		Alarm_Hour = (KPD_Press - 48) * 10;
 		do
 		{
-			press = KPD_u8GetPressed();
-		}while(press == NOTPRESSED);
+			KPD_Press = KPD_u8GetPressed();
+		} while (KPD_Press == NOTPRESSED);
 
-		CLCD_vSendData(press);
-		Hours_Alarm += (press - 48);
+		CLCD_vSendData(KPD_Press);
+		Alarm_Hour += (KPD_Press - 48);
 
-		//Check if it valid or not
-		switch(mode)
+		/* Check if it valid or not */
+		switch (Time_Mode)
 		{
-		case mode_12Hours:
-			if (Hours_Alarm > 12 && Hours_Alarm < 24 )
+		// Check if it valid or not In case it is in 12 hour mode
+		case Time_Mode12Hours:
+			if (Alarm_Hour > 12 && Alarm_Hour < 24)
 			{
-				Hours_Alarm -= 12;
+				Alarm_Hour -= 12;
 				CLCD_vSetPosition(2, 6);
-				CLCD_vSendData((Hours_Alarm / 10) + 48);
-				CLCD_vSendData((Hours_Alarm % 10) + 48);
+				CLCD_vSendData((Alarm_Hour / 10) + 48);
+				CLCD_vSendData((Alarm_Hour % 10) + 48);
 			}
-			else if (Hours_Alarm > 23)
+			else if (Alarm_Hour > 23)
 			{
-				Hours_Alarm = 12;
+				Alarm_Hour = 12;
 				CLCD_vSetPosition(2, 6);
-				CLCD_vSendData((Hours_Alarm / 10) + 48);
-				CLCD_vSendData((Hours_Alarm % 10) + 48);
+				CLCD_vSendData((Alarm_Hour / 10) + 48);
+				CLCD_vSendData((Alarm_Hour % 10) + 48);
 			}
 			else
 			{
-
 			}
 			break;
-
-		case mode_24Hours:
-			if (Hours_Alarm > 23)
+			// Check if it valid or not In case it is in 24 hour mode
+		case Time_Mode24Hours:
+			if (Alarm_Hour > 23)
 			{
-				Hours_Alarm = 12;
+				Alarm_Hour = 12;
 				CLCD_vSetPosition(2, 6);
-				CLCD_vSendData((Hours_Alarm / 10) + 48);
-				CLCD_vSendData((Hours_Alarm % 10) + 48);
+				CLCD_vSendData((Alarm_Hour / 10) + 48);
+				CLCD_vSendData((Alarm_Hour % 10) + 48);
 			}
 			else
 			{
-
 			}
 			break;
 
@@ -817,40 +843,49 @@ void Set_Alarm()
 			break;
 		}
 
+		/*___________________________________________________________________________________________________________________*/
+
 		CLCD_vSetPosition(2, 11);
-		/* Set Minute Alarm */
+
+		/* Set Alarm Minutes */
 		do
 		{
-			press = KPD_u8GetPressed();
-		}while (press == NOTPRESSED);
+			KPD_Press = KPD_u8GetPressed();
+		} while (KPD_Press == NOTPRESSED);
 
-		CLCD_vSendData(press);
+		CLCD_vSendData(KPD_Press);
 
-		Minutes_Alarm = (press - 48) * 10;
+		Alarm_Minutes = (KPD_Press - 48) * 10;
 		do
 		{
-			press = KPD_u8GetPressed();
-		}while(press == NOTPRESSED);
+			KPD_Press = KPD_u8GetPressed();
+		} while (KPD_Press == NOTPRESSED);
 
-		CLCD_vSendData(press);
-		Minutes_Alarm += (press - 48);
+		CLCD_vSendData(KPD_Press);
+		Alarm_Minutes += (KPD_Press - 48);
 
-		if (Minutes_Alarm > 59)
+		//Check if it valid or not
+		if (Alarm_Minutes > 59)
 		{
-			Minutes_Alarm = 0;
+			Alarm_Minutes = 0;
 			CLCD_vSetPosition(2, 11);
-			CLCD_vSendData((Minutes_Alarm / 10) + 48);
-			CLCD_vSendData((Minutes_Alarm % 10) + 48);
+			CLCD_vSendData((Alarm_Minutes / 10) + 48);
+			CLCD_vSendData((Alarm_Minutes % 10) + 48);
 		}
 
-		if (mode == mode_12Hours)
+		/*___________________________________________________________________________________________________________________*/
+
+		/* Check time mode to display AM / PM or not and Choose the time mode */
+		//if time mode is 12 hours disply AM or PM and choose between them
+		if (Time_Mode == Time_Mode12Hours)
 		{
 			CLCD_vSetPosition(3, 1);
 			CLCD_vSendString("1 : AM    2 : PM");
 			do
 			{
-				Alarm_Flag = KPD_u8GetPressed();
-				if (Alarm_Flag != NOTPRESSED && (Alarm_Flag != '1' && Alarm_Flag != '2'))
+				Alarm_DayTime = KPD_u8GetPressed();
+				//when choose invalid input
+				if (Alarm_DayTime != NOTPRESSED && (Alarm_DayTime != '1' && Alarm_DayTime != '2'))
 				{
 					CLCD_vClearScreen();
 					CLCD_vSendString("Wrong Choise");
@@ -858,12 +893,12 @@ void Set_Alarm()
 					CLCD_vClearScreen();
 					CLCD_vSendString("Set Aalrm :");
 					CLCD_vSetPosition(2, 6);
-					CLCD_vSendData((Hours_Alarm / 10 ) + 48);
-					CLCD_vSendData((Hours_Alarm % 10 ) + 48);
+					CLCD_vSendData((Alarm_Hour / 10) + 48);
+					CLCD_vSendData((Alarm_Hour % 10) + 48);
 					CLCD_vSendString(" : ");
-					CLCD_vSendData((Minutes_Alarm / 10 ) + 48);
-					CLCD_vSendData((Minutes_Alarm % 10 ) + 48);
-					switch(Alarm_Flag)
+					CLCD_vSendData((Alarm_Minutes / 10) + 48);
+					CLCD_vSendData((Alarm_Minutes % 10) + 48);
+					switch (Alarm_DayTime)
 					{
 					case 1:
 						CLCD_vSendString(" AM");
@@ -875,30 +910,38 @@ void Set_Alarm()
 					CLCD_vSetPosition(3, 1);
 					CLCD_vSendString("1 : AM    2 : PM");
 				}
-			}while (Alarm_Flag != '1' && Alarm_Flag != '2');
+			} while (Alarm_DayTime != '1' && Alarm_DayTime != '2');
 
-			if (Alarm_Flag == '1')
+			/*___________________________________________________________________________________________________________________*/
+
+			//Set invaliv val to compre with READ AM or PM Led
+			if (Alarm_DayTime == '1')
 			{
-				Alarm_Flag = 1;
+				Alarm_DayTime = 1; //AM
 			}
-			else if (Alarm_Flag == '2')
+			else if (Alarm_DayTime == '2')
 			{
-				Alarm_Flag = 0;
+				Alarm_DayTime = 0; //PM
 			}
 			else
 			{
 
 			}
+
+			/*___________________________________________________________________________________________________________________*/
+
 		}
-		else if (mode == mode_24Hours)
+		//if time mode is 24 hours don't disply AM or PM
+		//and set it depend on hour is AM or PM
+		else if (Time_Mode == Time_Mode24Hours)
 		{
-			if (Hours_Alarm >= 12)
+			if (Alarm_Hour >= 12)
 			{
-				Alarm_Flag = 0;
+				Alarm_DayTime = 0;
 			}
-			else if (Hours_Alarm >= 0)
+			else if (Alarm_Hour >= 0)
 			{
-				Alarm_Flag = 1;
+				Alarm_DayTime = 1;
 			}
 			else
 			{
@@ -909,55 +952,134 @@ void Set_Alarm()
 		{
 
 		}
-		/* Make Alarm Status : Alarm Enable  */
-		Alarm_Mode = Alarm_EN ;
-		//=====================================
+
+		/*___________________________________________________________________________________________________________________*/
+
+		/* Make Alarm Status : Alarm Enable */
+		Alarm_Status = Alarm_EN;
+
+		/*___________________________________________________________________________________________________________________*/
 	}
 	/* if user choose alarm is disaple */
-	else if (press == '2')
+	else if (KPD_Press == '2')
 	{
-		/* Make Alarm Status : Alarm Disaple  */
-		Hours_Alarm = NOTPRESSED;
-		Alarm_Mode = Alarm_DIS;
-		//=====================================
+		/* Make Alarm Status : Alarm Disaple */
+		Alarm_Hour = NOTPRESSED;
+		Alarm_Status = Alarm_DIS;
+
+		/*___________________________________________________________________________________________________________________*/
 	}
 	else
 	{
 
 	}
 
-	_delay_ms(200);
-	CLCD_vSendCommand(CLCD_DISPLAYON_CURSOROFF);
-	CLCD_vClearScreen();
-	CLCD_vSendString("1 - set time");
-	CLCD_vSetPosition(2,1);
-	CLCD_vSendString("2 - select mode");
-	CLCD_vSetPosition(3, 1);
-	CLCD_vSendString("3 - Set Alarm");
-	CLCD_vSetPosition(4, 1);
-	CLCD_vSendString("4 - Weather");
-	CLCD_vSetPosition(4, 15);
-	CLCD_vSendString("X:EXIT");
+	/*___________________________________________________________________________________________________________________*/
+
+	/* Check Alarm is correct or not */
+	// when it not correct you can ReEnter it by choose Cancel but this option is valid when alarm is enable
+	if (Alarm_Status == Alarm_EN)
+	{
+		CLCD_vClearScreen();
+		CLCD_vSendString("Set Alarm ?");
+		CLCD_vSetPosition(2, 1);
+		CLCD_vSendString("1 : OK    2 : Cancel");
+		CLCD_vSetPosition(3, 1);
+		CLCD_vSendString("Cancel to Set");
+		CLCD_vSetPosition(4, 1);
+		CLCD_vSendString("Alarm Again");
+		do
+		{
+			KPD_Press = KPD_u8GetPressed();
+			//when choose invalid input
+			if (KPD_Press != NOTPRESSED && (KPD_Press != '1' && KPD_Press != '2'))
+			{
+				CLCD_vClearScreen();
+				CLCD_vSendString("Wrong Choise");
+				_delay_ms(500);
+				CLCD_vClearScreen();
+				CLCD_vSendString("Set Alarm ?");
+				CLCD_vSetPosition(2, 1);
+				CLCD_vSendString("1 : OK    2 : Cancel");
+				CLCD_vSetPosition(3, 1);
+				CLCD_vSendString("Cancel to Set");
+				CLCD_vSetPosition(4, 1);
+				CLCD_vSendString("Alarm Again");
+			}
+		}while (KPD_Press != '1' && KPD_Press != '2');
+
+		/*___________________________________________________________________________________________________________________*/
+
+		//When Alarm is Correct
+		if (KPD_Press == '1')
+		{
+			CLCD_vSendCommand(CLCD_DISPLAYON_CURSOROFF);
+			CLCD_vClearScreen();
+			CLCD_vSendString("1 - set time");
+			CLCD_vSetPosition(2, 1);
+			CLCD_vSendString("2 - select mode");
+			CLCD_vSetPosition(3, 1);
+			CLCD_vSendString("3 - Set Alarm");
+			CLCD_vSetPosition(4, 1);
+			CLCD_vSendString("4 - Weather");
+			CLCD_vSetPosition(4, 15);
+			CLCD_vSendString("X:EXIT");
+		}
+		//When Alarm is not Correct
+		else if (KPD_Press == '2')
+		{
+			Set_Alarm();
+		}
+		else
+		{
+
+		}
+		/*___________________________________________________________________________________________________________________*/
+	}
+	//When Alarm is disaple you don't need to make sure the alarm set correct or not
+	else if (Alarm_Status == Alarm_DIS)
+	{
+		CLCD_vSendCommand(CLCD_DISPLAYON_CURSOROFF);
+		CLCD_vClearScreen();
+		CLCD_vSendString("1 - set time");
+		CLCD_vSetPosition(2, 1);
+		CLCD_vSendString("2 - select mode");
+		CLCD_vSetPosition(3, 1);
+		CLCD_vSendString("3 - Set Alarm");
+		CLCD_vSetPosition(4, 1);
+		CLCD_vSendString("4 - Weather");
+		CLCD_vSetPosition(4, 15);
+		CLCD_vSendString("X:EXIT");
+	}
+	else
+	{
+
+	}
+	/*___________________________________________________________________________________________________________________*/
 }
 
 //======================================================================================================================================//
 
+/* Function To get Temp from LM35 Sensor and display it On CLCD */
 void Get_Temp()
 {
-	volatile u8  TEMP_val;
-	volatile u16 TEMP_volt ;
+	volatile u8 LM35_Temp;
+	volatile u16 LM35_Volt;
 	CLCD_vClearScreen();
 	CLCD_vSendString("Press any key");
 	CLCD_vSetPosition(2, 1);
 	CLCD_vSendString("To Exit");
+	CLCD_vSetPosition(4, 10);
+	CLCD_vSendString("TEMP : ");
 	while (1)
 	{
-		press = KPD_u8GetPressed();
-		if (press != NOTPRESSED)
+		//If Any key pressed will exit from Get_Temp Fuction
+		KPD_Press = KPD_u8GetPressed();
+		if (KPD_Press != NOTPRESSED)
 		{
 			CLCD_vClearScreen();
 			CLCD_vSendString("1 - set time");
-			CLCD_vSetPosition(2,1);
+			CLCD_vSetPosition(2, 1);
 			CLCD_vSendString("2 - select mode");
 			CLCD_vSetPosition(3, 1);
 			CLCD_vSendString("3 - Set Alarm");
@@ -967,117 +1089,160 @@ void Get_Temp()
 			CLCD_vSendString("X:EXIT");
 			break;
 		}
-		LM35_u8GetAnalogSignal(&LM350, &TEMP_volt);
-		CLCD_vSetPosition(4, 10);
-		CLCD_vSendString("TEMP : ");
-		if(TEMP_volt >= 1000)
+
+		/*___________________________________________________________________________________________________________________*/
+
+		//Get value of Temp Meter
+		LM35_u8GetAnalogSignal(&LM350, &LM35_Volt);
+
+		/* Check LM35_Volt */
+		/* if it more than 1000 that mean LM35_Temp is positive */
+		if (LM35_Volt >= 1000)
 		{
-			TEMP_val = (TEMP_volt - 1000) / 10;
-			if (TEMP_val < 10)
+			LM35_Temp = (LM35_Volt - 1000) / 10;
+			//Display Temp on LCD when it positive
+			if (LM35_Temp < 10)
 			{
 				CLCD_vSetPosition(4, 16);
-				CLCD_vSendData(TEMP_val + 48);
+				CLCD_vSendData(LM35_Temp + 48);
 				CLCD_vSendData(0xDF);
 				CLCD_vSendData('C');
 				CLCD_vSendData(' ');
 			}
-			else if (TEMP_val < 100)
+			else if (LM35_Temp < 100)
 			{
 				CLCD_vSetPosition(4, 16);
-				CLCD_vSendData((TEMP_val /10) + 48);
-				CLCD_vSendData((TEMP_val % 10) + 48);
+				CLCD_vSendData((LM35_Temp / 10) + 48);
+				CLCD_vSendData((LM35_Temp % 10) + 48);
 				CLCD_vSendData(0xDF);
 				CLCD_vSendData('C');
 			}
-			else if (TEMP_val < 1000)
+			else if (LM35_Temp < 1000)
 			{
 				CLCD_vSetPosition(4, 16);
-				CLCD_vSendData((TEMP_val / 100) + 48);
-				CLCD_vSendData(((TEMP_val / 10) % 10) + 48);
-				CLCD_vSendData((TEMP_val % 10) + 48);
+				CLCD_vSendData((LM35_Temp / 100) + 48);
+				CLCD_vSendData(((LM35_Temp / 10) % 10) + 48);
+				CLCD_vSendData((LM35_Temp % 10) + 48);
 				CLCD_vSendData(0xDF);
 				CLCD_vSendData('C');
+			}
+			else
+			{
+
 			}
 		}
+
+		/*___________________________________________________________________________________________________________________*/
+
+		/* if it less than 1000 that mean LM35_Temp is negative */
 		else
 		{
-			TEMP_val = (1000 - TEMP_volt ) / 10;
-			if (TEMP_val < 10)
+			LM35_Temp = (1000 - LM35_Volt) / 10;
+			//Display Temp on LCD when it negative
+			if (LM35_Temp < 10)
 			{
 				CLCD_vSetPosition(4, 16);
 				CLCD_vSendData('-');
-				CLCD_vSendData(TEMP_val + 48);
+				CLCD_vSendData(LM35_Temp + 48);
 				CLCD_vSendData(0xDF);
 				CLCD_vSendData('C');
 				CLCD_vSendData(' ');
 			}
-			else if (TEMP_val < 100)
+			else if (LM35_Temp < 100)
 			{
 				CLCD_vSetPosition(4, 16);
 				CLCD_vSendData('-');
-				CLCD_vSendData((TEMP_val/10) + 48);
-				CLCD_vSendData((TEMP_val % 10) + 48);
+				CLCD_vSendData((LM35_Temp / 10) + 48);
+				CLCD_vSendData((LM35_Temp % 10) + 48);
 				CLCD_vSendData(0xDF);
 				CLCD_vSendData('C');
 			}
+			else
+			{
+
+			}
 		}
+
+		/*___________________________________________________________________________________________________________________*/
+
 	}
 }
 
 //======================================================================================================================================//
 
-/* ISR for timer OverFlow */
+/* ISR for timer OverFlow
+ * each every second Time_Second++
+ * check Time_Minute and Time_Hour and Time_Mode
+ * ISR will execute with out affects on the code
+ */
 void ISR_TIMER2_OVF_MODE()
 {
+	/* it's pluse to make sure that ISR will execute each Second */
 	DIO_enumTogglePinVal(DIO_PORTA, DIO_PIN2);
-	Second++;
 
-	if (Second == 60)
+	/*___________________________________________________________________________________________________________________*/
+
+	Time_Second++;
+
+	if (Time_Second == 60)
 	{
-		Second = 0;
-		Minute++;
+		Time_Second = 0;
+		Time_Minute++;
 	}
-	if (Minute == 60)
+	if (Time_Minute == 60)
 	{
-		Minute=0;
-		Hour++;
+		Time_Minute = 0;
+		Time_Hour++;
 	}
-	if (mode == '1')
+
+	/*___________________________________________________________________________________________________________________*/
+
+	/* Check Time condition */
+	if (Time_Mode == Time_Mode12Hours)
 	{
-		if (Hour== 13)
+		if (Time_Hour == 13)
 		{
-			Hour= 1;
+			Time_Hour = 1;
 		}
-		if (Hour == 12 && Minute == 0 && Second == 0 )
+		if (Time_Hour == 12 && Time_Minute == 0 && Time_Second == 0)
 		{
-			TOG_BIT(PORTA_REG, DIO_PIN3);
+			TOG_BIT(PORTA_REG, DIO_PIN3);   //Toggle LED that displays AM or PM
 		}
 	}
-	if (mode == '2')
+
+	else if (Time_Mode == Time_Mode24Hours)
 	{
-		if (Hour == 24)
+		if (Time_Hour == 24)
 		{
-			Hour = 0;
+			Time_Hour = 0;
 		}
 		else
 		{
 
 		}
-		if (Hour < 12)
+		if (Time_Hour < 12)
 		{
-			SET_BIT(PORTA_REG, DIO_PIN3);
+			SET_BIT(PORTA_REG, DIO_PIN3);   //Turn ON Led To Display AM
 		}
-		else if (Hour == 12 && Minute == 0 && Second == 0)
+		else if (Time_Hour == 12 && Time_Minute == 0 && Time_Second == 0)
 		{
-			CLR_BIT(PORTA_REG, DIO_PIN3);
+			CLR_BIT(PORTA_REG, DIO_PIN3);   //Turn OFF Led To Display PM
 		}
-		else if (Hour > 12)
+		else if (Time_Hour > 12)
 		{
-			CLR_BIT(PORTA_REG, DIO_PIN3);
+			CLR_BIT(PORTA_REG, DIO_PIN3);   //Turn OFF Led To Display PM
 		}
 		else
 		{
 
 		}
 	}
+
+	else
+	{
+
+	}
+
+	/*___________________________________________________________________________________________________________________*/
+
 }
