@@ -634,6 +634,10 @@ void Select_Mode()
 				{
 					Time_Hour -= 12;
 				}
+				else if (Time_Hour == 0 && READ_BIT(PORTA_REG,DIO_PIN3) == 1)
+				{
+					Time_Hour = 12;
+				}
 				else if (Time_Hour)
 				{
 					Time_Hour += 12;
