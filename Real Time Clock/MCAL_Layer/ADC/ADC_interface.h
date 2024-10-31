@@ -10,8 +10,6 @@
 #ifndef ADC_interface_H_
 #define ADC_interface_H_
 
-#include "../../APP_Layer/STD_TYPES.h"
-
 #define ADC_EN                         1
 #define ADC_DIS                        0
 

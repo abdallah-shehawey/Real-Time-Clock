@@ -6,8 +6,6 @@
  *  SWC    : LM35
  *
  */
-#include "../../APP_Layer/STD_TYPES.h"
-
 #ifndef LM35_INTERFACE_H_
 #define LM35_INTERFACE_H_
 
