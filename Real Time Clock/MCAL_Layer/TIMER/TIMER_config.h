@@ -22,7 +22,7 @@
 	 * 3. TIMER_CTC_MODE
 	 * 4. TIMER_FAST_PWM_MODE
 	 */
-#define TIMER0_WAVEFORM_GENERATION_MODE TIMER_NORMAL_MODE
+#define TIMER0_WAVEFORM_GENERATION_MODE TIMER_FAST_PWM_MODE
 
 /*Set the Required Prescaler
  * Choose between
@@ -35,7 +35,7 @@
  * - TIMER_T0_EXTERNAL_CLOCK_SOURCE_FALLING
  * - TIMER_T0_EXTERNAL_CLOCK_SOURCE_RISING
  */
-#define TIMER0_PRESCALER TIMER_DIVISION_FACTOR_8
+#define TIMER0_PRESCALER TIMER_NO_CLOCK_SOURCE
 
 #if TIMER0_WAVEFORM_GENERATION_MODE == TIMER_NORMAL_MODE
 
@@ -144,7 +144,7 @@
 	#define TIMER1_PRELOAD_VAL					0
 
 	/*Set CTCA Value*/
-	#define TIMER1_CTCA_VAL						500
+	#define TIMER1_CTCA_VAL						0
 
 	/*Set CTCB Value*/
 	#define TIMER1_CTCB_VAL						0
@@ -187,35 +187,35 @@
 	 * 1. FALLING_EDGE
 	 * 2. RISING_EDGE
 	 */
-	#define TIMER1_ICR_EDGE				RISING_EDGE
+	#define TIMER1_ICR_EDGE				          RISING_EDGE
 
 	/*Set Timer1 Overflow Interrupt
 	 * Choose between
 	 * 1. DISABLE
 	 * 2. ENABLE
 	 */
-	#define TIMER1_OVERFLOW_INTERRUPT			DISABLE
+	#define TIMER1_OVERFLOW_INTERRUPT			  DISABLE
 
 	/*Set Timer1 CTCB Interrupt
 	 * Choose between
 	 * 1. DISABLE
 	 * 2. ENABLE
 	 */
-	#define TIMER1_CTCB_INTERRUPT			DISABLE
+	#define TIMER1_CTCB_INTERRUPT			       DISABLE
 
 	/*Set Timer1 CTCA Interrupt
 	 * Choose between
 	 * 1. DISABLE
 	 * 2. ENABLE
 	 */
-	#define TIMER1_CTCA_INTERRUPT			DISABLE
+	#define TIMER1_CTCA_INTERRUPT		        	DISABLE
 
 	/*Set Timer1 Input Capture Interrupt
 	 * Choose between
 	 * 1. DISABLE
 	 * 2. ENABLE
 	 */
-	#define TIMER1_ICR_INTERRUPT			DISABLE
+	#define TIMER1_ICR_INTERRUPT		        	DISABLE
 
 /***********************************************************************************************/
 /***********************************************************************************************/
@@ -242,16 +242,16 @@
 
 	/*Set the Required Prescaler
 	 * Choose between
-	 * - TIMER_NO_CLOCK_SOURCE
-	 * - TIMER_NO_PRESCALER_FACTOR
-	 * - TIMER_DIVISION_FACTOR_8
-	 * - TIMER_DIVISION_FACTOR_64
-	 * - TIMER_DIVISION_FACTOR_256
-	 * - TIMER_DIVISION_FACTOR_1024
-	 * - TIMER_T0_EXTERNAL_CLOCK_SOURCE_FALLING
-	 * - TIMER_T0_EXTERNAL_CLOCK_SOURCE_RISING
+	 * - TIMER2_NO_CLOCK_SOURCE
+	 * - TIMER2_NO_PRESCALER_FACTOR
+	 * - TIMER2_DIVISION_FACTOR_8
+	 * - TIMER2_DIVISION_FACTOR_32
+	 * - TIMER2_DIVISION_FACTOR_64
+	 * - TIMER2_DIVISION_FACTOR_128
+	 * - TIMER2_DIVISION_FACTOR_256
+	 * - TIMER2_DIVISION_FACTOR_1024
 	 */
-	#define TIMER2_PRESCALER		TIMER_DIVISION_FACTOR_128
+	#define TIMER2_PRESCALER		TIMER2_DIVISION_FACTOR_128
 
 	#if TIMER2_WAVEFORM_GENERATION_MODE == TIMER_NORMAL_MODE
 
@@ -322,12 +322,12 @@
 	/* WDT Prescaler select */
 	/*
 		$ Options :-
-		1- WDT_PS_16_3_MS	   ( for 16.3 ms )
-		2- WDT_PS_32_5_MS	   ( for 32.5 ms )
+		1- WDT_PS_16_3_MS	     ( for 16.3 ms )
+		2- WDT_PS_32_5_MS	     ( for 32.5 ms )
 		3- WDT_PS_65_MS	       ( for 65   ms )
-		4- WDT_PS_0_13_S	   ( for 0.13  s )
-		5- WDT_PS_0_26_S	   ( for 0.26  s )
-		6- WDT_PS_0_52_S	   ( for 0.52  s )
+		4- WDT_PS_0_13_S	     ( for 0.13  s )
+		5- WDT_PS_0_26_S	     ( for 0.26  s )
+		6- WDT_PS_0_52_S	     ( for 0.52  s )
 		7- WDT_PS_1_0_S	       ( for 1.0   s )
 		8- WDT_PS_2_1_S	       ( for 2.1   s )
 

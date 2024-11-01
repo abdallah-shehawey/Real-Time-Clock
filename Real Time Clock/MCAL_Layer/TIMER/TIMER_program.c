@@ -18,6 +18,8 @@
 /*Global Pointer to array of Function to Hold the Call Back Function Address for Timer*/
 static void (*TIMERS_pvCallBackFunc[8])(void) = {NULL} ;  /* we have 8 interrupt sources in timer  */
 
+
+/*******************************************************************************************************************/
 void TIMER0_vInit(void)
 {
 	/*Set Configurable Modes*/
@@ -567,9 +569,9 @@ void TIMER2_vInit(void)
 
 		#endif
 
-	/*Set the Required Prescaler*/
-	TCCR2 &= TIMER_PRESCALER_MASK ;
-	TCCR2 |= TIMER2_PRESCALER ;
+			/*Set the Required Prescaler*/
+		TCCR2 &= TIMER_PRESCALER_MASK ;
+		TCCR2 |= TIMER2_PRESCALER ;
 }
 
 /*******************************************************************************************************************/
@@ -635,7 +637,20 @@ void TIMER_vSetPWM(u16 Copy_u16CompareValue)
 {
 	OCR1A = Copy_u16CompareValue;
 }
-
+/*******************************************************************************************************************/
+void Timer2_vSetPrescaler(u8 Prescaler)
+{
+	/*Set the Required Prescaler*/
+	TCCR2 &= TIMER_PRESCALER_MASK ;
+	TCCR2 |= Prescaler ;
+}
+/*******************************************************************************************************************/
+void Timer0_vSetPrescaler(u8 Prescaler)
+{
+	/*Set the Required Prescaler*/
+	TCCR0 &= TIMER_PRESCALER_MASK ;
+	TCCR0 |= Prescaler ;
+}
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 /*
 	Hint : This func for initial state of trigger (prebuild)
@@ -770,6 +785,7 @@ void TIMER_vWDTDisable (void)
 	/* I don't care for any value in this Reg Cuz I want to Disable */
 	WDTCR = 0 ;
 }
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
