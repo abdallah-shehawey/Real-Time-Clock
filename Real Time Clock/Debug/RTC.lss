@@ -11345,7 +11345,7 @@ void SSD_vDisable(SSD_config Configuration)
     473c:	08 95       	ret
 
 0000473e <main>:
-void ISR_TIMER2_OVF_MODE(void);
+void ISR_TIMER2_OVF_MODE             (void);
 
 //======================================================================================================================================//
 
@@ -11364,87 +11364,87 @@ void main(void)
     4752:	de bf       	out	0x3e, r29	; 62
     4754:	0f be       	out	0x3f, r0	; 63
     4756:	cd bf       	out	0x3d, r28	; 61
-	/* Configure AM/PM indicator pin as output */
-	DIO_enumSetPinDir(DIO_PORTA, DIO_PIN3, DIO_PIN_OUTPUT);
+  /* Configure AM/PM indicator pin as output */
+  DIO_enumSetPinDir  (DIO_PORTA, DIO_PIN3, DIO_PIN_OUTPUT        );
     4758:	80 e0       	ldi	r24, 0x00	; 0
     475a:	63 e0       	ldi	r22, 0x03	; 3
     475c:	41 e0       	ldi	r20, 0x01	; 1
     475e:	0e 94 46 0d 	call	0x1a8c	; 0x1a8c <DIO_enumSetPinDir>
-	DIO_enumWritePinVal(DIO_PORTA, DIO_PIN3, DIO_HIGH);
+  DIO_enumWritePinVal(DIO_PORTA, DIO_PIN3, DIO_HIGH              );
     4762:	80 e0       	ldi	r24, 0x00	; 0
     4764:	63 e0       	ldi	r22, 0x03	; 3
     4766:	41 e0       	ldi	r20, 0x01	; 1
     4768:	0e 94 55 0e 	call	0x1caa	; 0x1caa <DIO_enumWritePinVal>
-	/* To sure that ISR execute each 1 sec */
-	DIO_enumSetPinDir(DIO_PORTA, DIO_PIN2, DIO_PIN_OUTPUT);
+  /* To sure that ISR execute each 1 sec */
+  DIO_enumSetPinDir  (DIO_PORTA, DIO_PIN2, DIO_PIN_OUTPUT        );
     476c:	80 e0       	ldi	r24, 0x00	; 0
     476e:	62 e0       	ldi	r22, 0x02	; 2
     4770:	41 e0       	ldi	r20, 0x01	; 1
     4772:	0e 94 46 0d 	call	0x1a8c	; 0x1a8c <DIO_enumSetPinDir>
 
-	// Set callback function for TIMER2 overflow interrup
-	TIMER_u8SetCallBack(ISR_TIMER2_OVF_MODE, TIMER2_OVF_VECTOR_ID);
+  // Set callback function for TIMER2 overflow interrup
+  TIMER_u8SetCallBack(ISR_TIMER2_OVF_MODE, TIMER2_OVF_VECTOR_ID);
     4776:	8a e1       	ldi	r24, 0x1A	; 26
     4778:	9c e3       	ldi	r25, 0x3C	; 60
     477a:	65 e0       	ldi	r22, 0x05	; 5
     477c:	0e 94 6d 0b 	call	0x16da	; 0x16da <TIMER_u8SetCallBack>
 
-	/* Initialize Keypad on PORTD */
-	KPD_vInit();
+  /* Initialize Keypad on PORTD */
+  KPD_vInit();
     4780:	0e 94 a9 19 	call	0x3352	; 0x3352 <KPD_vInit>
 
-	/* Initialize CLCD on High Nibble for PORTA */
-	CLCD_vInit();
+  /* Initialize CLCD on High Nibble for PORTA */
+  CLCD_vInit();
     4784:	0e 94 b2 1a 	call	0x3564	; 0x3564 <CLCD_vInit>
 
-	/* Enable Global Interrupts */
-	GIE_vEnable();
+  /* Enable Global Interrupts */
+  GIE_vEnable();
     4788:	0e 94 2a 0d 	call	0x1a54	; 0x1a54 <GIE_vEnable>
 
-	/* Initialize BUZ on PIN4 for PORTB */
-	BUZ_vInit(BUZ0);
+  /* Initialize BUZ on PIN4 for PORTB */
+  BUZ_vInit(BUZ0);
     478c:	60 91 77 03 	lds	r22, 0x0377
     4790:	70 91 78 03 	lds	r23, 0x0378
     4794:	80 91 79 03 	lds	r24, 0x0379
     4798:	0e 94 84 22 	call	0x4508	; 0x4508 <BUZ_vInit>
 
-	/* Initialize seven-segment displays */
-	SSD_vInitDataPort(seven_seg0);
+  /* Initialize seven-segment displays */
+  SSD_vInitDataPort(seven_seg0);
     479c:	40 91 56 03 	lds	r20, 0x0356
     47a0:	50 91 57 03 	lds	r21, 0x0357
     47a4:	60 91 58 03 	lds	r22, 0x0358
     47a8:	70 91 59 03 	lds	r23, 0x0359
     47ac:	80 91 5a 03 	lds	r24, 0x035A
     47b0:	0e 94 f1 22 	call	0x45e2	; 0x45e2 <SSD_vInitDataPort>
-	SSD_vInitDataPort(seven_seg1);
+  SSD_vInitDataPort(seven_seg1);
     47b4:	40 91 5b 03 	lds	r20, 0x035B
     47b8:	50 91 5c 03 	lds	r21, 0x035C
     47bc:	60 91 5d 03 	lds	r22, 0x035D
     47c0:	70 91 5e 03 	lds	r23, 0x035E
     47c4:	80 91 5f 03 	lds	r24, 0x035F
     47c8:	0e 94 f1 22 	call	0x45e2	; 0x45e2 <SSD_vInitDataPort>
-	SSD_vInitDataPort(seven_seg2);
+  SSD_vInitDataPort(seven_seg2);
     47cc:	40 91 60 03 	lds	r20, 0x0360
     47d0:	50 91 61 03 	lds	r21, 0x0361
     47d4:	60 91 62 03 	lds	r22, 0x0362
     47d8:	70 91 63 03 	lds	r23, 0x0363
     47dc:	80 91 64 03 	lds	r24, 0x0364
     47e0:	0e 94 f1 22 	call	0x45e2	; 0x45e2 <SSD_vInitDataPort>
-	SSD_vInitDataPort(seven_seg3);
+  SSD_vInitDataPort(seven_seg3);
     47e4:	40 91 65 03 	lds	r20, 0x0365
     47e8:	50 91 66 03 	lds	r21, 0x0366
     47ec:	60 91 67 03 	lds	r22, 0x0367
     47f0:	70 91 68 03 	lds	r23, 0x0368
     47f4:	80 91 69 03 	lds	r24, 0x0369
     47f8:	0e 94 f1 22 	call	0x45e2	; 0x45e2 <SSD_vInitDataPort>
-	SSD_vInitDataPort(seven_seg4);
+  SSD_vInitDataPort(seven_seg4);
     47fc:	40 91 6a 03 	lds	r20, 0x036A
     4800:	50 91 6b 03 	lds	r21, 0x036B
     4804:	60 91 6c 03 	lds	r22, 0x036C
     4808:	70 91 6d 03 	lds	r23, 0x036D
     480c:	80 91 6e 03 	lds	r24, 0x036E
     4810:	0e 94 f1 22 	call	0x45e2	; 0x45e2 <SSD_vInitDataPort>
-	SSD_vInitDataPort(seven_seg5);
+  SSD_vInitDataPort(seven_seg5);
     4814:	40 91 6f 03 	lds	r20, 0x036F
     4818:	50 91 70 03 	lds	r21, 0x0370
     481c:	60 91 71 03 	lds	r22, 0x0371
@@ -11452,93 +11452,93 @@ void main(void)
     4824:	80 91 73 03 	lds	r24, 0x0373
     4828:	0e 94 f1 22 	call	0x45e2	; 0x45e2 <SSD_vInitDataPort>
 
-	/*
-	 * Initialize TIMER2 with external clock at 32.768 KHz
-	 * Using division factor 128 to achieve 1 second intervals
-	 */
-	TIMER2_vInit();
+  /*
+   * Initialize TIMER2 with external clock at 32.768 KHz
+   * Using division factor 128 to achieve 1 second intervals
+   */
+  TIMER2_vInit();
     482c:	0e 94 c1 09 	call	0x1382	; 0x1382 <TIMER2_vInit>
 
-	/* Initialize ADC for temperature sensor */
-	ADC_vInit();
+  /* Initialize ADC for temperature sensor */
+  ADC_vInit();
     4830:	0e 94 4a 15 	call	0x2a94	; 0x2a94 <ADC_vInit>
 
-	CLCD_vSendString("Press ON to");
+  CLCD_vSendString("Press ON to");
     4834:	80 e6       	ldi	r24, 0x60	; 96
     4836:	90 e0       	ldi	r25, 0x00	; 0
     4838:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSetPosition(2, 1);
+  CLCD_vSetPosition(2, 1);
     483c:	82 e0       	ldi	r24, 0x02	; 2
     483e:	61 e0       	ldi	r22, 0x01	; 1
     4840:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendString("Show Option");
+  CLCD_vSendString("Show Option");
     4844:	8c e6       	ldi	r24, 0x6C	; 108
     4846:	90 e0       	ldi	r25, 0x00	; 0
     4848:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	while (1)
-	{
-		KPD_Press = KPD_u8GetPressed();
+  while (1)
+  {
+    KPD_Press = KPD_u8GetPressed();
     484c:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     4850:	80 93 9a 03 	sts	0x039A, r24
-		if (KPD_Press == 'A')
+    if (KPD_Press == 'A')
     4854:	80 91 9a 03 	lds	r24, 0x039A
     4858:	81 34       	cpi	r24, 0x41	; 65
     485a:	09 f0       	breq	.+2      	; 0x485e <main+0x120>
     485c:	70 c1       	rjmp	.+736    	; 0x4b3e <main+0x400>
-		{
-			// Display menu options on CLCD
-			CLCD_vClearScreen();
+    {
+      // Display menu options on CLCD
+      CLCD_vClearScreen();
     485e:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSendString("1 - Set time");
+      CLCD_vSendString("1 - Set time");
     4862:	88 e7       	ldi	r24, 0x78	; 120
     4864:	90 e0       	ldi	r25, 0x00	; 0
     4866:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(2, 1);
+      CLCD_vSetPosition(2, 1);
     486a:	82 e0       	ldi	r24, 0x02	; 2
     486c:	61 e0       	ldi	r22, 0x01	; 1
     486e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("2 - Select mode");
+      CLCD_vSendString("2 - Select mode");
     4872:	85 e8       	ldi	r24, 0x85	; 133
     4874:	90 e0       	ldi	r25, 0x00	; 0
     4876:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(3, 1);
+      CLCD_vSetPosition(3, 1);
     487a:	83 e0       	ldi	r24, 0x03	; 3
     487c:	61 e0       	ldi	r22, 0x01	; 1
     487e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("3 - Set Alarm");
+      CLCD_vSendString("3 - Set Alarm");
     4882:	85 e9       	ldi	r24, 0x95	; 149
     4884:	90 e0       	ldi	r25, 0x00	; 0
     4886:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(4, 1);
+      CLCD_vSetPosition(4, 1);
     488a:	84 e0       	ldi	r24, 0x04	; 4
     488c:	61 e0       	ldi	r22, 0x01	; 1
     488e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("4 - Weather");
+      CLCD_vSendString("4 - Weather");
     4892:	83 ea       	ldi	r24, 0xA3	; 163
     4894:	90 e0       	ldi	r25, 0x00	; 0
     4896:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(4, 15);
+      CLCD_vSetPosition(4, 15);
     489a:	84 e0       	ldi	r24, 0x04	; 4
     489c:	6f e0       	ldi	r22, 0x0F	; 15
     489e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("X:EXIT");
+      CLCD_vSendString("X:EXIT");
     48a2:	8f ea       	ldi	r24, 0xAF	; 175
     48a4:	90 e0       	ldi	r25, 0x00	; 0
     48a6:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
 
-			do
-			{
-				KPD_Press = KPD_u8GetPressed();
+      do
+      {
+        KPD_Press = KPD_u8GetPressed();
     48aa:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     48ae:	80 93 9a 03 	sts	0x039A, r24
-				if (KPD_Press != NOTPRESSED)
+        if (KPD_Press != NOTPRESSED)
     48b2:	80 91 9a 03 	lds	r24, 0x039A
     48b6:	8f 3f       	cpi	r24, 0xFF	; 255
     48b8:	09 f4       	brne	.+2      	; 0x48bc <main+0x17e>
     48ba:	3c c1       	rjmp	.+632    	; 0x4b34 <main+0x3f6>
-				{
-					// Perform actions based on the pressed key
-					switch (KPD_Press)
+        {
+          // Perform actions based on the pressed key
+          switch (KPD_Press)
     48bc:	80 91 9a 03 	lds	r24, 0x039A
     48c0:	28 2f       	mov	r18, r24
     48c2:	30 e0       	ldi	r19, 0x00	; 0
@@ -11604,54 +11604,54 @@ void main(void)
     493a:	31 05       	cpc	r19, r1
     493c:	51 f0       	breq	.+20     	; 0x4952 <main+0x214>
     493e:	1b c0       	rjmp	.+54     	; 0x4976 <main+0x238>
-					{
-					case '1':
-						Set_Time();
+          {
+          case '1':
+            Set_Time();
     4940:	0e 94 5f 30 	call	0x60be	; 0x60be <Set_Time>
     4944:	f7 c0       	rjmp	.+494    	; 0x4b34 <main+0x3f6>
-						break;
+            break;
 
-					case '2':
-						Select_Mode();
+          case '2':
+            Select_Mode();
     4946:	0e 94 f5 34 	call	0x69ea	; 0x69ea <Select_Mode>
     494a:	f4 c0       	rjmp	.+488    	; 0x4b34 <main+0x3f6>
-						break;
+            break;
 
-					case '3':
-						Set_Alarm();
+          case '3':
+            Set_Alarm();
     494c:	0e 94 5a 36 	call	0x6cb4	; 0x6cb4 <Set_Alarm>
     4950:	f1 c0       	rjmp	.+482    	; 0x4b34 <main+0x3f6>
-						break;
+            break;
 
-					case '4':
-						Get_Temp();
+          case '4':
+            Get_Temp();
     4952:	0e 94 09 3b 	call	0x7612	; 0x7612 <Get_Temp>
     4956:	ee c0       	rjmp	.+476    	; 0x4b34 <main+0x3f6>
-						break;
+            break;
 
-					case '*':
-						CLCD_vClearScreen();
+          case '*':
+            CLCD_vClearScreen();
     4958:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-						CLCD_vSendString("Press ON to");
+            CLCD_vSendString("Press ON to");
     495c:	80 e6       	ldi	r24, 0x60	; 96
     495e:	90 e0       	ldi	r25, 0x00	; 0
     4960:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-						CLCD_vSetPosition(2, 1);
+            CLCD_vSetPosition(2, 1);
     4964:	82 e0       	ldi	r24, 0x02	; 2
     4966:	61 e0       	ldi	r22, 0x01	; 1
     4968:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-						CLCD_vSendString("Show Option");
+            CLCD_vSendString("Show Option");
     496c:	8c e6       	ldi	r24, 0x6C	; 108
     496e:	90 e0       	ldi	r25, 0x00	; 0
     4970:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
     4974:	df c0       	rjmp	.+446    	; 0x4b34 <main+0x3f6>
-						break;
+            break;
 
-					default:
-						// Invalid choice handling
-						CLCD_vClearScreen();
+          default:
+            // Invalid choice handling
+            CLCD_vClearScreen();
     4976:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-						CLCD_vSendString("wrong choice");
+            CLCD_vSendString("wrong choice");
     497a:	86 eb       	ldi	r24, 0xB6	; 182
     497c:	90 e0       	ldi	r25, 0x00	; 0
     497e:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
@@ -11857,72 +11857,72 @@ _delay_ms(double __ms)
     4ae2:	ff 4f       	sbci	r31, 0xFF	; 255
     4ae4:	91 83       	std	Z+1, r25	; 0x01
     4ae6:	80 83       	st	Z, r24
-						_delay_ms(500);
-						CLCD_vClearScreen();
+            _delay_ms(500);
+            CLCD_vClearScreen();
     4ae8:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-						CLCD_vSendString("1 - set time");
+            CLCD_vSendString("1 - set time");
     4aec:	83 ec       	ldi	r24, 0xC3	; 195
     4aee:	90 e0       	ldi	r25, 0x00	; 0
     4af0:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-						CLCD_vSetPosition(2, 1);
+            CLCD_vSetPosition(2, 1);
     4af4:	82 e0       	ldi	r24, 0x02	; 2
     4af6:	61 e0       	ldi	r22, 0x01	; 1
     4af8:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-						CLCD_vSendString("2 - select mode");
+            CLCD_vSendString("2 - select mode");
     4afc:	80 ed       	ldi	r24, 0xD0	; 208
     4afe:	90 e0       	ldi	r25, 0x00	; 0
     4b00:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-						CLCD_vSetPosition(3, 1);
+            CLCD_vSetPosition(3, 1);
     4b04:	83 e0       	ldi	r24, 0x03	; 3
     4b06:	61 e0       	ldi	r22, 0x01	; 1
     4b08:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-						CLCD_vSendString("3 - Set Alarm");
+            CLCD_vSendString("3 - Set Alarm");
     4b0c:	85 e9       	ldi	r24, 0x95	; 149
     4b0e:	90 e0       	ldi	r25, 0x00	; 0
     4b10:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-						CLCD_vSetPosition(4, 1);
+            CLCD_vSetPosition(4, 1);
     4b14:	84 e0       	ldi	r24, 0x04	; 4
     4b16:	61 e0       	ldi	r22, 0x01	; 1
     4b18:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-						CLCD_vSendString("4 - Weather");
+            CLCD_vSendString("4 - Weather");
     4b1c:	83 ea       	ldi	r24, 0xA3	; 163
     4b1e:	90 e0       	ldi	r25, 0x00	; 0
     4b20:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-						CLCD_vSetPosition(4, 15);
+            CLCD_vSetPosition(4, 15);
     4b24:	84 e0       	ldi	r24, 0x04	; 4
     4b26:	6f e0       	ldi	r22, 0x0F	; 15
     4b28:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-						CLCD_vSendString("X:EXIT");
+            CLCD_vSendString("X:EXIT");
     4b2c:	8f ea       	ldi	r24, 0xAF	; 175
     4b2e:	90 e0       	ldi	r25, 0x00	; 0
     4b30:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-						break;
-					}
-				}
-			} while (KPD_Press != '*');
+            break;
+          }
+        }
+      } while (KPD_Press != '*');
     4b34:	80 91 9a 03 	lds	r24, 0x039A
     4b38:	8a 32       	cpi	r24, 0x2A	; 42
     4b3a:	09 f0       	breq	.+2      	; 0x4b3e <main+0x400>
     4b3c:	b6 ce       	rjmp	.-660    	; 0x48aa <main+0x16c>
-		}
-		/* Display time on seven-segment displays using POV theorem */
+    }
+    /* Display time on seven-segment displays using POV theorem */
 
-		// Display seconds (units)
-		SSD_vDisable(seven_seg5);
+    // Display seconds (units)
+    SSD_vDisable(seven_seg5);
     4b3e:	40 91 6f 03 	lds	r20, 0x036F
     4b42:	50 91 70 03 	lds	r21, 0x0370
     4b46:	60 91 71 03 	lds	r22, 0x0371
     4b4a:	70 91 72 03 	lds	r23, 0x0372
     4b4e:	80 91 73 03 	lds	r24, 0x0373
     4b52:	0e 94 6c 23 	call	0x46d8	; 0x46d8 <SSD_vDisable>
-		SSD_vEnable(seven_seg0);
+    SSD_vEnable(seven_seg0);
     4b56:	40 91 56 03 	lds	r20, 0x0356
     4b5a:	50 91 57 03 	lds	r21, 0x0357
     4b5e:	60 91 58 03 	lds	r22, 0x0358
     4b62:	70 91 59 03 	lds	r23, 0x0359
     4b66:	80 91 5a 03 	lds	r24, 0x035A
     4b6a:	0e 94 39 23 	call	0x4672	; 0x4672 <SSD_vEnable>
-		SSD_vSendNumber(seven_seg0, Time_Second % 10);
+    SSD_vSendNumber(seven_seg0, Time_Second % 10);
     4b6e:	80 91 97 03 	lds	r24, 0x0397
     4b72:	9a e0       	ldi	r25, 0x0A	; 10
     4b74:	69 2f       	mov	r22, r25
@@ -12138,24 +12138,24 @@ _delay_ms(double __ms)
     4cf8:	ff 4f       	sbci	r31, 0xFF	; 255
     4cfa:	91 83       	std	Z+1, r25	; 0x01
     4cfc:	80 83       	st	Z, r24
-		_delay_ms(5);
+    _delay_ms(5);
 
-		// Display seconds (tens)
-		SSD_vDisable(seven_seg0);
+    // Display seconds (tens)
+    SSD_vDisable(seven_seg0);
     4cfe:	40 91 56 03 	lds	r20, 0x0356
     4d02:	50 91 57 03 	lds	r21, 0x0357
     4d06:	60 91 58 03 	lds	r22, 0x0358
     4d0a:	70 91 59 03 	lds	r23, 0x0359
     4d0e:	80 91 5a 03 	lds	r24, 0x035A
     4d12:	0e 94 6c 23 	call	0x46d8	; 0x46d8 <SSD_vDisable>
-		SSD_vEnable(seven_seg1);
+    SSD_vEnable(seven_seg1);
     4d16:	40 91 5b 03 	lds	r20, 0x035B
     4d1a:	50 91 5c 03 	lds	r21, 0x035C
     4d1e:	60 91 5d 03 	lds	r22, 0x035D
     4d22:	70 91 5e 03 	lds	r23, 0x035E
     4d26:	80 91 5f 03 	lds	r24, 0x035F
     4d2a:	0e 94 39 23 	call	0x4672	; 0x4672 <SSD_vEnable>
-		SSD_vSendNumber(seven_seg1, Time_Second / 10);
+    SSD_vSendNumber(seven_seg1, Time_Second / 10);
     4d2e:	80 91 97 03 	lds	r24, 0x0397
     4d32:	9a e0       	ldi	r25, 0x0A	; 10
     4d34:	69 2f       	mov	r22, r25
@@ -12370,24 +12370,24 @@ _delay_ms(double __ms)
     4eb6:	ff 4f       	sbci	r31, 0xFF	; 255
     4eb8:	91 83       	std	Z+1, r25	; 0x01
     4eba:	80 83       	st	Z, r24
-		_delay_ms(5);
+    _delay_ms(5);
 
-		// Display minutes (units)
-		SSD_vDisable(seven_seg1);
+    // Display minutes (units)
+    SSD_vDisable(seven_seg1);
     4ebc:	40 91 5b 03 	lds	r20, 0x035B
     4ec0:	50 91 5c 03 	lds	r21, 0x035C
     4ec4:	60 91 5d 03 	lds	r22, 0x035D
     4ec8:	70 91 5e 03 	lds	r23, 0x035E
     4ecc:	80 91 5f 03 	lds	r24, 0x035F
     4ed0:	0e 94 6c 23 	call	0x46d8	; 0x46d8 <SSD_vDisable>
-		SSD_vEnable(seven_seg2);
+    SSD_vEnable(seven_seg2);
     4ed4:	40 91 60 03 	lds	r20, 0x0360
     4ed8:	50 91 61 03 	lds	r21, 0x0361
     4edc:	60 91 62 03 	lds	r22, 0x0362
     4ee0:	70 91 63 03 	lds	r23, 0x0363
     4ee4:	80 91 64 03 	lds	r24, 0x0364
     4ee8:	0e 94 39 23 	call	0x4672	; 0x4672 <SSD_vEnable>
-		SSD_vSendNumber(seven_seg2, Time_Minute % 10);
+    SSD_vSendNumber(seven_seg2, Time_Minute % 10);
     4eec:	80 91 96 03 	lds	r24, 0x0396
     4ef0:	9a e0       	ldi	r25, 0x0A	; 10
     4ef2:	69 2f       	mov	r22, r25
@@ -12603,24 +12603,24 @@ _delay_ms(double __ms)
     5076:	ff 4f       	sbci	r31, 0xFF	; 255
     5078:	91 83       	std	Z+1, r25	; 0x01
     507a:	80 83       	st	Z, r24
-		_delay_ms(5);
+    _delay_ms(5);
 
-		// Display minutes (tens)
-		SSD_vDisable(seven_seg2);
+    // Display minutes (tens)
+    SSD_vDisable(seven_seg2);
     507c:	40 91 60 03 	lds	r20, 0x0360
     5080:	50 91 61 03 	lds	r21, 0x0361
     5084:	60 91 62 03 	lds	r22, 0x0362
     5088:	70 91 63 03 	lds	r23, 0x0363
     508c:	80 91 64 03 	lds	r24, 0x0364
     5090:	0e 94 6c 23 	call	0x46d8	; 0x46d8 <SSD_vDisable>
-		SSD_vEnable(seven_seg3);
+    SSD_vEnable(seven_seg3);
     5094:	40 91 65 03 	lds	r20, 0x0365
     5098:	50 91 66 03 	lds	r21, 0x0366
     509c:	60 91 67 03 	lds	r22, 0x0367
     50a0:	70 91 68 03 	lds	r23, 0x0368
     50a4:	80 91 69 03 	lds	r24, 0x0369
     50a8:	0e 94 39 23 	call	0x4672	; 0x4672 <SSD_vEnable>
-		SSD_vSendNumber(seven_seg3, Time_Minute / 10);
+    SSD_vSendNumber(seven_seg3, Time_Minute / 10);
     50ac:	80 91 96 03 	lds	r24, 0x0396
     50b0:	9a e0       	ldi	r25, 0x0A	; 10
     50b2:	69 2f       	mov	r22, r25
@@ -12835,24 +12835,24 @@ _delay_ms(double __ms)
     5234:	ff 4f       	sbci	r31, 0xFF	; 255
     5236:	91 83       	std	Z+1, r25	; 0x01
     5238:	80 83       	st	Z, r24
-		_delay_ms(5);
+    _delay_ms(5);
 
-		// Display hours (units)
-		SSD_vDisable(seven_seg3);
+    // Display hours (units)
+    SSD_vDisable(seven_seg3);
     523a:	40 91 65 03 	lds	r20, 0x0365
     523e:	50 91 66 03 	lds	r21, 0x0366
     5242:	60 91 67 03 	lds	r22, 0x0367
     5246:	70 91 68 03 	lds	r23, 0x0368
     524a:	80 91 69 03 	lds	r24, 0x0369
     524e:	0e 94 6c 23 	call	0x46d8	; 0x46d8 <SSD_vDisable>
-		SSD_vEnable(seven_seg4);
+    SSD_vEnable(seven_seg4);
     5252:	40 91 6a 03 	lds	r20, 0x036A
     5256:	50 91 6b 03 	lds	r21, 0x036B
     525a:	60 91 6c 03 	lds	r22, 0x036C
     525e:	70 91 6d 03 	lds	r23, 0x036D
     5262:	80 91 6e 03 	lds	r24, 0x036E
     5266:	0e 94 39 23 	call	0x4672	; 0x4672 <SSD_vEnable>
-		SSD_vSendNumber(seven_seg4, Time_Hour % 10);
+    SSD_vSendNumber(seven_seg4, Time_Hour % 10);
     526a:	80 91 54 03 	lds	r24, 0x0354
     526e:	9a e0       	ldi	r25, 0x0A	; 10
     5270:	69 2f       	mov	r22, r25
@@ -13068,24 +13068,24 @@ _delay_ms(double __ms)
     53f4:	ff 4f       	sbci	r31, 0xFF	; 255
     53f6:	91 83       	std	Z+1, r25	; 0x01
     53f8:	80 83       	st	Z, r24
-		_delay_ms(5);
+    _delay_ms(5);
 
-		// Display hours (tens)
-		SSD_vDisable(seven_seg4);
+    // Display hours (tens)
+    SSD_vDisable(seven_seg4);
     53fa:	40 91 6a 03 	lds	r20, 0x036A
     53fe:	50 91 6b 03 	lds	r21, 0x036B
     5402:	60 91 6c 03 	lds	r22, 0x036C
     5406:	70 91 6d 03 	lds	r23, 0x036D
     540a:	80 91 6e 03 	lds	r24, 0x036E
     540e:	0e 94 6c 23 	call	0x46d8	; 0x46d8 <SSD_vDisable>
-		SSD_vEnable(seven_seg5);
+    SSD_vEnable(seven_seg5);
     5412:	40 91 6f 03 	lds	r20, 0x036F
     5416:	50 91 70 03 	lds	r21, 0x0370
     541a:	60 91 71 03 	lds	r22, 0x0371
     541e:	70 91 72 03 	lds	r23, 0x0372
     5422:	80 91 73 03 	lds	r24, 0x0373
     5426:	0e 94 39 23 	call	0x4672	; 0x4672 <SSD_vEnable>
-		SSD_vSendNumber(seven_seg5, Time_Hour / 10);
+    SSD_vSendNumber(seven_seg5, Time_Hour / 10);
     542a:	80 91 54 03 	lds	r24, 0x0354
     542e:	9a e0       	ldi	r25, 0x0A	; 10
     5430:	69 2f       	mov	r22, r25
@@ -13301,10 +13301,10 @@ _delay_ms(double __ms)
     55b4:	ff 4f       	sbci	r31, 0xFF	; 255
     55b6:	91 83       	std	Z+1, r25	; 0x01
     55b8:	80 83       	st	Z, r24
-		_delay_ms(5);
+    _delay_ms(5);
 
-		/* When Alarm is Ring */
-		if (Time_Hour == Alarm_Hour && Time_Minute == Alarm_Minutes && Time_Second == 0 && Alarm_Status == Alarm_EN && READ_BIT(PORTA_REG, DIO_PIN3) == Alarm_DayTime)
+    /* When Alarm is Ring */
+    if (Time_Hour == Alarm_Hour && Time_Minute == Alarm_Minutes && Time_Second == 0 && Alarm_Status == Alarm_EN && READ_BIT(PORTA_REG, DIO_PIN3) == Alarm_DayTime)
     55ba:	90 91 54 03 	lds	r25, 0x0354
     55be:	80 91 98 03 	lds	r24, 0x0398
     55c2:	98 17       	cp	r25, r24
@@ -13344,30 +13344,30 @@ _delay_ms(double __ms)
     5610:	39 07       	cpc	r19, r25
     5612:	09 f0       	breq	.+2      	; 0x5616 <main+0xed8>
     5614:	1b c9       	rjmp	.-3530   	; 0x484c <main+0x10e>
-		{
-			CLCD_vClearScreen();
+    {
+      CLCD_vClearScreen();
     5616:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSetPosition(1, 8);
+      CLCD_vSetPosition(1, 8);
     561a:	81 e0       	ldi	r24, 0x01	; 1
     561c:	68 e0       	ldi	r22, 0x08	; 8
     561e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("Alarm");
+      CLCD_vSendString("Alarm");
     5622:	80 ee       	ldi	r24, 0xE0	; 224
     5624:	90 e0       	ldi	r25, 0x00	; 0
     5626:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
 
-			CLCD_vSetPosition(2, 6);
+      CLCD_vSetPosition(2, 6);
     562a:	82 e0       	ldi	r24, 0x02	; 2
     562c:	66 e0       	ldi	r22, 0x06	; 6
     562e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendData((Alarm_Hour / 10) + 48);
+      CLCD_vSendData((Alarm_Hour / 10) + 48);
     5632:	80 91 98 03 	lds	r24, 0x0398
     5636:	9a e0       	ldi	r25, 0x0A	; 10
     5638:	69 2f       	mov	r22, r25
     563a:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     563e:	80 5d       	subi	r24, 0xD0	; 208
     5640:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-			CLCD_vSendData((Alarm_Hour % 10) + 48);
+      CLCD_vSendData((Alarm_Hour % 10) + 48);
     5644:	80 91 98 03 	lds	r24, 0x0398
     5648:	9a e0       	ldi	r25, 0x0A	; 10
     564a:	69 2f       	mov	r22, r25
@@ -13375,18 +13375,18 @@ _delay_ms(double __ms)
     5650:	89 2f       	mov	r24, r25
     5652:	80 5d       	subi	r24, 0xD0	; 208
     5654:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-			CLCD_vSendString(" : ");
+      CLCD_vSendString(" : ");
     5658:	86 ee       	ldi	r24, 0xE6	; 230
     565a:	90 e0       	ldi	r25, 0x00	; 0
     565c:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSendData((Alarm_Minutes / 10) + 48);
+      CLCD_vSendData((Alarm_Minutes / 10) + 48);
     5660:	80 91 9b 03 	lds	r24, 0x039B
     5664:	9a e0       	ldi	r25, 0x0A	; 10
     5666:	69 2f       	mov	r22, r25
     5668:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     566c:	80 5d       	subi	r24, 0xD0	; 208
     566e:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-			CLCD_vSendData((Alarm_Minutes % 10) + 48);
+      CLCD_vSendData((Alarm_Minutes % 10) + 48);
     5672:	80 91 9b 03 	lds	r24, 0x039B
     5676:	9a e0       	ldi	r25, 0x0A	; 10
     5678:	69 2f       	mov	r22, r25
@@ -13394,7 +13394,7 @@ _delay_ms(double __ms)
     567e:	89 2f       	mov	r24, r25
     5680:	80 5d       	subi	r24, 0xD0	; 208
     5682:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-			switch (Alarm_DayTime)
+      switch (Alarm_DayTime)
     5686:	80 91 94 03 	lds	r24, 0x0394
     568a:	28 2f       	mov	r18, r24
     568c:	30 e0       	ldi	r19, 0x00	; 0
@@ -13421,68 +13421,68 @@ _delay_ms(double __ms)
     56b6:	e1 30       	cpi	r30, 0x01	; 1
     56b8:	f1 05       	cpc	r31, r1
     56ba:	49 f4       	brne	.+18     	; 0x56ce <main+0xf90>
-			{
-			case 1:
-				CLCD_vSendString(" AM");
+      {
+      case 1:
+        CLCD_vSendString(" AM");
     56bc:	8a ee       	ldi	r24, 0xEA	; 234
     56be:	90 e0       	ldi	r25, 0x00	; 0
     56c0:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
     56c4:	04 c0       	rjmp	.+8      	; 0x56ce <main+0xf90>
-				break;
-			case 0:
-				CLCD_vSendString(" PM");
+        break;
+      case 0:
+        CLCD_vSendString(" PM");
     56c6:	8e ee       	ldi	r24, 0xEE	; 238
     56c8:	90 e0       	ldi	r25, 0x00	; 0
     56ca:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-				break;
-			}
-			CLCD_vSetPosition(3, 1);
+        break;
+      }
+      CLCD_vSetPosition(3, 1);
     56ce:	83 e0       	ldi	r24, 0x03	; 3
     56d0:	61 e0       	ldi	r22, 0x01	; 1
     56d2:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("Press any key");
+      CLCD_vSendString("Press any key");
     56d6:	82 ef       	ldi	r24, 0xF2	; 242
     56d8:	90 e0       	ldi	r25, 0x00	; 0
     56da:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(4, 1);
+      CLCD_vSetPosition(4, 1);
     56de:	84 e0       	ldi	r24, 0x04	; 4
     56e0:	61 e0       	ldi	r22, 0x01	; 1
     56e2:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("to close");
+      CLCD_vSendString("to close");
     56e6:	80 e0       	ldi	r24, 0x00	; 0
     56e8:	91 e0       	ldi	r25, 0x01	; 1
     56ea:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
 
-			while (1)
-			{
-				KPD_Press = KPD_u8GetPressed();
+      while (1)
+      {
+        KPD_Press = KPD_u8GetPressed();
     56ee:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     56f2:	80 93 9a 03 	sts	0x039A, r24
-				if (KPD_Press != NOTPRESSED)
+        if (KPD_Press != NOTPRESSED)
     56f6:	80 91 9a 03 	lds	r24, 0x039A
     56fa:	8f 3f       	cpi	r24, 0xFF	; 255
     56fc:	09 f0       	breq	.+2      	; 0x5700 <main+0xfc2>
     56fe:	c7 c4       	rjmp	.+2446   	; 0x608e <main+0x1950>
-					break;
-				}
-				/* Display time on seven-segment displays using POV theorem */
+          break;
+        }
+        /* Display time on seven-segment displays using POV theorem */
 
-				// Display seconds (units)
-				SSD_vDisable(seven_seg5);
+        // Display seconds (units)
+        SSD_vDisable(seven_seg5);
     5700:	40 91 6f 03 	lds	r20, 0x036F
     5704:	50 91 70 03 	lds	r21, 0x0370
     5708:	60 91 71 03 	lds	r22, 0x0371
     570c:	70 91 72 03 	lds	r23, 0x0372
     5710:	80 91 73 03 	lds	r24, 0x0373
     5714:	0e 94 6c 23 	call	0x46d8	; 0x46d8 <SSD_vDisable>
-				SSD_vEnable(seven_seg0);
+        SSD_vEnable(seven_seg0);
     5718:	40 91 56 03 	lds	r20, 0x0356
     571c:	50 91 57 03 	lds	r21, 0x0357
     5720:	60 91 58 03 	lds	r22, 0x0358
     5724:	70 91 59 03 	lds	r23, 0x0359
     5728:	80 91 5a 03 	lds	r24, 0x035A
     572c:	0e 94 39 23 	call	0x4672	; 0x4672 <SSD_vEnable>
-				SSD_vSendNumber(seven_seg0, Time_Second % 10);
+        SSD_vSendNumber(seven_seg0, Time_Second % 10);
     5730:	80 91 97 03 	lds	r24, 0x0397
     5734:	9a e0       	ldi	r25, 0x0A	; 10
     5736:	69 2f       	mov	r22, r25
@@ -13698,24 +13698,24 @@ _delay_ms(double __ms)
     58ba:	ff 4f       	sbci	r31, 0xFF	; 255
     58bc:	91 83       	std	Z+1, r25	; 0x01
     58be:	80 83       	st	Z, r24
-				_delay_ms(5);
+        _delay_ms(5);
 
-				// Display seconds (tens)
-				SSD_vDisable(seven_seg0);
+        // Display seconds (tens)
+        SSD_vDisable(seven_seg0);
     58c0:	40 91 56 03 	lds	r20, 0x0356
     58c4:	50 91 57 03 	lds	r21, 0x0357
     58c8:	60 91 58 03 	lds	r22, 0x0358
     58cc:	70 91 59 03 	lds	r23, 0x0359
     58d0:	80 91 5a 03 	lds	r24, 0x035A
     58d4:	0e 94 6c 23 	call	0x46d8	; 0x46d8 <SSD_vDisable>
-				SSD_vEnable(seven_seg1);
+        SSD_vEnable(seven_seg1);
     58d8:	40 91 5b 03 	lds	r20, 0x035B
     58dc:	50 91 5c 03 	lds	r21, 0x035C
     58e0:	60 91 5d 03 	lds	r22, 0x035D
     58e4:	70 91 5e 03 	lds	r23, 0x035E
     58e8:	80 91 5f 03 	lds	r24, 0x035F
     58ec:	0e 94 39 23 	call	0x4672	; 0x4672 <SSD_vEnable>
-				SSD_vSendNumber(seven_seg1, Time_Second / 10);
+        SSD_vSendNumber(seven_seg1, Time_Second / 10);
     58f0:	80 91 97 03 	lds	r24, 0x0397
     58f4:	9a e0       	ldi	r25, 0x0A	; 10
     58f6:	69 2f       	mov	r22, r25
@@ -13930,24 +13930,24 @@ _delay_ms(double __ms)
     5a78:	ff 4f       	sbci	r31, 0xFF	; 255
     5a7a:	91 83       	std	Z+1, r25	; 0x01
     5a7c:	80 83       	st	Z, r24
-				_delay_ms(5);
+        _delay_ms(5);
 
-				// Display minutes (units)
-				SSD_vDisable(seven_seg1);
+        // Display minutes (units)
+        SSD_vDisable(seven_seg1);
     5a7e:	40 91 5b 03 	lds	r20, 0x035B
     5a82:	50 91 5c 03 	lds	r21, 0x035C
     5a86:	60 91 5d 03 	lds	r22, 0x035D
     5a8a:	70 91 5e 03 	lds	r23, 0x035E
     5a8e:	80 91 5f 03 	lds	r24, 0x035F
     5a92:	0e 94 6c 23 	call	0x46d8	; 0x46d8 <SSD_vDisable>
-				SSD_vEnable(seven_seg2);
+        SSD_vEnable(seven_seg2);
     5a96:	40 91 60 03 	lds	r20, 0x0360
     5a9a:	50 91 61 03 	lds	r21, 0x0361
     5a9e:	60 91 62 03 	lds	r22, 0x0362
     5aa2:	70 91 63 03 	lds	r23, 0x0363
     5aa6:	80 91 64 03 	lds	r24, 0x0364
     5aaa:	0e 94 39 23 	call	0x4672	; 0x4672 <SSD_vEnable>
-				SSD_vSendNumber(seven_seg2, Time_Minute % 10);
+        SSD_vSendNumber(seven_seg2, Time_Minute % 10);
     5aae:	80 91 96 03 	lds	r24, 0x0396
     5ab2:	9a e0       	ldi	r25, 0x0A	; 10
     5ab4:	69 2f       	mov	r22, r25
@@ -14117,24 +14117,24 @@ _delay_ms(double __ms)
     5bdc:	f1 f7       	brne	.-4      	; 0x5bda <main+0x149c>
     5bde:	9a af       	std	Y+58, r25	; 0x3a
     5be0:	89 af       	std	Y+57, r24	; 0x39
-				_delay_ms(5);
+        _delay_ms(5);
 
-				// Display minutes (tens)
-				SSD_vDisable(seven_seg2);
+        // Display minutes (tens)
+        SSD_vDisable(seven_seg2);
     5be2:	40 91 60 03 	lds	r20, 0x0360
     5be6:	50 91 61 03 	lds	r21, 0x0361
     5bea:	60 91 62 03 	lds	r22, 0x0362
     5bee:	70 91 63 03 	lds	r23, 0x0363
     5bf2:	80 91 64 03 	lds	r24, 0x0364
     5bf6:	0e 94 6c 23 	call	0x46d8	; 0x46d8 <SSD_vDisable>
-				SSD_vEnable(seven_seg3);
+        SSD_vEnable(seven_seg3);
     5bfa:	40 91 65 03 	lds	r20, 0x0365
     5bfe:	50 91 66 03 	lds	r21, 0x0366
     5c02:	60 91 67 03 	lds	r22, 0x0367
     5c06:	70 91 68 03 	lds	r23, 0x0368
     5c0a:	80 91 69 03 	lds	r24, 0x0369
     5c0e:	0e 94 39 23 	call	0x4672	; 0x4672 <SSD_vEnable>
-				SSD_vSendNumber(seven_seg3, Time_Minute / 10);
+        SSD_vSendNumber(seven_seg3, Time_Minute / 10);
     5c12:	80 91 96 03 	lds	r24, 0x0396
     5c16:	9a e0       	ldi	r25, 0x0A	; 10
     5c18:	69 2f       	mov	r22, r25
@@ -14284,24 +14284,24 @@ _delay_ms(double __ms)
     5d18:	f1 f7       	brne	.-4      	; 0x5d16 <main+0x15d8>
     5d1a:	9c a7       	std	Y+44, r25	; 0x2c
     5d1c:	8b a7       	std	Y+43, r24	; 0x2b
-				_delay_ms(5);
+        _delay_ms(5);
 
-				// Display hours (units)
-				SSD_vDisable(seven_seg3);
+        // Display hours (units)
+        SSD_vDisable(seven_seg3);
     5d1e:	40 91 65 03 	lds	r20, 0x0365
     5d22:	50 91 66 03 	lds	r21, 0x0366
     5d26:	60 91 67 03 	lds	r22, 0x0367
     5d2a:	70 91 68 03 	lds	r23, 0x0368
     5d2e:	80 91 69 03 	lds	r24, 0x0369
     5d32:	0e 94 6c 23 	call	0x46d8	; 0x46d8 <SSD_vDisable>
-				SSD_vEnable(seven_seg4);
+        SSD_vEnable(seven_seg4);
     5d36:	40 91 6a 03 	lds	r20, 0x036A
     5d3a:	50 91 6b 03 	lds	r21, 0x036B
     5d3e:	60 91 6c 03 	lds	r22, 0x036C
     5d42:	70 91 6d 03 	lds	r23, 0x036D
     5d46:	80 91 6e 03 	lds	r24, 0x036E
     5d4a:	0e 94 39 23 	call	0x4672	; 0x4672 <SSD_vEnable>
-				SSD_vSendNumber(seven_seg4, Time_Hour % 10);
+        SSD_vSendNumber(seven_seg4, Time_Hour % 10);
     5d4e:	80 91 54 03 	lds	r24, 0x0354
     5d52:	9a e0       	ldi	r25, 0x0A	; 10
     5d54:	69 2f       	mov	r22, r25
@@ -14452,24 +14452,24 @@ _delay_ms(double __ms)
     5e56:	f1 f7       	brne	.-4      	; 0x5e54 <main+0x1716>
     5e58:	9e 8f       	std	Y+30, r25	; 0x1e
     5e5a:	8d 8f       	std	Y+29, r24	; 0x1d
-				_delay_ms(5);
+        _delay_ms(5);
 
-				// Display hours (tens)
-				SSD_vDisable(seven_seg4);
+        // Display hours (tens)
+        SSD_vDisable(seven_seg4);
     5e5c:	40 91 6a 03 	lds	r20, 0x036A
     5e60:	50 91 6b 03 	lds	r21, 0x036B
     5e64:	60 91 6c 03 	lds	r22, 0x036C
     5e68:	70 91 6d 03 	lds	r23, 0x036D
     5e6c:	80 91 6e 03 	lds	r24, 0x036E
     5e70:	0e 94 6c 23 	call	0x46d8	; 0x46d8 <SSD_vDisable>
-				SSD_vEnable(seven_seg5);
+        SSD_vEnable(seven_seg5);
     5e74:	40 91 6f 03 	lds	r20, 0x036F
     5e78:	50 91 70 03 	lds	r21, 0x0370
     5e7c:	60 91 71 03 	lds	r22, 0x0371
     5e80:	70 91 72 03 	lds	r23, 0x0372
     5e84:	80 91 73 03 	lds	r24, 0x0373
     5e88:	0e 94 39 23 	call	0x4672	; 0x4672 <SSD_vEnable>
-				SSD_vSendNumber(seven_seg5, Time_Hour / 10);
+        SSD_vSendNumber(seven_seg5, Time_Hour / 10);
     5e8c:	80 91 54 03 	lds	r24, 0x0354
     5e90:	9a e0       	ldi	r25, 0x0A	; 10
     5e92:	69 2f       	mov	r22, r25
@@ -14619,9 +14619,9 @@ _delay_ms(double __ms)
     5f92:	f1 f7       	brne	.-4      	; 0x5f90 <main+0x1852>
     5f94:	98 8b       	std	Y+16, r25	; 0x10
     5f96:	8f 87       	std	Y+15, r24	; 0x0f
-				_delay_ms(5);
+        _delay_ms(5);
 
-				BUZ_vTog(BUZ0);
+        BUZ_vTog(BUZ0);
     5f98:	60 91 77 03 	lds	r22, 0x0377
     5f9c:	70 91 78 03 	lds	r23, 0x0378
     5fa0:	80 91 79 03 	lds	r24, 0x0379
@@ -14764,24 +14764,24 @@ _delay_ms(double __ms)
     6088:	9a 83       	std	Y+2, r25	; 0x02
     608a:	89 83       	std	Y+1, r24	; 0x01
     608c:	30 cb       	rjmp	.-2464   	; 0x56ee <main+0xfb0>
-				_delay_ms(10);
-			}
-			BUZ_vOff(BUZ0);
+        _delay_ms(10);
+      }
+      BUZ_vOff(BUZ0);
     608e:	60 91 77 03 	lds	r22, 0x0377
     6092:	70 91 78 03 	lds	r23, 0x0378
     6096:	80 91 79 03 	lds	r24, 0x0379
     609a:	0e 94 bb 22 	call	0x4576	; 0x4576 <BUZ_vOff>
-			CLCD_vClearScreen();
+      CLCD_vClearScreen();
     609e:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSendString("Press ON to");
+      CLCD_vSendString("Press ON to");
     60a2:	80 e6       	ldi	r24, 0x60	; 96
     60a4:	90 e0       	ldi	r25, 0x00	; 0
     60a6:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(2, 1);
+      CLCD_vSetPosition(2, 1);
     60aa:	82 e0       	ldi	r24, 0x02	; 2
     60ac:	61 e0       	ldi	r22, 0x01	; 1
     60ae:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("Show Option");
+      CLCD_vSendString("Show Option");
     60b2:	8c e6       	ldi	r24, 0x6C	; 108
     60b4:	90 e0       	ldi	r25, 0x00	; 0
     60b6:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
@@ -14804,30 +14804,30 @@ void Set_Time()
     60cc:	de bf       	out	0x3e, r29	; 62
     60ce:	0f be       	out	0x3f, r0	; 63
     60d0:	cd bf       	out	0x3d, r28	; 61
-	CLCD_vClearScreen();
+  CLCD_vClearScreen();
     60d2:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-	CLCD_vSendString("1 - 12-hour time");
+  CLCD_vSendString("1 - 12-hour time");
     60d6:	89 e0       	ldi	r24, 0x09	; 9
     60d8:	91 e0       	ldi	r25, 0x01	; 1
     60da:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSetPosition(2, 1);
+  CLCD_vSetPosition(2, 1);
     60de:	82 e0       	ldi	r24, 0x02	; 2
     60e0:	61 e0       	ldi	r22, 0x01	; 1
     60e2:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendString("2 - 24-hour time");
+  CLCD_vSendString("2 - 24-hour time");
     60e6:	8a e1       	ldi	r24, 0x1A	; 26
     60e8:	91 e0       	ldi	r25, 0x01	; 1
     60ea:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	/* Select time mode: 12 Hours or 24 Hours */
-	do
-	{
-		/*___________________________________________________________________________________________________________________*/
+  /* Select time mode: 12 Hours or 24 Hours */
+  do
+  {
+    /*___________________________________________________________________________________________________________________*/
 
-		Time_Mode = KPD_u8GetPressed();
+    Time_Mode = KPD_u8GetPressed();
     60ee:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     60f2:	80 93 55 03 	sts	0x0355, r24
 
-		if (Time_Mode != NOTPRESSED && (Time_Mode != Time_Mode12Hours && Time_Mode != Time_Mode24Hours))
+    if (Time_Mode != NOTPRESSED && (Time_Mode != Time_Mode12Hours && Time_Mode != Time_Mode24Hours))
     60f6:	80 91 55 03 	lds	r24, 0x0355
     60fa:	8f 3f       	cpi	r24, 0xFF	; 255
     60fc:	09 f4       	brne	.+2      	; 0x6100 <Set_Time+0x42>
@@ -14840,11 +14840,11 @@ void Set_Time()
     610e:	82 33       	cpi	r24, 0x32	; 50
     6110:	09 f4       	brne	.+2      	; 0x6114 <Set_Time+0x56>
     6112:	86 c0       	rjmp	.+268    	; 0x6220 <Set_Time+0x162>
-		{
-			// Handle wrong input
-			CLCD_vClearScreen();
+    {
+      // Handle wrong input
+      CLCD_vClearScreen();
     6114:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSendString("wrong choise");
+      CLCD_vSendString("wrong choise");
     6118:	8b e2       	ldi	r24, 0x2B	; 43
     611a:	91 e0       	ldi	r25, 0x01	; 1
     611c:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
@@ -14985,23 +14985,23 @@ _delay_ms(double __ms)
     61fe:	f1 f7       	brne	.-4      	; 0x61fc <Set_Time+0x13e>
     6200:	9e 8f       	std	Y+30, r25	; 0x1e
     6202:	8d 8f       	std	Y+29, r24	; 0x1d
-			_delay_ms(500);
-			CLCD_vClearScreen();
+      _delay_ms(500);
+      CLCD_vClearScreen();
     6204:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSendString("1 - 12-hour time");
+      CLCD_vSendString("1 - 12-hour time");
     6208:	89 e0       	ldi	r24, 0x09	; 9
     620a:	91 e0       	ldi	r25, 0x01	; 1
     620c:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(2, 1);
+      CLCD_vSetPosition(2, 1);
     6210:	82 e0       	ldi	r24, 0x02	; 2
     6212:	61 e0       	ldi	r22, 0x01	; 1
     6214:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("2 - 24-hour time");
+      CLCD_vSendString("2 - 24-hour time");
     6218:	8a e1       	ldi	r24, 0x1A	; 26
     621a:	91 e0       	ldi	r25, 0x01	; 1
     621c:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		}
-	} while (Time_Mode == NOTPRESSED || (Time_Mode != Time_Mode12Hours && Time_Mode != Time_Mode24Hours));
+    }
+  } while (Time_Mode == NOTPRESSED || (Time_Mode != Time_Mode12Hours && Time_Mode != Time_Mode24Hours));
     6220:	80 91 55 03 	lds	r24, 0x0355
     6224:	8f 3f       	cpi	r24, 0xFF	; 255
     6226:	09 f4       	brne	.+2      	; 0x622a <Set_Time+0x16c>
@@ -15014,45 +15014,45 @@ _delay_ms(double __ms)
     6238:	09 f0       	breq	.+2      	; 0x623c <Set_Time+0x17e>
     623a:	59 cf       	rjmp	.-334    	; 0x60ee <Set_Time+0x30>
 
-	/*___________________________________________________________________________________________________________________*/
+  /*___________________________________________________________________________________________________________________*/
 
-	// Set AM or PM flag based on selected mode
-	if (Time_Mode == Time_Mode12Hours)
+  // Set AM or PM flag based on selected mode
+  if (Time_Mode == Time_Mode12Hours)
     623c:	80 91 55 03 	lds	r24, 0x0355
     6240:	81 33       	cpi	r24, 0x31	; 49
     6242:	21 f4       	brne	.+8      	; 0x624c <Set_Time+0x18e>
-	{
-		Time_ModeFlag = 1;
+  {
+    Time_ModeFlag = 1;
     6244:	81 e0       	ldi	r24, 0x01	; 1
     6246:	80 93 53 03 	sts	0x0353, r24
     624a:	06 c0       	rjmp	.+12     	; 0x6258 <Set_Time+0x19a>
-	}
-	else if (Time_Mode == Time_Mode24Hours)
+  }
+  else if (Time_Mode == Time_Mode24Hours)
     624c:	80 91 55 03 	lds	r24, 0x0355
     6250:	82 33       	cpi	r24, 0x32	; 50
     6252:	11 f4       	brne	.+4      	; 0x6258 <Set_Time+0x19a>
-	{
-		Time_ModeFlag = 0;
+  {
+    Time_ModeFlag = 0;
     6254:	10 92 53 03 	sts	0x0353, r1
 
-	}
+  }
 
-	/*___________________________________________________________________________________________________________________*/
+  /*___________________________________________________________________________________________________________________*/
 
-	CLCD_vClearScreen();
+  CLCD_vClearScreen();
     6258:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
 
-	/*___________________________________________________________________________________________________________________*/
+  /*___________________________________________________________________________________________________________________*/
 
-	// Display the current time on the CLCD
-	CLCD_vSendData(Time_Hour / 10 + 48);
+  // Display the current time on the CLCD
+  CLCD_vSendData(Time_Hour / 10 + 48);
     625c:	80 91 54 03 	lds	r24, 0x0354
     6260:	9a e0       	ldi	r25, 0x0A	; 10
     6262:	69 2f       	mov	r22, r25
     6264:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     6268:	80 5d       	subi	r24, 0xD0	; 208
     626a:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-	CLCD_vSendData(Time_Hour % 10 + 48);
+  CLCD_vSendData(Time_Hour % 10 + 48);
     626e:	80 91 54 03 	lds	r24, 0x0354
     6272:	9a e0       	ldi	r25, 0x0A	; 10
     6274:	69 2f       	mov	r22, r25
@@ -15060,18 +15060,18 @@ _delay_ms(double __ms)
     627a:	89 2f       	mov	r24, r25
     627c:	80 5d       	subi	r24, 0xD0	; 208
     627e:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-	CLCD_vSendString(" : ");
+  CLCD_vSendString(" : ");
     6282:	86 ee       	ldi	r24, 0xE6	; 230
     6284:	90 e0       	ldi	r25, 0x00	; 0
     6286:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSendData(Time_Minute / 10 + 48);
+  CLCD_vSendData(Time_Minute / 10 + 48);
     628a:	80 91 96 03 	lds	r24, 0x0396
     628e:	9a e0       	ldi	r25, 0x0A	; 10
     6290:	69 2f       	mov	r22, r25
     6292:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     6296:	80 5d       	subi	r24, 0xD0	; 208
     6298:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-	CLCD_vSendData(Time_Minute % 10 + 48);
+  CLCD_vSendData(Time_Minute % 10 + 48);
     629c:	80 91 96 03 	lds	r24, 0x0396
     62a0:	9a e0       	ldi	r25, 0x0A	; 10
     62a2:	69 2f       	mov	r22, r25
@@ -15079,18 +15079,18 @@ _delay_ms(double __ms)
     62a8:	89 2f       	mov	r24, r25
     62aa:	80 5d       	subi	r24, 0xD0	; 208
     62ac:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-	CLCD_vSendString(" : ");
+  CLCD_vSendString(" : ");
     62b0:	86 ee       	ldi	r24, 0xE6	; 230
     62b2:	90 e0       	ldi	r25, 0x00	; 0
     62b4:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSendData(Time_Second / 10 + 48);
+  CLCD_vSendData(Time_Second / 10 + 48);
     62b8:	80 91 97 03 	lds	r24, 0x0397
     62bc:	9a e0       	ldi	r25, 0x0A	; 10
     62be:	69 2f       	mov	r22, r25
     62c0:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     62c4:	80 5d       	subi	r24, 0xD0	; 208
     62c6:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-	CLCD_vSendData(Time_Second % 10 + 48);
+  CLCD_vSendData(Time_Second % 10 + 48);
     62ca:	80 91 97 03 	lds	r24, 0x0397
     62ce:	9a e0       	ldi	r25, 0x0A	; 10
     62d0:	69 2f       	mov	r22, r25
@@ -15098,17 +15098,17 @@ _delay_ms(double __ms)
     62d6:	89 2f       	mov	r24, r25
     62d8:	80 5d       	subi	r24, 0xD0	; 208
     62da:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-	CLCD_vSendData(' ');
+  CLCD_vSendData(' ');
     62de:	80 e2       	ldi	r24, 0x20	; 32
     62e0:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
 
-	// Display AM/PM if in 12-hour mode
-	if (Time_Mode == Time_Mode12Hours)
+  // Display AM/PM if in 12-hour mode
+  if (Time_Mode == Time_Mode12Hours)
     62e4:	80 91 55 03 	lds	r24, 0x0355
     62e8:	81 33       	cpi	r24, 0x31	; 49
     62ea:	c9 f4       	brne	.+50     	; 0x631e <Set_Time+0x260>
-	{
-		if (READ_BIT(PORTA_REG, DIO_PIN3) == 1)
+  {
+    if (READ_BIT(PORTA_REG, DIO_PIN3) == 1)
     62ec:	eb e3       	ldi	r30, 0x3B	; 59
     62ee:	f0 e0       	ldi	r31, 0x00	; 0
     62f0:	80 81       	ld	r24, Z
@@ -15125,51 +15125,51 @@ _delay_ms(double __ms)
     6306:	81 30       	cpi	r24, 0x01	; 1
     6308:	91 05       	cpc	r25, r1
     630a:	29 f4       	brne	.+10     	; 0x6316 <Set_Time+0x258>
-		{
-			CLCD_vSendString("AM");
+    {
+      CLCD_vSendString("AM");
     630c:	88 e3       	ldi	r24, 0x38	; 56
     630e:	91 e0       	ldi	r25, 0x01	; 1
     6310:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
     6314:	04 c0       	rjmp	.+8      	; 0x631e <Set_Time+0x260>
-		}
-		else
-		{
-			CLCD_vSendString("PM");
+    }
+    else
+    {
+      CLCD_vSendString("PM");
     6316:	8b e3       	ldi	r24, 0x3B	; 59
     6318:	91 e0       	ldi	r25, 0x01	; 1
     631a:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	}
+  }
 
-	/*___________________________________________________________________________________________________________________*/
+  /*___________________________________________________________________________________________________________________*/
 
-	/* Change Time */
-	CLCD_vSendCommand(CLCD_DISPLAYON_CURSORON);
+  /* Change Time */
+  CLCD_vSendCommand(CLCD_DISPLAYON_CURSORON);
     631e:	8e e0       	ldi	r24, 0x0E	; 14
     6320:	0e 94 6d 1d 	call	0x3ada	; 0x3ada <CLCD_vSendCommand>
-	CLCD_vSetPosition(1, 1);
+  CLCD_vSetPosition(1, 1);
     6324:	81 e0       	ldi	r24, 0x01	; 1
     6326:	61 e0       	ldi	r22, 0x01	; 1
     6328:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
 
-	/* Set hours */
-	// First Digit
-	do
-	{
-		KPD_Press = KPD_u8GetPressed();
+  /* Set hours */
+  // First Digit
+  do
+  {
+    KPD_Press = KPD_u8GetPressed();
     632c:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     6330:	80 93 9a 03 	sts	0x039A, r24
-	} while (KPD_Press == NOTPRESSED);
+  } while (KPD_Press == NOTPRESSED);
     6334:	80 91 9a 03 	lds	r24, 0x039A
     6338:	8f 3f       	cpi	r24, 0xFF	; 255
     633a:	c1 f3       	breq	.-16     	; 0x632c <Set_Time+0x26e>
-	CLCD_vSetPosition(1, 1);
+  CLCD_vSetPosition(1, 1);
     633c:	81 e0       	ldi	r24, 0x01	; 1
     633e:	61 e0       	ldi	r22, 0x01	; 1
     6340:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendData(KPD_Press);
+  CLCD_vSendData(KPD_Press);
     6344:	80 91 9a 03 	lds	r24, 0x039A
     6348:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-	Time_Hour = (KPD_Press - 48) * 10;
+  Time_Hour = (KPD_Press - 48) * 10;
     634c:	80 91 9a 03 	lds	r24, 0x039A
     6350:	88 2f       	mov	r24, r24
     6352:	90 e0       	ldi	r25, 0x00	; 0
@@ -15186,38 +15186,38 @@ _delay_ms(double __ms)
     6368:	80 5e       	subi	r24, 0xE0	; 224
     636a:	80 93 54 03 	sts	0x0354, r24
 
-	// Second Digit
-	do
-	{
-		KPD_Press = KPD_u8GetPressed();
+  // Second Digit
+  do
+  {
+    KPD_Press = KPD_u8GetPressed();
     636e:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     6372:	80 93 9a 03 	sts	0x039A, r24
-	} while (KPD_Press == NOTPRESSED);
+  } while (KPD_Press == NOTPRESSED);
     6376:	80 91 9a 03 	lds	r24, 0x039A
     637a:	8f 3f       	cpi	r24, 0xFF	; 255
     637c:	c1 f3       	breq	.-16     	; 0x636e <Set_Time+0x2b0>
-	CLCD_vSendData(KPD_Press);
+  CLCD_vSendData(KPD_Press);
     637e:	80 91 9a 03 	lds	r24, 0x039A
     6382:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
 
-	// Calculate total hours
-	Time_Hour += (KPD_Press - 48);
+  // Calculate total hours
+  Time_Hour += (KPD_Press - 48);
     6386:	90 91 9a 03 	lds	r25, 0x039A
     638a:	80 91 54 03 	lds	r24, 0x0354
     638e:	89 0f       	add	r24, r25
     6390:	80 53       	subi	r24, 0x30	; 48
     6392:	80 93 54 03 	sts	0x0354, r24
-	 * ==> if mode is 12 hours --> hour is less than 12
-	 */
+   * ==> if mode is 12 hours --> hour is less than 12
+   */
 
-	/*___________________________________________________________________________________________________________________*/
+  /*___________________________________________________________________________________________________________________*/
 
-	if (Time_Mode == Time_Mode12Hours)
+  if (Time_Mode == Time_Mode12Hours)
     6396:	80 91 55 03 	lds	r24, 0x0355
     639a:	81 33       	cpi	r24, 0x31	; 49
     639c:	21 f5       	brne	.+72     	; 0x63e6 <Set_Time+0x328>
-	{
-		if (Time_Hour > 12 || Time_Hour == 0)
+  {
+    if (Time_Hour > 12 || Time_Hour == 0)
     639e:	80 91 54 03 	lds	r24, 0x0354
     63a2:	8d 30       	cpi	r24, 0x0D	; 13
     63a4:	28 f4       	brcc	.+10     	; 0x63b0 <Set_Time+0x2f2>
@@ -15225,22 +15225,22 @@ _delay_ms(double __ms)
     63aa:	88 23       	and	r24, r24
     63ac:	09 f0       	breq	.+2      	; 0x63b0 <Set_Time+0x2f2>
     63ae:	47 c0       	rjmp	.+142    	; 0x643e <Set_Time+0x380>
-		{
-			Time_Hour = 12;
+    {
+      Time_Hour = 12;
     63b0:	8c e0       	ldi	r24, 0x0C	; 12
     63b2:	80 93 54 03 	sts	0x0354, r24
-			CLCD_vSetPosition(1, 1);
+      CLCD_vSetPosition(1, 1);
     63b6:	81 e0       	ldi	r24, 0x01	; 1
     63b8:	61 e0       	ldi	r22, 0x01	; 1
     63ba:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendData(Time_Hour / 10 + 48);
+      CLCD_vSendData(Time_Hour / 10 + 48);
     63be:	80 91 54 03 	lds	r24, 0x0354
     63c2:	9a e0       	ldi	r25, 0x0A	; 10
     63c4:	69 2f       	mov	r22, r25
     63c6:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     63ca:	80 5d       	subi	r24, 0xD0	; 208
     63cc:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-			CLCD_vSendData(Time_Hour % 10 + 48);
+      CLCD_vSendData(Time_Hour % 10 + 48);
     63d0:	80 91 54 03 	lds	r24, 0x0354
     63d4:	9a e0       	ldi	r25, 0x0A	; 10
     63d6:	69 2f       	mov	r22, r25
@@ -15249,35 +15249,35 @@ _delay_ms(double __ms)
     63de:	80 5d       	subi	r24, 0xD0	; 208
     63e0:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
     63e4:	2c c0       	rjmp	.+88     	; 0x643e <Set_Time+0x380>
-		}
-		else
-		{
-		}
-	}
-	else if (Time_Mode == Time_Mode24Hours)
+    }
+    else
+    {
+    }
+  }
+  else if (Time_Mode == Time_Mode24Hours)
     63e6:	80 91 55 03 	lds	r24, 0x0355
     63ea:	82 33       	cpi	r24, 0x32	; 50
     63ec:	41 f5       	brne	.+80     	; 0x643e <Set_Time+0x380>
-	{
-		if (Time_Hour > 23)
+  {
+    if (Time_Hour > 23)
     63ee:	80 91 54 03 	lds	r24, 0x0354
     63f2:	88 31       	cpi	r24, 0x18	; 24
     63f4:	c8 f0       	brcs	.+50     	; 0x6428 <Set_Time+0x36a>
-		{
-			Time_Hour = 0;
+    {
+      Time_Hour = 0;
     63f6:	10 92 54 03 	sts	0x0354, r1
-			CLCD_vSetPosition(1, 1);
+      CLCD_vSetPosition(1, 1);
     63fa:	81 e0       	ldi	r24, 0x01	; 1
     63fc:	61 e0       	ldi	r22, 0x01	; 1
     63fe:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendData(Time_Hour / 10 + 48);
+      CLCD_vSendData(Time_Hour / 10 + 48);
     6402:	80 91 54 03 	lds	r24, 0x0354
     6406:	9a e0       	ldi	r25, 0x0A	; 10
     6408:	69 2f       	mov	r22, r25
     640a:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     640e:	80 5d       	subi	r24, 0xD0	; 208
     6410:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-			CLCD_vSendData(Time_Hour % 10 + 48);
+      CLCD_vSendData(Time_Hour % 10 + 48);
     6414:	80 91 54 03 	lds	r24, 0x0354
     6418:	9a e0       	ldi	r25, 0x0A	; 10
     641a:	69 2f       	mov	r22, r25
@@ -15285,16 +15285,16 @@ _delay_ms(double __ms)
     6420:	89 2f       	mov	r24, r25
     6422:	80 5d       	subi	r24, 0xD0	; 208
     6424:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-		}
-		else
-		{
-		}
-		if (Time_Hour == 12)
+    }
+    else
+    {
+    }
+    if (Time_Hour == 12)
     6428:	80 91 54 03 	lds	r24, 0x0354
     642c:	8c 30       	cpi	r24, 0x0C	; 12
     642e:	39 f4       	brne	.+14     	; 0x643e <Set_Time+0x380>
-		{
-			CLR_BIT(PORTA_REG, DIO_PIN3);
+    {
+      CLR_BIT(PORTA_REG, DIO_PIN3);
     6430:	ab e3       	ldi	r26, 0x3B	; 59
     6432:	b0 e0       	ldi	r27, 0x00	; 0
     6434:	eb e3       	ldi	r30, 0x3B	; 59
@@ -15302,28 +15302,28 @@ _delay_ms(double __ms)
     6438:	80 81       	ld	r24, Z
     643a:	87 7f       	andi	r24, 0xF7	; 247
     643c:	8c 93       	st	X, r24
-	/*___________________________________________________________________________________________________________________*/
+  /*___________________________________________________________________________________________________________________*/
 
-	/* Set minutes and seconds similar to hours */
+  /* Set minutes and seconds similar to hours */
 
-	// Set minutes
-	CLCD_vSetPosition(1, 6);
+  // Set minutes
+  CLCD_vSetPosition(1, 6);
     643e:	81 e0       	ldi	r24, 0x01	; 1
     6440:	66 e0       	ldi	r22, 0x06	; 6
     6442:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	do
-	{
-		KPD_Press = KPD_u8GetPressed();
+  do
+  {
+    KPD_Press = KPD_u8GetPressed();
     6446:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     644a:	80 93 9a 03 	sts	0x039A, r24
-	} while (KPD_Press == NOTPRESSED);
+  } while (KPD_Press == NOTPRESSED);
     644e:	80 91 9a 03 	lds	r24, 0x039A
     6452:	8f 3f       	cpi	r24, 0xFF	; 255
     6454:	c1 f3       	breq	.-16     	; 0x6446 <Set_Time+0x388>
-	CLCD_vSendData(KPD_Press);
+  CLCD_vSendData(KPD_Press);
     6456:	80 91 9a 03 	lds	r24, 0x039A
     645a:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-	Time_Minute = (KPD_Press - 48) * 10;
+  Time_Minute = (KPD_Press - 48) * 10;
     645e:	80 91 9a 03 	lds	r24, 0x039A
     6462:	88 2f       	mov	r24, r24
     6464:	90 e0       	ldi	r25, 0x00	; 0
@@ -15340,46 +15340,46 @@ _delay_ms(double __ms)
     647a:	80 5e       	subi	r24, 0xE0	; 224
     647c:	80 93 96 03 	sts	0x0396, r24
 
-	do
-	{
-		KPD_Press = KPD_u8GetPressed();
+  do
+  {
+    KPD_Press = KPD_u8GetPressed();
     6480:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     6484:	80 93 9a 03 	sts	0x039A, r24
 
-	} while (KPD_Press == NOTPRESSED);
+  } while (KPD_Press == NOTPRESSED);
     6488:	80 91 9a 03 	lds	r24, 0x039A
     648c:	8f 3f       	cpi	r24, 0xFF	; 255
     648e:	c1 f3       	breq	.-16     	; 0x6480 <Set_Time+0x3c2>
-	CLCD_vSendData(KPD_Press);
+  CLCD_vSendData(KPD_Press);
     6490:	80 91 9a 03 	lds	r24, 0x039A
     6494:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
 
-	Time_Minute += (KPD_Press - 48);
+  Time_Minute += (KPD_Press - 48);
     6498:	90 91 9a 03 	lds	r25, 0x039A
     649c:	80 91 96 03 	lds	r24, 0x0396
     64a0:	89 0f       	add	r24, r25
     64a2:	80 53       	subi	r24, 0x30	; 48
     64a4:	80 93 96 03 	sts	0x0396, r24
 
-	if (Time_Minute > 59)
+  if (Time_Minute > 59)
     64a8:	80 91 96 03 	lds	r24, 0x0396
     64ac:	8c 33       	cpi	r24, 0x3C	; 60
     64ae:	c8 f0       	brcs	.+50     	; 0x64e2 <Set_Time+0x424>
-	{
-		Time_Minute = 0;
+  {
+    Time_Minute = 0;
     64b0:	10 92 96 03 	sts	0x0396, r1
-		CLCD_vSetPosition(1, 6);
+    CLCD_vSetPosition(1, 6);
     64b4:	81 e0       	ldi	r24, 0x01	; 1
     64b6:	66 e0       	ldi	r22, 0x06	; 6
     64b8:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-		CLCD_vSendData(Time_Minute / 10 + 48);
+    CLCD_vSendData(Time_Minute / 10 + 48);
     64bc:	80 91 96 03 	lds	r24, 0x0396
     64c0:	9a e0       	ldi	r25, 0x0A	; 10
     64c2:	69 2f       	mov	r22, r25
     64c4:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     64c8:	80 5d       	subi	r24, 0xD0	; 208
     64ca:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-		CLCD_vSendData(Time_Minute % 10 + 48);
+    CLCD_vSendData(Time_Minute % 10 + 48);
     64ce:	80 91 96 03 	lds	r24, 0x0396
     64d2:	9a e0       	ldi	r25, 0x0A	; 10
     64d4:	69 2f       	mov	r22, r25
@@ -15387,29 +15387,29 @@ _delay_ms(double __ms)
     64da:	89 2f       	mov	r24, r25
     64dc:	80 5d       	subi	r24, 0xD0	; 208
     64de:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-	}
+  }
 
-	/*___________________________________________________________________________________________________________________*/
+  /*___________________________________________________________________________________________________________________*/
 
-	// Set seconds
-	CLCD_vSetPosition(1, 11);
+  // Set seconds
+  CLCD_vSetPosition(1, 11);
     64e2:	81 e0       	ldi	r24, 0x01	; 1
     64e4:	6b e0       	ldi	r22, 0x0B	; 11
     64e6:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	do
-	{
-		KPD_Press = KPD_u8GetPressed();
+  do
+  {
+    KPD_Press = KPD_u8GetPressed();
     64ea:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     64ee:	80 93 9a 03 	sts	0x039A, r24
 
-	} while (KPD_Press == NOTPRESSED);
+  } while (KPD_Press == NOTPRESSED);
     64f2:	80 91 9a 03 	lds	r24, 0x039A
     64f6:	8f 3f       	cpi	r24, 0xFF	; 255
     64f8:	c1 f3       	breq	.-16     	; 0x64ea <Set_Time+0x42c>
-	CLCD_vSendData(KPD_Press);
+  CLCD_vSendData(KPD_Press);
     64fa:	80 91 9a 03 	lds	r24, 0x039A
     64fe:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-	Time_Second = (KPD_Press - 48) * 10;
+  Time_Second = (KPD_Press - 48) * 10;
     6502:	80 91 9a 03 	lds	r24, 0x039A
     6506:	88 2f       	mov	r24, r24
     6508:	90 e0       	ldi	r25, 0x00	; 0
@@ -15426,46 +15426,46 @@ _delay_ms(double __ms)
     651e:	80 5e       	subi	r24, 0xE0	; 224
     6520:	80 93 97 03 	sts	0x0397, r24
 
-	do
-	{
-		KPD_Press = KPD_u8GetPressed();
+  do
+  {
+    KPD_Press = KPD_u8GetPressed();
     6524:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     6528:	80 93 9a 03 	sts	0x039A, r24
 
-	} while (KPD_Press == NOTPRESSED);
+  } while (KPD_Press == NOTPRESSED);
     652c:	80 91 9a 03 	lds	r24, 0x039A
     6530:	8f 3f       	cpi	r24, 0xFF	; 255
     6532:	c1 f3       	breq	.-16     	; 0x6524 <Set_Time+0x466>
-	CLCD_vSendData(KPD_Press);
+  CLCD_vSendData(KPD_Press);
     6534:	80 91 9a 03 	lds	r24, 0x039A
     6538:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
 
-	Time_Second += (KPD_Press - 48);
+  Time_Second += (KPD_Press - 48);
     653c:	90 91 9a 03 	lds	r25, 0x039A
     6540:	80 91 97 03 	lds	r24, 0x0397
     6544:	89 0f       	add	r24, r25
     6546:	80 53       	subi	r24, 0x30	; 48
     6548:	80 93 97 03 	sts	0x0397, r24
 
-	if (Time_Second > 59)
+  if (Time_Second > 59)
     654c:	80 91 97 03 	lds	r24, 0x0397
     6550:	8c 33       	cpi	r24, 0x3C	; 60
     6552:	c8 f0       	brcs	.+50     	; 0x6586 <Set_Time+0x4c8>
-	{
-		Time_Second = 0;
+  {
+    Time_Second = 0;
     6554:	10 92 97 03 	sts	0x0397, r1
-		CLCD_vSetPosition(1, 11);
+    CLCD_vSetPosition(1, 11);
     6558:	81 e0       	ldi	r24, 0x01	; 1
     655a:	6b e0       	ldi	r22, 0x0B	; 11
     655c:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-		CLCD_vSendData(Time_Second / 10 + 48);
+    CLCD_vSendData(Time_Second / 10 + 48);
     6560:	80 91 97 03 	lds	r24, 0x0397
     6564:	9a e0       	ldi	r25, 0x0A	; 10
     6566:	69 2f       	mov	r22, r25
     6568:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     656c:	80 5d       	subi	r24, 0xD0	; 208
     656e:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-		CLCD_vSendData(Time_Second % 10 + 48);
+    CLCD_vSendData(Time_Second % 10 + 48);
     6572:	80 91 97 03 	lds	r24, 0x0397
     6576:	9a e0       	ldi	r25, 0x0A	; 10
     6578:	69 2f       	mov	r22, r25
@@ -15473,33 +15473,33 @@ _delay_ms(double __ms)
     657e:	89 2f       	mov	r24, r25
     6580:	80 5d       	subi	r24, 0xD0	; 208
     6582:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-	}
+  }
 
-	/*___________________________________________________________________________________________________________________*/
+  /*___________________________________________________________________________________________________________________*/
 
-	//display AM or PM when mode is 12 Hour
-	if (Time_Mode == Time_Mode12Hours)
+  //display AM or PM when mode is 12 Hour
+  if (Time_Mode == Time_Mode12Hours)
     6586:	80 91 55 03 	lds	r24, 0x0355
     658a:	81 33       	cpi	r24, 0x31	; 49
     658c:	09 f0       	breq	.+2      	; 0x6590 <Set_Time+0x4d2>
     658e:	20 c1       	rjmp	.+576    	; 0x67d0 <Set_Time+0x712>
-	{
-		/* Select AM or PM if mode is 12-hour */
-		CLCD_vSetPosition(2, 1);
+  {
+    /* Select AM or PM if mode is 12-hour */
+    CLCD_vSetPosition(2, 1);
     6590:	82 e0       	ldi	r24, 0x02	; 2
     6592:	61 e0       	ldi	r22, 0x01	; 1
     6594:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-		CLCD_vSendString("1 : AM    2 : PM");
+    CLCD_vSendString("1 : AM    2 : PM");
     6598:	8e e3       	ldi	r24, 0x3E	; 62
     659a:	91 e0       	ldi	r25, 0x01	; 1
     659c:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		do
-		{
-			Time_DayFlag = KPD_u8GetPressed();
+    do
+    {
+      Time_DayFlag = KPD_u8GetPressed();
     65a0:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     65a4:	80 93 99 03 	sts	0x0399, r24
-			// Handle wrong input
-			if (Time_DayFlag != NOTPRESSED && (Time_DayFlag != '1' && Time_DayFlag != '2'))
+      // Handle wrong input
+      if (Time_DayFlag != NOTPRESSED && (Time_DayFlag != '1' && Time_DayFlag != '2'))
     65a8:	80 91 99 03 	lds	r24, 0x0399
     65ac:	8f 3f       	cpi	r24, 0xFF	; 255
     65ae:	09 f4       	brne	.+2      	; 0x65b2 <Set_Time+0x4f4>
@@ -15512,10 +15512,10 @@ _delay_ms(double __ms)
     65c0:	82 33       	cpi	r24, 0x32	; 50
     65c2:	09 f4       	brne	.+2      	; 0x65c6 <Set_Time+0x508>
     65c4:	e0 c0       	rjmp	.+448    	; 0x6786 <Set_Time+0x6c8>
-			{
-				CLCD_vClearScreen();
+      {
+        CLCD_vClearScreen();
     65c6:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-				CLCD_vSendString("Wrong Choise");
+        CLCD_vSendString("Wrong Choise");
     65ca:	8f e4       	ldi	r24, 0x4F	; 79
     65cc:	91 e0       	ldi	r25, 0x01	; 1
     65ce:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
@@ -15656,21 +15656,21 @@ _delay_ms(double __ms)
     66b0:	f1 f7       	brne	.-4      	; 0x66ae <Set_Time+0x5f0>
     66b2:	98 8b       	std	Y+16, r25	; 0x10
     66b4:	8f 87       	std	Y+15, r24	; 0x0f
-				_delay_ms(500);
-				CLCD_vClearScreen();
+        _delay_ms(500);
+        CLCD_vClearScreen();
     66b6:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-				CLCD_vSetPosition(1, 1);
+        CLCD_vSetPosition(1, 1);
     66ba:	81 e0       	ldi	r24, 0x01	; 1
     66bc:	61 e0       	ldi	r22, 0x01	; 1
     66be:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-				CLCD_vSendData(Time_Hour / 10 + 48);
+        CLCD_vSendData(Time_Hour / 10 + 48);
     66c2:	80 91 54 03 	lds	r24, 0x0354
     66c6:	9a e0       	ldi	r25, 0x0A	; 10
     66c8:	69 2f       	mov	r22, r25
     66ca:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     66ce:	80 5d       	subi	r24, 0xD0	; 208
     66d0:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData(Time_Hour % 10 + 48);
+        CLCD_vSendData(Time_Hour % 10 + 48);
     66d4:	80 91 54 03 	lds	r24, 0x0354
     66d8:	9a e0       	ldi	r25, 0x0A	; 10
     66da:	69 2f       	mov	r22, r25
@@ -15678,18 +15678,18 @@ _delay_ms(double __ms)
     66e0:	89 2f       	mov	r24, r25
     66e2:	80 5d       	subi	r24, 0xD0	; 208
     66e4:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendString(" : ");
+        CLCD_vSendString(" : ");
     66e8:	86 ee       	ldi	r24, 0xE6	; 230
     66ea:	90 e0       	ldi	r25, 0x00	; 0
     66ec:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-				CLCD_vSendData(Time_Minute / 10 + 48);
+        CLCD_vSendData(Time_Minute / 10 + 48);
     66f0:	80 91 96 03 	lds	r24, 0x0396
     66f4:	9a e0       	ldi	r25, 0x0A	; 10
     66f6:	69 2f       	mov	r22, r25
     66f8:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     66fc:	80 5d       	subi	r24, 0xD0	; 208
     66fe:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData(Time_Minute % 10 + 48);
+        CLCD_vSendData(Time_Minute % 10 + 48);
     6702:	80 91 96 03 	lds	r24, 0x0396
     6706:	9a e0       	ldi	r25, 0x0A	; 10
     6708:	69 2f       	mov	r22, r25
@@ -15697,18 +15697,18 @@ _delay_ms(double __ms)
     670e:	89 2f       	mov	r24, r25
     6710:	80 5d       	subi	r24, 0xD0	; 208
     6712:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendString(" : ");
+        CLCD_vSendString(" : ");
     6716:	86 ee       	ldi	r24, 0xE6	; 230
     6718:	90 e0       	ldi	r25, 0x00	; 0
     671a:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-				CLCD_vSendData(Time_Second / 10 + 48);
+        CLCD_vSendData(Time_Second / 10 + 48);
     671e:	80 91 97 03 	lds	r24, 0x0397
     6722:	9a e0       	ldi	r25, 0x0A	; 10
     6724:	69 2f       	mov	r22, r25
     6726:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     672a:	80 5d       	subi	r24, 0xD0	; 208
     672c:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData(Time_Second % 10 + 48);
+        CLCD_vSendData(Time_Second % 10 + 48);
     6730:	80 91 97 03 	lds	r24, 0x0397
     6734:	9a e0       	ldi	r25, 0x0A	; 10
     6736:	69 2f       	mov	r22, r25
@@ -15717,7 +15717,7 @@ _delay_ms(double __ms)
     673e:	80 5d       	subi	r24, 0xD0	; 208
     6740:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
 
-				if (READ_BIT(PORTA_REG, DIO_PIN3) == 1)
+        if (READ_BIT(PORTA_REG, DIO_PIN3) == 1)
     6744:	eb e3       	ldi	r30, 0x3B	; 59
     6746:	f0 e0       	ldi	r31, 0x00	; 0
     6748:	80 81       	ld	r24, Z
@@ -15734,33 +15734,33 @@ _delay_ms(double __ms)
     675e:	81 30       	cpi	r24, 0x01	; 1
     6760:	91 05       	cpc	r25, r1
     6762:	29 f4       	brne	.+10     	; 0x676e <Set_Time+0x6b0>
-				{
-					CLCD_vSendString(" AM");
+        {
+          CLCD_vSendString(" AM");
     6764:	8a ee       	ldi	r24, 0xEA	; 234
     6766:	90 e0       	ldi	r25, 0x00	; 0
     6768:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
     676c:	04 c0       	rjmp	.+8      	; 0x6776 <Set_Time+0x6b8>
-				}
-				else
-				{
-					CLCD_vSendString(" PM");
+        }
+        else
+        {
+          CLCD_vSendString(" PM");
     676e:	8e ee       	ldi	r24, 0xEE	; 238
     6770:	90 e0       	ldi	r25, 0x00	; 0
     6772:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-				}
-				CLCD_vSetPosition(2, 1);
+        }
+        CLCD_vSetPosition(2, 1);
     6776:	82 e0       	ldi	r24, 0x02	; 2
     6778:	61 e0       	ldi	r22, 0x01	; 1
     677a:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-				CLCD_vSendString("1 : AM    2 : PM");
+        CLCD_vSendString("1 : AM    2 : PM");
     677e:	8e e3       	ldi	r24, 0x3E	; 62
     6780:	91 e0       	ldi	r25, 0x01	; 1
     6782:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			}
-			else
-			{
-			}
-		} while (Time_DayFlag == NOTPRESSED || (Time_DayFlag != '1' && Time_DayFlag != '2'));
+      }
+      else
+      {
+      }
+    } while (Time_DayFlag == NOTPRESSED || (Time_DayFlag != '1' && Time_DayFlag != '2'));
     6786:	80 91 99 03 	lds	r24, 0x0399
     678a:	8f 3f       	cpi	r24, 0xFF	; 255
     678c:	09 f4       	brne	.+2      	; 0x6790 <Set_Time+0x6d2>
@@ -15773,13 +15773,13 @@ _delay_ms(double __ms)
     679e:	09 f0       	breq	.+2      	; 0x67a2 <Set_Time+0x6e4>
     67a0:	ff ce       	rjmp	.-514    	; 0x65a0 <Set_Time+0x4e2>
 
-		// if day time is AM
-		if (Time_DayFlag == '1')
+    // if day time is AM
+    if (Time_DayFlag == '1')
     67a2:	80 91 99 03 	lds	r24, 0x0399
     67a6:	81 33       	cpi	r24, 0x31	; 49
     67a8:	41 f4       	brne	.+16     	; 0x67ba <Set_Time+0x6fc>
-		{
-			SET_BIT(PORTA_REG, DIO_PIN3);
+    {
+      SET_BIT(PORTA_REG, DIO_PIN3);
     67aa:	ab e3       	ldi	r26, 0x3B	; 59
     67ac:	b0 e0       	ldi	r27, 0x00	; 0
     67ae:	eb e3       	ldi	r30, 0x3B	; 59
@@ -15788,14 +15788,14 @@ _delay_ms(double __ms)
     67b4:	88 60       	ori	r24, 0x08	; 8
     67b6:	8c 93       	st	X, r24
     67b8:	0b c0       	rjmp	.+22     	; 0x67d0 <Set_Time+0x712>
-		}
-		// if day time is PM
-		else if (Time_DayFlag == '2')
+    }
+    // if day time is PM
+    else if (Time_DayFlag == '2')
     67ba:	80 91 99 03 	lds	r24, 0x0399
     67be:	82 33       	cpi	r24, 0x32	; 50
     67c0:	39 f4       	brne	.+14     	; 0x67d0 <Set_Time+0x712>
-		{
-			CLR_BIT(PORTA_REG, DIO_PIN3);
+    {
+      CLR_BIT(PORTA_REG, DIO_PIN3);
     67c2:	ab e3       	ldi	r26, 0x3B	; 59
     67c4:	b0 e0       	ldi	r27, 0x00	; 0
     67c6:	eb e3       	ldi	r30, 0x3B	; 59
@@ -15803,48 +15803,48 @@ _delay_ms(double __ms)
     67ca:	80 81       	ld	r24, Z
     67cc:	87 7f       	andi	r24, 0xF7	; 247
     67ce:	8c 93       	st	X, r24
-	else
-	{
+  else
+  {
 
-	}
-	//to make sure that the user enter correct our or not to Re enter Clock again
-	CLCD_vClearScreen();
+  }
+  //to make sure that the user enter correct our or not to Re enter Clock again
+  CLCD_vClearScreen();
     67d0:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-	CLCD_vSendString("Set Time ?");
+  CLCD_vSendString("Set Time ?");
     67d4:	8c e5       	ldi	r24, 0x5C	; 92
     67d6:	91 e0       	ldi	r25, 0x01	; 1
     67d8:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSetPosition(2, 1);
+  CLCD_vSetPosition(2, 1);
     67dc:	82 e0       	ldi	r24, 0x02	; 2
     67de:	61 e0       	ldi	r22, 0x01	; 1
     67e0:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendString("1 : OK    2 : Cancel");
+  CLCD_vSendString("1 : OK    2 : Cancel");
     67e4:	87 e6       	ldi	r24, 0x67	; 103
     67e6:	91 e0       	ldi	r25, 0x01	; 1
     67e8:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSetPosition(3, 1);
+  CLCD_vSetPosition(3, 1);
     67ec:	83 e0       	ldi	r24, 0x03	; 3
     67ee:	61 e0       	ldi	r22, 0x01	; 1
     67f0:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendString("Cancel to Set");
+  CLCD_vSendString("Cancel to Set");
     67f4:	8c e7       	ldi	r24, 0x7C	; 124
     67f6:	91 e0       	ldi	r25, 0x01	; 1
     67f8:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSetPosition(4, 1);
+  CLCD_vSetPosition(4, 1);
     67fc:	84 e0       	ldi	r24, 0x04	; 4
     67fe:	61 e0       	ldi	r22, 0x01	; 1
     6800:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendString("Time Again");
+  CLCD_vSendString("Time Again");
     6804:	8a e8       	ldi	r24, 0x8A	; 138
     6806:	91 e0       	ldi	r25, 0x01	; 1
     6808:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	do
-	{
-		KPD_Press = KPD_u8GetPressed();
+  do
+  {
+    KPD_Press = KPD_u8GetPressed();
     680c:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     6810:	80 93 9a 03 	sts	0x039A, r24
-		//when input invalid val
-		if (KPD_Press != NOTPRESSED && (KPD_Press != '1' && KPD_Press != '2'))
+    //when input invalid val
+    if (KPD_Press != NOTPRESSED && (KPD_Press != '1' && KPD_Press != '2'))
     6814:	80 91 9a 03 	lds	r24, 0x039A
     6818:	8f 3f       	cpi	r24, 0xFF	; 255
     681a:	09 f4       	brne	.+2      	; 0x681e <Set_Time+0x760>
@@ -15857,10 +15857,10 @@ _delay_ms(double __ms)
     682c:	82 33       	cpi	r24, 0x32	; 50
     682e:	09 f4       	brne	.+2      	; 0x6832 <Set_Time+0x774>
     6830:	96 c0       	rjmp	.+300    	; 0x695e <Set_Time+0x8a0>
-		{
-			CLCD_vClearScreen();
+    {
+      CLCD_vClearScreen();
     6832:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSendString("Wrong Choise");
+      CLCD_vSendString("Wrong Choise");
     6836:	8f e4       	ldi	r24, 0x4F	; 79
     6838:	91 e0       	ldi	r25, 0x01	; 1
     683a:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
@@ -16001,39 +16001,39 @@ _delay_ms(double __ms)
     691c:	f1 f7       	brne	.-4      	; 0x691a <Set_Time+0x85c>
     691e:	9a 83       	std	Y+2, r25	; 0x02
     6920:	89 83       	std	Y+1, r24	; 0x01
-			_delay_ms(500);
-			CLCD_vClearScreen();
+      _delay_ms(500);
+      CLCD_vClearScreen();
     6922:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSendString("Set Time ?");
+      CLCD_vSendString("Set Time ?");
     6926:	8c e5       	ldi	r24, 0x5C	; 92
     6928:	91 e0       	ldi	r25, 0x01	; 1
     692a:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(2, 1);
+      CLCD_vSetPosition(2, 1);
     692e:	82 e0       	ldi	r24, 0x02	; 2
     6930:	61 e0       	ldi	r22, 0x01	; 1
     6932:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("1 : OK    2 : Cancel");
+      CLCD_vSendString("1 : OK    2 : Cancel");
     6936:	87 e6       	ldi	r24, 0x67	; 103
     6938:	91 e0       	ldi	r25, 0x01	; 1
     693a:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(3, 1);
+      CLCD_vSetPosition(3, 1);
     693e:	83 e0       	ldi	r24, 0x03	; 3
     6940:	61 e0       	ldi	r22, 0x01	; 1
     6942:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("Cancel to Set");
+      CLCD_vSendString("Cancel to Set");
     6946:	8c e7       	ldi	r24, 0x7C	; 124
     6948:	91 e0       	ldi	r25, 0x01	; 1
     694a:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(4, 1);
+      CLCD_vSetPosition(4, 1);
     694e:	84 e0       	ldi	r24, 0x04	; 4
     6950:	61 e0       	ldi	r22, 0x01	; 1
     6952:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("Time Again");
+      CLCD_vSendString("Time Again");
     6956:	8a e8       	ldi	r24, 0x8A	; 138
     6958:	91 e0       	ldi	r25, 0x01	; 1
     695a:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		}
-	} while (KPD_Press != '1' && KPD_Press != '2');
+    }
+  } while (KPD_Press != '1' && KPD_Press != '2');
     695e:	80 91 9a 03 	lds	r24, 0x039A
     6962:	81 33       	cpi	r24, 0x31	; 49
     6964:	29 f0       	breq	.+10     	; 0x6970 <Set_Time+0x8b2>
@@ -16042,64 +16042,64 @@ _delay_ms(double __ms)
     696c:	09 f0       	breq	.+2      	; 0x6970 <Set_Time+0x8b2>
     696e:	4e cf       	rjmp	.-356    	; 0x680c <Set_Time+0x74e>
 
-	//when enter correct clock
-	if (KPD_Press == '1')
+  //when enter correct clock
+  if (KPD_Press == '1')
     6970:	80 91 9a 03 	lds	r24, 0x039A
     6974:	81 33       	cpi	r24, 0x31	; 49
     6976:	51 f5       	brne	.+84     	; 0x69cc <Set_Time+0x90e>
-	{
-		CLCD_vSendCommand(CLCD_DISPLAYON_CURSOROFF);
+  {
+    CLCD_vSendCommand(CLCD_DISPLAYON_CURSOROFF);
     6978:	8c e0       	ldi	r24, 0x0C	; 12
     697a:	0e 94 6d 1d 	call	0x3ada	; 0x3ada <CLCD_vSendCommand>
-		CLCD_vClearScreen();
+    CLCD_vClearScreen();
     697e:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-		CLCD_vSendString("1 - set time");
+    CLCD_vSendString("1 - set time");
     6982:	83 ec       	ldi	r24, 0xC3	; 195
     6984:	90 e0       	ldi	r25, 0x00	; 0
     6986:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		CLCD_vSetPosition(2, 1);
+    CLCD_vSetPosition(2, 1);
     698a:	82 e0       	ldi	r24, 0x02	; 2
     698c:	61 e0       	ldi	r22, 0x01	; 1
     698e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-		CLCD_vSendString("2 - select mode");
+    CLCD_vSendString("2 - select mode");
     6992:	80 ed       	ldi	r24, 0xD0	; 208
     6994:	90 e0       	ldi	r25, 0x00	; 0
     6996:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		CLCD_vSetPosition(3, 1);
+    CLCD_vSetPosition(3, 1);
     699a:	83 e0       	ldi	r24, 0x03	; 3
     699c:	61 e0       	ldi	r22, 0x01	; 1
     699e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-		CLCD_vSendString("3 - Set Alarm");
+    CLCD_vSendString("3 - Set Alarm");
     69a2:	85 e9       	ldi	r24, 0x95	; 149
     69a4:	90 e0       	ldi	r25, 0x00	; 0
     69a6:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		CLCD_vSetPosition(4, 1);
+    CLCD_vSetPosition(4, 1);
     69aa:	84 e0       	ldi	r24, 0x04	; 4
     69ac:	61 e0       	ldi	r22, 0x01	; 1
     69ae:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-		CLCD_vSendString("4 - Weather");
+    CLCD_vSendString("4 - Weather");
     69b2:	83 ea       	ldi	r24, 0xA3	; 163
     69b4:	90 e0       	ldi	r25, 0x00	; 0
     69b6:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		CLCD_vSetPosition(4, 15);
+    CLCD_vSetPosition(4, 15);
     69ba:	84 e0       	ldi	r24, 0x04	; 4
     69bc:	6f e0       	ldi	r22, 0x0F	; 15
     69be:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-		CLCD_vSendString("X:EXIT");
+    CLCD_vSendString("X:EXIT");
     69c2:	8f ea       	ldi	r24, 0xAF	; 175
     69c4:	90 e0       	ldi	r25, 0x00	; 0
     69c6:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
     69ca:	06 c0       	rjmp	.+12     	; 0x69d8 <Set_Time+0x91a>
-	}
-	//when enter incorrect clock
-	else if (KPD_Press == '2')
+  }
+  //when enter incorrect clock
+  else if (KPD_Press == '2')
     69cc:	80 91 9a 03 	lds	r24, 0x039A
     69d0:	82 33       	cpi	r24, 0x32	; 50
     69d2:	11 f4       	brne	.+4      	; 0x69d8 <Set_Time+0x91a>
-	{
-		Set_Time();
+  {
+    Set_Time();
     69d4:	0e 94 5f 30 	call	0x60be	; 0x60be <Set_Time>
-	}
+  }
 }
     69d8:	aa 96       	adiw	r28, 0x2a	; 42
     69da:	0f b6       	in	r0, 0x3f	; 63
@@ -16129,50 +16129,50 @@ void Select_Mode()
     69fa:	0f be       	out	0x3f, r0	; 63
     69fc:	cd bf       	out	0x3d, r28	; 61
 
-	CLCD_vClearScreen();
+  CLCD_vClearScreen();
     69fe:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-	CLCD_vSendString("1 - 12-hour time");
+  CLCD_vSendString("1 - 12-hour time");
     6a02:	89 e0       	ldi	r24, 0x09	; 9
     6a04:	91 e0       	ldi	r25, 0x01	; 1
     6a06:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSetPosition(2, 1);
+  CLCD_vSetPosition(2, 1);
     6a0a:	82 e0       	ldi	r24, 0x02	; 2
     6a0c:	61 e0       	ldi	r22, 0x01	; 1
     6a0e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendString("2 - 24-hour time");
+  CLCD_vSendString("2 - 24-hour time");
     6a12:	8a e1       	ldi	r24, 0x1A	; 26
     6a14:	91 e0       	ldi	r25, 0x01	; 1
     6a16:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	//Get input from user
-	do
-	{
-		Time_Mode = KPD_u8GetPressed();
+  //Get input from user
+  do
+  {
+    Time_Mode = KPD_u8GetPressed();
     6a1a:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     6a1e:	80 93 55 03 	sts	0x0355, r24
-		//if Select 12 hour mode
-		if (Time_Mode == Time_Mode12Hours)
+    //if Select 12 hour mode
+    if (Time_Mode == Time_Mode12Hours)
     6a22:	80 91 55 03 	lds	r24, 0x0355
     6a26:	81 33       	cpi	r24, 0x31	; 49
     6a28:	a1 f5       	brne	.+104    	; 0x6a92 <Select_Mode+0xa8>
-		{
-			if (Time_ModeFlag == 0)
+    {
+      if (Time_ModeFlag == 0)
     6a2a:	80 91 53 03 	lds	r24, 0x0353
     6a2e:	88 23       	and	r24, r24
     6a30:	09 f0       	breq	.+2      	; 0x6a34 <Select_Mode+0x4a>
     6a32:	03 c1       	rjmp	.+518    	; 0x6c3a <Select_Mode+0x250>
-			{
-				if (Time_Hour > 12)
+      {
+        if (Time_Hour > 12)
     6a34:	80 91 54 03 	lds	r24, 0x0354
     6a38:	8d 30       	cpi	r24, 0x0D	; 13
     6a3a:	30 f0       	brcs	.+12     	; 0x6a48 <Select_Mode+0x5e>
-				{
-					Time_Hour -= 12;
+        {
+          Time_Hour -= 12;
     6a3c:	80 91 54 03 	lds	r24, 0x0354
     6a40:	8c 50       	subi	r24, 0x0C	; 12
     6a42:	80 93 54 03 	sts	0x0354, r24
     6a46:	21 c0       	rjmp	.+66     	; 0x6a8a <Select_Mode+0xa0>
-				}
-				else if (Time_Hour == 0 && READ_BIT(PORTA_REG,DIO_PIN3) == 1)
+        }
+        else if (Time_Hour == 0 && READ_BIT(PORTA_REG,DIO_PIN3) == 1)
     6a48:	80 91 54 03 	lds	r24, 0x0354
     6a4c:	88 23       	and	r24, r24
     6a4e:	a1 f4       	brne	.+40     	; 0x6a78 <Select_Mode+0x8e>
@@ -16192,46 +16192,46 @@ void Select_Mode()
     6a6a:	81 30       	cpi	r24, 0x01	; 1
     6a6c:	91 05       	cpc	r25, r1
     6a6e:	21 f4       	brne	.+8      	; 0x6a78 <Select_Mode+0x8e>
-				{
-					Time_Hour = 12;
+        {
+          Time_Hour = 12;
     6a70:	8c e0       	ldi	r24, 0x0C	; 12
     6a72:	80 93 54 03 	sts	0x0354, r24
     6a76:	09 c0       	rjmp	.+18     	; 0x6a8a <Select_Mode+0xa0>
-				}
-				else if (Time_Hour)
+        }
+        else if (Time_Hour)
     6a78:	80 91 54 03 	lds	r24, 0x0354
     6a7c:	88 23       	and	r24, r24
     6a7e:	29 f0       	breq	.+10     	; 0x6a8a <Select_Mode+0xa0>
-				{
-					Time_Hour += 12;
+        {
+          Time_Hour += 12;
     6a80:	80 91 54 03 	lds	r24, 0x0354
     6a84:	84 5f       	subi	r24, 0xF4	; 244
     6a86:	80 93 54 03 	sts	0x0354, r24
-				}
-				else
-				{
-				}
-				Time_ModeFlag = 1;
+        }
+        else
+        {
+        }
+        Time_ModeFlag = 1;
     6a8a:	81 e0       	ldi	r24, 0x01	; 1
     6a8c:	80 93 53 03 	sts	0x0353, r24
     6a90:	d4 c0       	rjmp	.+424    	; 0x6c3a <Select_Mode+0x250>
-			else
-			{
-			}
-		}
-		//if Select 24 hour mode
-		else if (Time_Mode == Time_Mode24Hours)
+      else
+      {
+      }
+    }
+    //if Select 24 hour mode
+    else if (Time_Mode == Time_Mode24Hours)
     6a92:	80 91 55 03 	lds	r24, 0x0355
     6a96:	82 33       	cpi	r24, 0x32	; 50
     6a98:	d9 f5       	brne	.+118    	; 0x6b10 <Select_Mode+0x126>
-		{
-			if (Time_ModeFlag == 1)
+    {
+      if (Time_ModeFlag == 1)
     6a9a:	80 91 53 03 	lds	r24, 0x0353
     6a9e:	81 30       	cpi	r24, 0x01	; 1
     6aa0:	09 f0       	breq	.+2      	; 0x6aa4 <Select_Mode+0xba>
     6aa2:	cb c0       	rjmp	.+406    	; 0x6c3a <Select_Mode+0x250>
-			{
-				if (Time_Hour == 12 && READ_BIT(PORTA_REG, DIO_PIN3) == 1)
+      {
+        if (Time_Hour == 12 && READ_BIT(PORTA_REG, DIO_PIN3) == 1)
     6aa4:	80 91 54 03 	lds	r24, 0x0354
     6aa8:	8c 30       	cpi	r24, 0x0C	; 12
     6aaa:	99 f4       	brne	.+38     	; 0x6ad2 <Select_Mode+0xe8>
@@ -16251,12 +16251,12 @@ void Select_Mode()
     6ac6:	81 30       	cpi	r24, 0x01	; 1
     6ac8:	91 05       	cpc	r25, r1
     6aca:	19 f4       	brne	.+6      	; 0x6ad2 <Select_Mode+0xe8>
-				{
-					Time_Hour = 0;
+        {
+          Time_Hour = 0;
     6acc:	10 92 54 03 	sts	0x0354, r1
     6ad0:	1c c0       	rjmp	.+56     	; 0x6b0a <Select_Mode+0x120>
-				}
-				else if (Time_Hour == 12 && READ_BIT(PORTA_REG, DIO_PIN3 == 0))
+        }
+        else if (Time_Hour == 12 && READ_BIT(PORTA_REG, DIO_PIN3 == 0))
     6ad2:	80 91 54 03 	lds	r24, 0x0354
     6ad6:	8c 30       	cpi	r24, 0x0C	; 12
     6ad8:	21 f4       	brne	.+8      	; 0x6ae2 <Select_Mode+0xf8>
@@ -16264,9 +16264,9 @@ void Select_Mode()
     6adc:	f0 e0       	ldi	r31, 0x00	; 0
     6ade:	80 81       	ld	r24, Z
     6ae0:	14 c0       	rjmp	.+40     	; 0x6b0a <Select_Mode+0x120>
-				{
-				}
-				else if (READ_BIT(PORTA_REG, DIO_PIN3) == 0)
+        {
+        }
+        else if (READ_BIT(PORTA_REG, DIO_PIN3) == 0)
     6ae2:	eb e3       	ldi	r30, 0x3B	; 59
     6ae4:	f0 e0       	ldi	r31, 0x00	; 0
     6ae6:	80 81       	ld	r24, Z
@@ -16282,24 +16282,24 @@ void Select_Mode()
     6afa:	87 95       	ror	r24
     6afc:	00 97       	sbiw	r24, 0x00	; 0
     6afe:	29 f4       	brne	.+10     	; 0x6b0a <Select_Mode+0x120>
-				{
-					Time_Hour += 12;
+        {
+          Time_Hour += 12;
     6b00:	80 91 54 03 	lds	r24, 0x0354
     6b04:	84 5f       	subi	r24, 0xF4	; 244
     6b06:	80 93 54 03 	sts	0x0354, r24
-				}
-				else
-				{
-				}
-				Time_ModeFlag = 0;
+        }
+        else
+        {
+        }
+        Time_ModeFlag = 0;
     6b0a:	10 92 53 03 	sts	0x0353, r1
     6b0e:	95 c0       	rjmp	.+298    	; 0x6c3a <Select_Mode+0x250>
-			else
-			{
-			}
-		}
-		//when inter invalid choose
-		else if (Time_Mode != NOTPRESSED && (Time_Mode != '1' && Time_Mode != '2'))
+      else
+      {
+      }
+    }
+    //when inter invalid choose
+    else if (Time_Mode != NOTPRESSED && (Time_Mode != '1' && Time_Mode != '2'))
     6b10:	80 91 55 03 	lds	r24, 0x0355
     6b14:	8f 3f       	cpi	r24, 0xFF	; 255
     6b16:	09 f4       	brne	.+2      	; 0x6b1a <Select_Mode+0x130>
@@ -16312,10 +16312,10 @@ void Select_Mode()
     6b28:	82 33       	cpi	r24, 0x32	; 50
     6b2a:	09 f4       	brne	.+2      	; 0x6b2e <Select_Mode+0x144>
     6b2c:	86 c0       	rjmp	.+268    	; 0x6c3a <Select_Mode+0x250>
-		{
-			CLCD_vClearScreen();
+    {
+      CLCD_vClearScreen();
     6b2e:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSendString("Wrong choise");
+      CLCD_vSendString("Wrong choise");
     6b32:	85 e9       	ldi	r24, 0x95	; 149
     6b34:	91 e0       	ldi	r25, 0x01	; 1
     6b36:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
@@ -16456,24 +16456,24 @@ _delay_ms(double __ms)
     6c18:	f1 f7       	brne	.-4      	; 0x6c16 <Select_Mode+0x22c>
     6c1a:	9a 83       	std	Y+2, r25	; 0x02
     6c1c:	89 83       	std	Y+1, r24	; 0x01
-			_delay_ms(500);
-			CLCD_vClearScreen();
+      _delay_ms(500);
+      CLCD_vClearScreen();
     6c1e:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSendString("1 - 12-hour time");
+      CLCD_vSendString("1 - 12-hour time");
     6c22:	89 e0       	ldi	r24, 0x09	; 9
     6c24:	91 e0       	ldi	r25, 0x01	; 1
     6c26:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(2, 1);
+      CLCD_vSetPosition(2, 1);
     6c2a:	82 e0       	ldi	r24, 0x02	; 2
     6c2c:	61 e0       	ldi	r22, 0x01	; 1
     6c2e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("2 - 24-hour time");
+      CLCD_vSendString("2 - 24-hour time");
     6c32:	8a e1       	ldi	r24, 0x1A	; 26
     6c34:	91 e0       	ldi	r25, 0x01	; 1
     6c36:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		}
+    }
 
-	} while (Time_Mode == NOTPRESSED || (Time_Mode != '1' && Time_Mode != '2'));
+  } while (Time_Mode == NOTPRESSED || (Time_Mode != '1' && Time_Mode != '2'));
     6c3a:	80 91 55 03 	lds	r24, 0x0355
     6c3e:	8f 3f       	cpi	r24, 0xFF	; 255
     6c40:	09 f4       	brne	.+2      	; 0x6c44 <Select_Mode+0x25a>
@@ -16486,42 +16486,42 @@ _delay_ms(double __ms)
     6c52:	09 f0       	breq	.+2      	; 0x6c56 <Select_Mode+0x26c>
     6c54:	e2 ce       	rjmp	.-572    	; 0x6a1a <Select_Mode+0x30>
 
-	//when choose any of them
-	CLCD_vClearScreen();
+  //when choose any of them
+  CLCD_vClearScreen();
     6c56:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-	CLCD_vSendString("1 - set time");
+  CLCD_vSendString("1 - set time");
     6c5a:	83 ec       	ldi	r24, 0xC3	; 195
     6c5c:	90 e0       	ldi	r25, 0x00	; 0
     6c5e:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSetPosition(2, 1);
+  CLCD_vSetPosition(2, 1);
     6c62:	82 e0       	ldi	r24, 0x02	; 2
     6c64:	61 e0       	ldi	r22, 0x01	; 1
     6c66:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendString("2 - select mode");
+  CLCD_vSendString("2 - select mode");
     6c6a:	80 ed       	ldi	r24, 0xD0	; 208
     6c6c:	90 e0       	ldi	r25, 0x00	; 0
     6c6e:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSetPosition(3, 1);
+  CLCD_vSetPosition(3, 1);
     6c72:	83 e0       	ldi	r24, 0x03	; 3
     6c74:	61 e0       	ldi	r22, 0x01	; 1
     6c76:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendString("3 - Set Alarm");
+  CLCD_vSendString("3 - Set Alarm");
     6c7a:	85 e9       	ldi	r24, 0x95	; 149
     6c7c:	90 e0       	ldi	r25, 0x00	; 0
     6c7e:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSetPosition(4, 1);
+  CLCD_vSetPosition(4, 1);
     6c82:	84 e0       	ldi	r24, 0x04	; 4
     6c84:	61 e0       	ldi	r22, 0x01	; 1
     6c86:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendString("4 - Weather");
+  CLCD_vSendString("4 - Weather");
     6c8a:	83 ea       	ldi	r24, 0xA3	; 163
     6c8c:	90 e0       	ldi	r25, 0x00	; 0
     6c8e:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSetPosition(4, 15);
+  CLCD_vSetPosition(4, 15);
     6c92:	84 e0       	ldi	r24, 0x04	; 4
     6c94:	6f e0       	ldi	r22, 0x0F	; 15
     6c96:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendString("X:EXIT");
+  CLCD_vSendString("X:EXIT");
     6c9a:	8f ea       	ldi	r24, 0xAF	; 175
     6c9c:	90 e0       	ldi	r25, 0x00	; 0
     6c9e:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
@@ -16553,36 +16553,36 @@ void Set_Alarm()
     6cc2:	de bf       	out	0x3e, r29	; 62
     6cc4:	0f be       	out	0x3f, r0	; 63
     6cc6:	cd bf       	out	0x3d, r28	; 61
-	CLCD_vClearScreen();
+  CLCD_vClearScreen();
     6cc8:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-	CLCD_vSendString("ALARM");
+  CLCD_vSendString("ALARM");
     6ccc:	82 ea       	ldi	r24, 0xA2	; 162
     6cce:	91 e0       	ldi	r25, 0x01	; 1
     6cd0:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSetPosition(2, 1);
+  CLCD_vSetPosition(2, 1);
     6cd4:	82 e0       	ldi	r24, 0x02	; 2
     6cd6:	61 e0       	ldi	r22, 0x01	; 1
     6cd8:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendString("1 - Enable");
+  CLCD_vSendString("1 - Enable");
     6cdc:	88 ea       	ldi	r24, 0xA8	; 168
     6cde:	91 e0       	ldi	r25, 0x01	; 1
     6ce0:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSetPosition(3, 1);
+  CLCD_vSetPosition(3, 1);
     6ce4:	83 e0       	ldi	r24, 0x03	; 3
     6ce6:	61 e0       	ldi	r22, 0x01	; 1
     6ce8:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendString("2 - Disable");
+  CLCD_vSendString("2 - Disable");
     6cec:	83 eb       	ldi	r24, 0xB3	; 179
     6cee:	91 e0       	ldi	r25, 0x01	; 1
     6cf0:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
 
-	/* Get pressed to choose if Alarm Statsu IS Enable or Disaple */
-	do
-	{
-		KPD_Press = KPD_u8GetPressed();
+  /* Get pressed to choose if Alarm Statsu IS Enable or Disaple */
+  do
+  {
+    KPD_Press = KPD_u8GetPressed();
     6cf4:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     6cf8:	80 93 9a 03 	sts	0x039A, r24
-		if (KPD_Press != NOTPRESSED && KPD_Press != '1' && KPD_Press != '2')
+    if (KPD_Press != NOTPRESSED && KPD_Press != '1' && KPD_Press != '2')
     6cfc:	80 91 9a 03 	lds	r24, 0x039A
     6d00:	8f 3f       	cpi	r24, 0xFF	; 255
     6d02:	09 f4       	brne	.+2      	; 0x6d06 <Set_Alarm+0x52>
@@ -16595,10 +16595,10 @@ void Set_Alarm()
     6d14:	82 33       	cpi	r24, 0x32	; 50
     6d16:	09 f4       	brne	.+2      	; 0x6d1a <Set_Alarm+0x66>
     6d18:	8e c0       	rjmp	.+284    	; 0x6e36 <Set_Alarm+0x182>
-		{
-			CLCD_vClearScreen();
+    {
+      CLCD_vClearScreen();
     6d1a:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSendString("Wrong Choise");
+      CLCD_vSendString("Wrong Choise");
     6d1e:	8f e4       	ldi	r24, 0x4F	; 79
     6d20:	91 e0       	ldi	r25, 0x01	; 1
     6d22:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
@@ -16739,31 +16739,31 @@ _delay_ms(double __ms)
     6e04:	f1 f7       	brne	.-4      	; 0x6e02 <Set_Alarm+0x14e>
     6e06:	9e 8f       	std	Y+30, r25	; 0x1e
     6e08:	8d 8f       	std	Y+29, r24	; 0x1d
-			_delay_ms(500);
-			CLCD_vClearScreen();
+      _delay_ms(500);
+      CLCD_vClearScreen();
     6e0a:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSendString("ALARM");
+      CLCD_vSendString("ALARM");
     6e0e:	82 ea       	ldi	r24, 0xA2	; 162
     6e10:	91 e0       	ldi	r25, 0x01	; 1
     6e12:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(2, 1);
+      CLCD_vSetPosition(2, 1);
     6e16:	82 e0       	ldi	r24, 0x02	; 2
     6e18:	61 e0       	ldi	r22, 0x01	; 1
     6e1a:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("1 - Enable");
+      CLCD_vSendString("1 - Enable");
     6e1e:	88 ea       	ldi	r24, 0xA8	; 168
     6e20:	91 e0       	ldi	r25, 0x01	; 1
     6e22:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(3, 1);
+      CLCD_vSetPosition(3, 1);
     6e26:	83 e0       	ldi	r24, 0x03	; 3
     6e28:	61 e0       	ldi	r22, 0x01	; 1
     6e2a:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("2 - Disable");
+      CLCD_vSendString("2 - Disable");
     6e2e:	83 eb       	ldi	r24, 0xB3	; 179
     6e30:	91 e0       	ldi	r25, 0x01	; 1
     6e32:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		}
-	} while (KPD_Press == NOTPRESSED || (KPD_Press != '1' && KPD_Press != '2'));
+    }
+  } while (KPD_Press == NOTPRESSED || (KPD_Press != '1' && KPD_Press != '2'));
     6e36:	80 91 9a 03 	lds	r24, 0x039A
     6e3a:	8f 3f       	cpi	r24, 0xFF	; 255
     6e3c:	09 f4       	brne	.+2      	; 0x6e40 <Set_Alarm+0x18c>
@@ -16776,18 +16776,18 @@ _delay_ms(double __ms)
     6e4e:	09 f0       	breq	.+2      	; 0x6e52 <Set_Alarm+0x19e>
     6e50:	51 cf       	rjmp	.-350    	; 0x6cf4 <Set_Alarm+0x40>
 
-	/*___________________________________________________________________________________________________________________*/
+  /*___________________________________________________________________________________________________________________*/
 
-	/* Check if chosen Alarm Status is Enable or Disaple */
-	/* if user choose alarm is enable */
-	if (KPD_Press == '1')
+  /* Check if chosen Alarm Status is Enable or Disaple */
+  /* if user choose alarm is enable */
+  if (KPD_Press == '1')
     6e52:	80 91 9a 03 	lds	r24, 0x039A
     6e56:	81 33       	cpi	r24, 0x31	; 49
     6e58:	09 f0       	breq	.+2      	; 0x6e5c <Set_Alarm+0x1a8>
     6e5a:	92 c2       	rjmp	.+1316   	; 0x7380 <Set_Alarm+0x6cc>
-	{
-		/* Check if Alarm was Enaple or Disaple */
-		switch (Alarm_Status)
+  {
+    /* Check if Alarm was Enaple or Disaple */
+    switch (Alarm_Status)
     6e5c:	80 91 95 03 	lds	r24, 0x0395
     6e60:	28 2f       	mov	r18, r24
     6e62:	30 e0       	ldi	r19, 0x00	; 0
@@ -16803,61 +16803,61 @@ _delay_ms(double __ms)
     6e76:	31 05       	cpc	r19, r1
     6e78:	e9 f0       	breq	.+58     	; 0x6eb4 <Set_Alarm+0x200>
     6e7a:	6c c0       	rjmp	.+216    	; 0x6f54 <Set_Alarm+0x2a0>
-		{
-		//if Alarm was Disaple display Alarm is 12 : 00
-		case Alarm_DIS:
-			CLCD_vClearScreen();
+    {
+    //if Alarm was Disaple display Alarm is 12 : 00
+    case Alarm_DIS:
+      CLCD_vClearScreen();
     6e7c:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSendString("Set Aalrm :");
+      CLCD_vSendString("Set Aalrm :");
     6e80:	8f eb       	ldi	r24, 0xBF	; 191
     6e82:	91 e0       	ldi	r25, 0x01	; 1
     6e84:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(2, 6);
+      CLCD_vSetPosition(2, 6);
     6e88:	82 e0       	ldi	r24, 0x02	; 2
     6e8a:	66 e0       	ldi	r22, 0x06	; 6
     6e8c:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("12 : 00");
+      CLCD_vSendString("12 : 00");
     6e90:	8b ec       	ldi	r24, 0xCB	; 203
     6e92:	91 e0       	ldi	r25, 0x01	; 1
     6e94:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			//if Time_Mode is 12 Hours Mode display AM or PM
-			if (Time_Mode == Time_Mode12Hours)
+      //if Time_Mode is 12 Hours Mode display AM or PM
+      if (Time_Mode == Time_Mode12Hours)
     6e98:	80 91 55 03 	lds	r24, 0x0355
     6e9c:	81 33       	cpi	r24, 0x31	; 49
     6e9e:	09 f0       	breq	.+2      	; 0x6ea2 <Set_Alarm+0x1ee>
     6ea0:	59 c0       	rjmp	.+178    	; 0x6f54 <Set_Alarm+0x2a0>
-			{
-				CLCD_vSetPosition(2, 14);
+      {
+        CLCD_vSetPosition(2, 14);
     6ea2:	82 e0       	ldi	r24, 0x02	; 2
     6ea4:	6e e0       	ldi	r22, 0x0E	; 14
     6ea6:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-				CLCD_vSendString("AM");
+        CLCD_vSendString("AM");
     6eaa:	88 e3       	ldi	r24, 0x38	; 56
     6eac:	91 e0       	ldi	r25, 0x01	; 1
     6eae:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
     6eb2:	50 c0       	rjmp	.+160    	; 0x6f54 <Set_Alarm+0x2a0>
-			}
-			break;
-			//If Alarm was Enaple display Last Alarm
-		case Alarm_EN:
-			CLCD_vClearScreen();
+      }
+      break;
+      //If Alarm was Enaple display Last Alarm
+    case Alarm_EN:
+      CLCD_vClearScreen();
     6eb4:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSendString("Set Aalrm :");
+      CLCD_vSendString("Set Aalrm :");
     6eb8:	8f eb       	ldi	r24, 0xBF	; 191
     6eba:	91 e0       	ldi	r25, 0x01	; 1
     6ebc:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(2, 6);
+      CLCD_vSetPosition(2, 6);
     6ec0:	82 e0       	ldi	r24, 0x02	; 2
     6ec2:	66 e0       	ldi	r22, 0x06	; 6
     6ec4:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendData((Alarm_Hour / 10) + 48);
+      CLCD_vSendData((Alarm_Hour / 10) + 48);
     6ec8:	80 91 98 03 	lds	r24, 0x0398
     6ecc:	9a e0       	ldi	r25, 0x0A	; 10
     6ece:	69 2f       	mov	r22, r25
     6ed0:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     6ed4:	80 5d       	subi	r24, 0xD0	; 208
     6ed6:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-			CLCD_vSendData((Alarm_Hour % 10) + 48);
+      CLCD_vSendData((Alarm_Hour % 10) + 48);
     6eda:	80 91 98 03 	lds	r24, 0x0398
     6ede:	9a e0       	ldi	r25, 0x0A	; 10
     6ee0:	69 2f       	mov	r22, r25
@@ -16865,18 +16865,18 @@ _delay_ms(double __ms)
     6ee6:	89 2f       	mov	r24, r25
     6ee8:	80 5d       	subi	r24, 0xD0	; 208
     6eea:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-			CLCD_vSendString(" : ");
+      CLCD_vSendString(" : ");
     6eee:	86 ee       	ldi	r24, 0xE6	; 230
     6ef0:	90 e0       	ldi	r25, 0x00	; 0
     6ef2:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSendData((Alarm_Minutes / 10) + 48);
+      CLCD_vSendData((Alarm_Minutes / 10) + 48);
     6ef6:	80 91 9b 03 	lds	r24, 0x039B
     6efa:	9a e0       	ldi	r25, 0x0A	; 10
     6efc:	69 2f       	mov	r22, r25
     6efe:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     6f02:	80 5d       	subi	r24, 0xD0	; 208
     6f04:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-			CLCD_vSendData((Alarm_Minutes % 10) + 48);
+      CLCD_vSendData((Alarm_Minutes % 10) + 48);
     6f08:	80 91 9b 03 	lds	r24, 0x039B
     6f0c:	9a e0       	ldi	r25, 0x0A	; 10
     6f0e:	69 2f       	mov	r22, r25
@@ -16885,13 +16885,13 @@ _delay_ms(double __ms)
     6f16:	80 5d       	subi	r24, 0xD0	; 208
     6f18:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
 
-			//if Time_Mode is 12 Hours Mode display AM or PM
-			if (Time_Mode == Time_Mode12Hours)
+      //if Time_Mode is 12 Hours Mode display AM or PM
+      if (Time_Mode == Time_Mode12Hours)
     6f1c:	80 91 55 03 	lds	r24, 0x0355
     6f20:	81 33       	cpi	r24, 0x31	; 49
     6f22:	c1 f4       	brne	.+48     	; 0x6f54 <Set_Alarm+0x2a0>
-			{
-				switch (Alarm_DayTime)
+      {
+        switch (Alarm_DayTime)
     6f24:	80 91 94 03 	lds	r24, 0x0394
     6f28:	28 2f       	mov	r18, r24
     6f2a:	30 e0       	ldi	r19, 0x00	; 0
@@ -16906,50 +16906,50 @@ _delay_ms(double __ms)
     6f3c:	21 30       	cpi	r18, 0x01	; 1
     6f3e:	31 05       	cpc	r19, r1
     6f40:	49 f4       	brne	.+18     	; 0x6f54 <Set_Alarm+0x2a0>
-				{
-				case 1:
-					CLCD_vSendString(" AM");
+        {
+        case 1:
+          CLCD_vSendString(" AM");
     6f42:	8a ee       	ldi	r24, 0xEA	; 234
     6f44:	90 e0       	ldi	r25, 0x00	; 0
     6f46:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
     6f4a:	04 c0       	rjmp	.+8      	; 0x6f54 <Set_Alarm+0x2a0>
-					break;
-				case 0:
-					CLCD_vSendString(" PM");
+          break;
+        case 0:
+          CLCD_vSendString(" PM");
     6f4c:	8e ee       	ldi	r24, 0xEE	; 238
     6f4e:	90 e0       	ldi	r25, 0x00	; 0
     6f50:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			}
-		}
+      }
+    }
 
-		/*___________________________________________________________________________________________________________________*/
+    /*___________________________________________________________________________________________________________________*/
 
-		CLCD_vSetPosition(2, 6);
+    CLCD_vSetPosition(2, 6);
     6f54:	82 e0       	ldi	r24, 0x02	; 2
     6f56:	66 e0       	ldi	r22, 0x06	; 6
     6f58:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
 
-		CLCD_vSendCommand(CLCD_DISPLAYON_CURSORON);
+    CLCD_vSendCommand(CLCD_DISPLAYON_CURSORON);
     6f5c:	8e e0       	ldi	r24, 0x0E	; 14
     6f5e:	0e 94 6d 1d 	call	0x3ada	; 0x3ada <CLCD_vSendCommand>
-		/*___________________________________________________________________________________________________________________*/
+    /*___________________________________________________________________________________________________________________*/
 
-		/* Set Alarm_Hour */
-		do
-		{
-			KPD_Press = KPD_u8GetPressed();
+    /* Set Alarm_Hour */
+    do
+    {
+      KPD_Press = KPD_u8GetPressed();
     6f62:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     6f66:	80 93 9a 03 	sts	0x039A, r24
-		} while (KPD_Press == NOTPRESSED);
+    } while (KPD_Press == NOTPRESSED);
     6f6a:	80 91 9a 03 	lds	r24, 0x039A
     6f6e:	8f 3f       	cpi	r24, 0xFF	; 255
     6f70:	c1 f3       	breq	.-16     	; 0x6f62 <Set_Alarm+0x2ae>
 
-		CLCD_vSendData(KPD_Press);
+    CLCD_vSendData(KPD_Press);
     6f72:	80 91 9a 03 	lds	r24, 0x039A
     6f76:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
 
-		Alarm_Hour = (KPD_Press - 48) * 10;
+    Alarm_Hour = (KPD_Press - 48) * 10;
     6f7a:	80 91 9a 03 	lds	r24, 0x039A
     6f7e:	88 2f       	mov	r24, r24
     6f80:	90 e0       	ldi	r25, 0x00	; 0
@@ -16965,28 +16965,28 @@ _delay_ms(double __ms)
     6f94:	93 1f       	adc	r25, r19
     6f96:	80 5e       	subi	r24, 0xE0	; 224
     6f98:	80 93 98 03 	sts	0x0398, r24
-		do
-		{
-			KPD_Press = KPD_u8GetPressed();
+    do
+    {
+      KPD_Press = KPD_u8GetPressed();
     6f9c:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     6fa0:	80 93 9a 03 	sts	0x039A, r24
-		} while (KPD_Press == NOTPRESSED);
+    } while (KPD_Press == NOTPRESSED);
     6fa4:	80 91 9a 03 	lds	r24, 0x039A
     6fa8:	8f 3f       	cpi	r24, 0xFF	; 255
     6faa:	c1 f3       	breq	.-16     	; 0x6f9c <Set_Alarm+0x2e8>
 
-		CLCD_vSendData(KPD_Press);
+    CLCD_vSendData(KPD_Press);
     6fac:	80 91 9a 03 	lds	r24, 0x039A
     6fb0:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-		Alarm_Hour += (KPD_Press - 48);
+    Alarm_Hour += (KPD_Press - 48);
     6fb4:	90 91 9a 03 	lds	r25, 0x039A
     6fb8:	80 91 98 03 	lds	r24, 0x0398
     6fbc:	89 0f       	add	r24, r25
     6fbe:	80 53       	subi	r24, 0x30	; 48
     6fc0:	80 93 98 03 	sts	0x0398, r24
 
-		/* Check if it valid or not */
-		switch (Time_Mode)
+    /* Check if it valid or not */
+    switch (Time_Mode)
     6fc4:	80 91 55 03 	lds	r24, 0x0355
     6fc8:	28 2f       	mov	r18, r24
     6fca:	30 e0       	ldi	r19, 0x00	; 0
@@ -17004,33 +17004,33 @@ _delay_ms(double __ms)
     6fe2:	09 f4       	brne	.+2      	; 0x6fe6 <Set_Alarm+0x332>
     6fe4:	45 c0       	rjmp	.+138    	; 0x7070 <Set_Alarm+0x3bc>
     6fe6:	62 c0       	rjmp	.+196    	; 0x70ac <Set_Alarm+0x3f8>
-		{
-		// Check if it valid or not In case it is in 12 hour mode
-		case Time_Mode12Hours:
-			if (Alarm_Hour > 12 && Alarm_Hour < 24)
+    {
+    // Check if it valid or not In case it is in 12 hour mode
+    case Time_Mode12Hours:
+      if (Alarm_Hour > 12 && Alarm_Hour < 24)
     6fe8:	80 91 98 03 	lds	r24, 0x0398
     6fec:	8d 30       	cpi	r24, 0x0D	; 13
     6fee:	08 f1       	brcs	.+66     	; 0x7032 <Set_Alarm+0x37e>
     6ff0:	80 91 98 03 	lds	r24, 0x0398
     6ff4:	88 31       	cpi	r24, 0x18	; 24
     6ff6:	e8 f4       	brcc	.+58     	; 0x7032 <Set_Alarm+0x37e>
-			{
-				Alarm_Hour -= 12;
+      {
+        Alarm_Hour -= 12;
     6ff8:	80 91 98 03 	lds	r24, 0x0398
     6ffc:	8c 50       	subi	r24, 0x0C	; 12
     6ffe:	80 93 98 03 	sts	0x0398, r24
-				CLCD_vSetPosition(2, 6);
+        CLCD_vSetPosition(2, 6);
     7002:	82 e0       	ldi	r24, 0x02	; 2
     7004:	66 e0       	ldi	r22, 0x06	; 6
     7006:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-				CLCD_vSendData((Alarm_Hour / 10) + 48);
+        CLCD_vSendData((Alarm_Hour / 10) + 48);
     700a:	80 91 98 03 	lds	r24, 0x0398
     700e:	9a e0       	ldi	r25, 0x0A	; 10
     7010:	69 2f       	mov	r22, r25
     7012:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     7016:	80 5d       	subi	r24, 0xD0	; 208
     7018:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData((Alarm_Hour % 10) + 48);
+        CLCD_vSendData((Alarm_Hour % 10) + 48);
     701c:	80 91 98 03 	lds	r24, 0x0398
     7020:	9a e0       	ldi	r25, 0x0A	; 10
     7022:	69 2f       	mov	r22, r25
@@ -17039,27 +17039,27 @@ _delay_ms(double __ms)
     702a:	80 5d       	subi	r24, 0xD0	; 208
     702c:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
     7030:	3d c0       	rjmp	.+122    	; 0x70ac <Set_Alarm+0x3f8>
-			}
-			else if (Alarm_Hour > 23)
+      }
+      else if (Alarm_Hour > 23)
     7032:	80 91 98 03 	lds	r24, 0x0398
     7036:	88 31       	cpi	r24, 0x18	; 24
     7038:	c8 f1       	brcs	.+114    	; 0x70ac <Set_Alarm+0x3f8>
-			{
-				Alarm_Hour = 12;
+      {
+        Alarm_Hour = 12;
     703a:	8c e0       	ldi	r24, 0x0C	; 12
     703c:	80 93 98 03 	sts	0x0398, r24
-				CLCD_vSetPosition(2, 6);
+        CLCD_vSetPosition(2, 6);
     7040:	82 e0       	ldi	r24, 0x02	; 2
     7042:	66 e0       	ldi	r22, 0x06	; 6
     7044:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-				CLCD_vSendData((Alarm_Hour / 10) + 48);
+        CLCD_vSendData((Alarm_Hour / 10) + 48);
     7048:	80 91 98 03 	lds	r24, 0x0398
     704c:	9a e0       	ldi	r25, 0x0A	; 10
     704e:	69 2f       	mov	r22, r25
     7050:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     7054:	80 5d       	subi	r24, 0xD0	; 208
     7056:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData((Alarm_Hour % 10) + 48);
+        CLCD_vSendData((Alarm_Hour % 10) + 48);
     705a:	80 91 98 03 	lds	r24, 0x0398
     705e:	9a e0       	ldi	r25, 0x0A	; 10
     7060:	69 2f       	mov	r22, r25
@@ -17068,31 +17068,31 @@ _delay_ms(double __ms)
     7068:	80 5d       	subi	r24, 0xD0	; 208
     706a:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
     706e:	1e c0       	rjmp	.+60     	; 0x70ac <Set_Alarm+0x3f8>
-			{
-			}
-			break;
-			// Check if it valid or not In case it is in 24 hour mode
-		case Time_Mode24Hours:
-			if (Alarm_Hour > 23)
+      {
+      }
+      break;
+      // Check if it valid or not In case it is in 24 hour mode
+    case Time_Mode24Hours:
+      if (Alarm_Hour > 23)
     7070:	80 91 98 03 	lds	r24, 0x0398
     7074:	88 31       	cpi	r24, 0x18	; 24
     7076:	d0 f0       	brcs	.+52     	; 0x70ac <Set_Alarm+0x3f8>
-			{
-				Alarm_Hour = 12;
+      {
+        Alarm_Hour = 12;
     7078:	8c e0       	ldi	r24, 0x0C	; 12
     707a:	80 93 98 03 	sts	0x0398, r24
-				CLCD_vSetPosition(2, 6);
+        CLCD_vSetPosition(2, 6);
     707e:	82 e0       	ldi	r24, 0x02	; 2
     7080:	66 e0       	ldi	r22, 0x06	; 6
     7082:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-				CLCD_vSendData((Alarm_Hour / 10) + 48);
+        CLCD_vSendData((Alarm_Hour / 10) + 48);
     7086:	80 91 98 03 	lds	r24, 0x0398
     708a:	9a e0       	ldi	r25, 0x0A	; 10
     708c:	69 2f       	mov	r22, r25
     708e:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     7092:	80 5d       	subi	r24, 0xD0	; 208
     7094:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData((Alarm_Hour % 10) + 48);
+        CLCD_vSendData((Alarm_Hour % 10) + 48);
     7098:	80 91 98 03 	lds	r24, 0x0398
     709c:	9a e0       	ldi	r25, 0x0A	; 10
     709e:	69 2f       	mov	r22, r25
@@ -17100,32 +17100,32 @@ _delay_ms(double __ms)
     70a4:	89 2f       	mov	r24, r25
     70a6:	80 5d       	subi	r24, 0xD0	; 208
     70a8:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-			break;
-		}
+      break;
+    }
 
-		/*___________________________________________________________________________________________________________________*/
+    /*___________________________________________________________________________________________________________________*/
 
-		CLCD_vSetPosition(2, 11);
+    CLCD_vSetPosition(2, 11);
     70ac:	82 e0       	ldi	r24, 0x02	; 2
     70ae:	6b e0       	ldi	r22, 0x0B	; 11
     70b0:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
 
-		/* Set Alarm Minutes */
-		do
-		{
-			KPD_Press = KPD_u8GetPressed();
+    /* Set Alarm Minutes */
+    do
+    {
+      KPD_Press = KPD_u8GetPressed();
     70b4:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     70b8:	80 93 9a 03 	sts	0x039A, r24
-		} while (KPD_Press == NOTPRESSED);
+    } while (KPD_Press == NOTPRESSED);
     70bc:	80 91 9a 03 	lds	r24, 0x039A
     70c0:	8f 3f       	cpi	r24, 0xFF	; 255
     70c2:	c1 f3       	breq	.-16     	; 0x70b4 <Set_Alarm+0x400>
 
-		CLCD_vSendData(KPD_Press);
+    CLCD_vSendData(KPD_Press);
     70c4:	80 91 9a 03 	lds	r24, 0x039A
     70c8:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
 
-		Alarm_Minutes = (KPD_Press - 48) * 10;
+    Alarm_Minutes = (KPD_Press - 48) * 10;
     70cc:	80 91 9a 03 	lds	r24, 0x039A
     70d0:	88 2f       	mov	r24, r24
     70d2:	90 e0       	ldi	r25, 0x00	; 0
@@ -17141,46 +17141,46 @@ _delay_ms(double __ms)
     70e6:	93 1f       	adc	r25, r19
     70e8:	80 5e       	subi	r24, 0xE0	; 224
     70ea:	80 93 9b 03 	sts	0x039B, r24
-		do
-		{
-			KPD_Press = KPD_u8GetPressed();
+    do
+    {
+      KPD_Press = KPD_u8GetPressed();
     70ee:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     70f2:	80 93 9a 03 	sts	0x039A, r24
-		} while (KPD_Press == NOTPRESSED);
+    } while (KPD_Press == NOTPRESSED);
     70f6:	80 91 9a 03 	lds	r24, 0x039A
     70fa:	8f 3f       	cpi	r24, 0xFF	; 255
     70fc:	c1 f3       	breq	.-16     	; 0x70ee <Set_Alarm+0x43a>
 
-		CLCD_vSendData(KPD_Press);
+    CLCD_vSendData(KPD_Press);
     70fe:	80 91 9a 03 	lds	r24, 0x039A
     7102:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-		Alarm_Minutes += (KPD_Press - 48);
+    Alarm_Minutes += (KPD_Press - 48);
     7106:	90 91 9a 03 	lds	r25, 0x039A
     710a:	80 91 9b 03 	lds	r24, 0x039B
     710e:	89 0f       	add	r24, r25
     7110:	80 53       	subi	r24, 0x30	; 48
     7112:	80 93 9b 03 	sts	0x039B, r24
 
-		//Check if it valid or not
-		if (Alarm_Minutes > 59)
+    //Check if it valid or not
+    if (Alarm_Minutes > 59)
     7116:	80 91 9b 03 	lds	r24, 0x039B
     711a:	8c 33       	cpi	r24, 0x3C	; 60
     711c:	c8 f0       	brcs	.+50     	; 0x7150 <Set_Alarm+0x49c>
-		{
-			Alarm_Minutes = 0;
+    {
+      Alarm_Minutes = 0;
     711e:	10 92 9b 03 	sts	0x039B, r1
-			CLCD_vSetPosition(2, 11);
+      CLCD_vSetPosition(2, 11);
     7122:	82 e0       	ldi	r24, 0x02	; 2
     7124:	6b e0       	ldi	r22, 0x0B	; 11
     7126:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendData((Alarm_Minutes / 10) + 48);
+      CLCD_vSendData((Alarm_Minutes / 10) + 48);
     712a:	80 91 9b 03 	lds	r24, 0x039B
     712e:	9a e0       	ldi	r25, 0x0A	; 10
     7130:	69 2f       	mov	r22, r25
     7132:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     7136:	80 5d       	subi	r24, 0xD0	; 208
     7138:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-			CLCD_vSendData((Alarm_Minutes % 10) + 48);
+      CLCD_vSendData((Alarm_Minutes % 10) + 48);
     713c:	80 91 9b 03 	lds	r24, 0x039B
     7140:	9a e0       	ldi	r25, 0x0A	; 10
     7142:	69 2f       	mov	r22, r25
@@ -17189,31 +17189,31 @@ _delay_ms(double __ms)
     714a:	80 5d       	subi	r24, 0xD0	; 208
     714c:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
 
-		/*___________________________________________________________________________________________________________________*/
+    /*___________________________________________________________________________________________________________________*/
 
-		/* Check time mode to display AM / PM or not and Choose the time mode */
-		//if time mode is 12 hours disply AM or PM and choose between them
-		if (Time_Mode == Time_Mode12Hours)
+    /* Check time mode to display AM / PM or not and Choose the time mode */
+    //if time mode is 12 hours disply AM or PM and choose between them
+    if (Time_Mode == Time_Mode12Hours)
     7150:	80 91 55 03 	lds	r24, 0x0355
     7154:	81 33       	cpi	r24, 0x31	; 49
     7156:	09 f0       	breq	.+2      	; 0x715a <Set_Alarm+0x4a6>
     7158:	ff c0       	rjmp	.+510    	; 0x7358 <Set_Alarm+0x6a4>
-		{
-			CLCD_vSetPosition(3, 1);
+    {
+      CLCD_vSetPosition(3, 1);
     715a:	83 e0       	ldi	r24, 0x03	; 3
     715c:	61 e0       	ldi	r22, 0x01	; 1
     715e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("1 : AM    2 : PM");
+      CLCD_vSendString("1 : AM    2 : PM");
     7162:	8e e3       	ldi	r24, 0x3E	; 62
     7164:	91 e0       	ldi	r25, 0x01	; 1
     7166:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			do
-			{
-				Alarm_DayTime = KPD_u8GetPressed();
+      do
+      {
+        Alarm_DayTime = KPD_u8GetPressed();
     716a:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     716e:	80 93 94 03 	sts	0x0394, r24
-				//when choose invalid input
-				if (Alarm_DayTime != NOTPRESSED && (Alarm_DayTime != '1' && Alarm_DayTime != '2'))
+        //when choose invalid input
+        if (Alarm_DayTime != NOTPRESSED && (Alarm_DayTime != '1' && Alarm_DayTime != '2'))
     7172:	80 91 94 03 	lds	r24, 0x0394
     7176:	8f 3f       	cpi	r24, 0xFF	; 255
     7178:	09 f4       	brne	.+2      	; 0x717c <Set_Alarm+0x4c8>
@@ -17226,10 +17226,10 @@ _delay_ms(double __ms)
     718a:	82 33       	cpi	r24, 0x32	; 50
     718c:	09 f4       	brne	.+2      	; 0x7190 <Set_Alarm+0x4dc>
     718e:	cc c0       	rjmp	.+408    	; 0x7328 <Set_Alarm+0x674>
-				{
-					CLCD_vClearScreen();
+        {
+          CLCD_vClearScreen();
     7190:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-					CLCD_vSendString("Wrong Choise");
+          CLCD_vSendString("Wrong Choise");
     7194:	8f e4       	ldi	r24, 0x4F	; 79
     7196:	91 e0       	ldi	r25, 0x01	; 1
     7198:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
@@ -17370,25 +17370,25 @@ _delay_ms(double __ms)
     727a:	f1 f7       	brne	.-4      	; 0x7278 <Set_Alarm+0x5c4>
     727c:	98 8b       	std	Y+16, r25	; 0x10
     727e:	8f 87       	std	Y+15, r24	; 0x0f
-					_delay_ms(500);
-					CLCD_vClearScreen();
+          _delay_ms(500);
+          CLCD_vClearScreen();
     7280:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-					CLCD_vSendString("Set Aalrm :");
+          CLCD_vSendString("Set Aalrm :");
     7284:	8f eb       	ldi	r24, 0xBF	; 191
     7286:	91 e0       	ldi	r25, 0x01	; 1
     7288:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-					CLCD_vSetPosition(2, 6);
+          CLCD_vSetPosition(2, 6);
     728c:	82 e0       	ldi	r24, 0x02	; 2
     728e:	66 e0       	ldi	r22, 0x06	; 6
     7290:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-					CLCD_vSendData((Alarm_Hour / 10) + 48);
+          CLCD_vSendData((Alarm_Hour / 10) + 48);
     7294:	80 91 98 03 	lds	r24, 0x0398
     7298:	9a e0       	ldi	r25, 0x0A	; 10
     729a:	69 2f       	mov	r22, r25
     729c:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     72a0:	80 5d       	subi	r24, 0xD0	; 208
     72a2:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-					CLCD_vSendData((Alarm_Hour % 10) + 48);
+          CLCD_vSendData((Alarm_Hour % 10) + 48);
     72a6:	80 91 98 03 	lds	r24, 0x0398
     72aa:	9a e0       	ldi	r25, 0x0A	; 10
     72ac:	69 2f       	mov	r22, r25
@@ -17396,18 +17396,18 @@ _delay_ms(double __ms)
     72b2:	89 2f       	mov	r24, r25
     72b4:	80 5d       	subi	r24, 0xD0	; 208
     72b6:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-					CLCD_vSendString(" : ");
+          CLCD_vSendString(" : ");
     72ba:	86 ee       	ldi	r24, 0xE6	; 230
     72bc:	90 e0       	ldi	r25, 0x00	; 0
     72be:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-					CLCD_vSendData((Alarm_Minutes / 10) + 48);
+          CLCD_vSendData((Alarm_Minutes / 10) + 48);
     72c2:	80 91 9b 03 	lds	r24, 0x039B
     72c6:	9a e0       	ldi	r25, 0x0A	; 10
     72c8:	69 2f       	mov	r22, r25
     72ca:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     72ce:	80 5d       	subi	r24, 0xD0	; 208
     72d0:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-					CLCD_vSendData((Alarm_Minutes % 10) + 48);
+          CLCD_vSendData((Alarm_Minutes % 10) + 48);
     72d4:	80 91 9b 03 	lds	r24, 0x039B
     72d8:	9a e0       	ldi	r25, 0x0A	; 10
     72da:	69 2f       	mov	r22, r25
@@ -17415,7 +17415,7 @@ _delay_ms(double __ms)
     72e0:	89 2f       	mov	r24, r25
     72e2:	80 5d       	subi	r24, 0xD0	; 208
     72e4:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-					switch (Alarm_DayTime)
+          switch (Alarm_DayTime)
     72e8:	80 91 94 03 	lds	r24, 0x0394
     72ec:	28 2f       	mov	r18, r24
     72ee:	30 e0       	ldi	r19, 0x00	; 0
@@ -17430,31 +17430,31 @@ _delay_ms(double __ms)
     7300:	21 30       	cpi	r18, 0x01	; 1
     7302:	31 05       	cpc	r19, r1
     7304:	49 f4       	brne	.+18     	; 0x7318 <Set_Alarm+0x664>
-					{
-					case 1:
-						CLCD_vSendString(" AM");
+          {
+          case 1:
+            CLCD_vSendString(" AM");
     7306:	8a ee       	ldi	r24, 0xEA	; 234
     7308:	90 e0       	ldi	r25, 0x00	; 0
     730a:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
     730e:	04 c0       	rjmp	.+8      	; 0x7318 <Set_Alarm+0x664>
-						break;
-					case 0:
-						CLCD_vSendString(" PM");
+            break;
+          case 0:
+            CLCD_vSendString(" PM");
     7310:	8e ee       	ldi	r24, 0xEE	; 238
     7312:	90 e0       	ldi	r25, 0x00	; 0
     7314:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-						break;
-					}
-					CLCD_vSetPosition(3, 1);
+            break;
+          }
+          CLCD_vSetPosition(3, 1);
     7318:	83 e0       	ldi	r24, 0x03	; 3
     731a:	61 e0       	ldi	r22, 0x01	; 1
     731c:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-					CLCD_vSendString("1 : AM    2 : PM");
+          CLCD_vSendString("1 : AM    2 : PM");
     7320:	8e e3       	ldi	r24, 0x3E	; 62
     7322:	91 e0       	ldi	r25, 0x01	; 1
     7324:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-				}
-			} while (Alarm_DayTime != '1' && Alarm_DayTime != '2');
+        }
+      } while (Alarm_DayTime != '1' && Alarm_DayTime != '2');
     7328:	80 91 94 03 	lds	r24, 0x0394
     732c:	81 33       	cpi	r24, 0x31	; 49
     732e:	29 f0       	breq	.+10     	; 0x733a <Set_Alarm+0x686>
@@ -17463,124 +17463,124 @@ _delay_ms(double __ms)
     7336:	09 f0       	breq	.+2      	; 0x733a <Set_Alarm+0x686>
     7338:	18 cf       	rjmp	.-464    	; 0x716a <Set_Alarm+0x4b6>
 
-			/*___________________________________________________________________________________________________________________*/
+      /*___________________________________________________________________________________________________________________*/
 
-			//Set invaliv val to compre with READ AM or PM Led
-			if (Alarm_DayTime == '1')
+      //Set invaliv val to compre with READ AM or PM Led
+      if (Alarm_DayTime == '1')
     733a:	80 91 94 03 	lds	r24, 0x0394
     733e:	81 33       	cpi	r24, 0x31	; 49
     7340:	21 f4       	brne	.+8      	; 0x734a <Set_Alarm+0x696>
-			{
-				Alarm_DayTime = 1; //AM
+      {
+        Alarm_DayTime = 1; //AM
     7342:	81 e0       	ldi	r24, 0x01	; 1
     7344:	80 93 94 03 	sts	0x0394, r24
     7348:	17 c0       	rjmp	.+46     	; 0x7378 <Set_Alarm+0x6c4>
-			}
-			else if (Alarm_DayTime == '2')
+      }
+      else if (Alarm_DayTime == '2')
     734a:	80 91 94 03 	lds	r24, 0x0394
     734e:	82 33       	cpi	r24, 0x32	; 50
     7350:	99 f4       	brne	.+38     	; 0x7378 <Set_Alarm+0x6c4>
-			{
-				Alarm_DayTime = 0; //PM
+      {
+        Alarm_DayTime = 0; //PM
     7352:	10 92 94 03 	sts	0x0394, r1
     7356:	10 c0       	rjmp	.+32     	; 0x7378 <Set_Alarm+0x6c4>
-			/*___________________________________________________________________________________________________________________*/
+      /*___________________________________________________________________________________________________________________*/
 
-		}
-		//if time mode is 24 hours don't disply AM or PM
-		//and set it depend on hour is AM or PM
-		else if (Time_Mode == Time_Mode24Hours)
+    }
+    //if time mode is 24 hours don't disply AM or PM
+    //and set it depend on hour is AM or PM
+    else if (Time_Mode == Time_Mode24Hours)
     7358:	80 91 55 03 	lds	r24, 0x0355
     735c:	82 33       	cpi	r24, 0x32	; 50
     735e:	61 f4       	brne	.+24     	; 0x7378 <Set_Alarm+0x6c4>
-		{
-			if (Alarm_Hour >= 12)
+    {
+      if (Alarm_Hour >= 12)
     7360:	80 91 98 03 	lds	r24, 0x0398
     7364:	8c 30       	cpi	r24, 0x0C	; 12
     7366:	18 f0       	brcs	.+6      	; 0x736e <Set_Alarm+0x6ba>
-			{
-				Alarm_DayTime = 0;
+      {
+        Alarm_DayTime = 0;
     7368:	10 92 94 03 	sts	0x0394, r1
     736c:	05 c0       	rjmp	.+10     	; 0x7378 <Set_Alarm+0x6c4>
-			}
-			else if (Alarm_Hour >= 0)
+      }
+      else if (Alarm_Hour >= 0)
     736e:	30 91 98 03 	lds	r19, 0x0398
-			{
-				Alarm_DayTime = 1;
+      {
+        Alarm_DayTime = 1;
     7372:	81 e0       	ldi	r24, 0x01	; 1
     7374:	80 93 94 03 	sts	0x0394, r24
-		}
+    }
 
-		/*___________________________________________________________________________________________________________________*/
+    /*___________________________________________________________________________________________________________________*/
 
-		/* Make Alarm Status : Alarm Enable */
-		Alarm_Status = Alarm_EN;
+    /* Make Alarm Status : Alarm Enable */
+    Alarm_Status = Alarm_EN;
     7378:	81 e0       	ldi	r24, 0x01	; 1
     737a:	80 93 95 03 	sts	0x0395, r24
     737e:	09 c0       	rjmp	.+18     	; 0x7392 <Set_Alarm+0x6de>
 
-		/*___________________________________________________________________________________________________________________*/
-	}
-	/* if user choose alarm is disaple */
-	else if (KPD_Press == '2')
+    /*___________________________________________________________________________________________________________________*/
+  }
+  /* if user choose alarm is disaple */
+  else if (KPD_Press == '2')
     7380:	80 91 9a 03 	lds	r24, 0x039A
     7384:	82 33       	cpi	r24, 0x32	; 50
     7386:	29 f4       	brne	.+10     	; 0x7392 <Set_Alarm+0x6de>
-	{
-		/* Make Alarm Status : Alarm Disaple */
-		Alarm_Hour = NOTPRESSED;
+  {
+    /* Make Alarm Status : Alarm Disaple */
+    Alarm_Hour = NOTPRESSED;
     7388:	8f ef       	ldi	r24, 0xFF	; 255
     738a:	80 93 98 03 	sts	0x0398, r24
-		Alarm_Status = Alarm_DIS;
+    Alarm_Status = Alarm_DIS;
     738e:	10 92 95 03 	sts	0x0395, r1
 
-	/*___________________________________________________________________________________________________________________*/
+  /*___________________________________________________________________________________________________________________*/
 
-	/* Check Alarm is correct or not */
-	// when it not correct you can ReEnter it by choose Cancel but this option is valid when alarm is enable
-	if (Alarm_Status == Alarm_EN)
+  /* Check Alarm is correct or not */
+  // when it not correct you can ReEnter it by choose Cancel but this option is valid when alarm is enable
+  if (Alarm_Status == Alarm_EN)
     7392:	80 91 95 03 	lds	r24, 0x0395
     7396:	81 30       	cpi	r24, 0x01	; 1
     7398:	09 f0       	breq	.+2      	; 0x739c <Set_Alarm+0x6e8>
     739a:	05 c1       	rjmp	.+522    	; 0x75a6 <Set_Alarm+0x8f2>
-	{
-		CLCD_vClearScreen();
+  {
+    CLCD_vClearScreen();
     739c:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-		CLCD_vSendString("Set Alarm ?");
+    CLCD_vSendString("Set Alarm ?");
     73a0:	83 ed       	ldi	r24, 0xD3	; 211
     73a2:	91 e0       	ldi	r25, 0x01	; 1
     73a4:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		CLCD_vSetPosition(2, 1);
+    CLCD_vSetPosition(2, 1);
     73a8:	82 e0       	ldi	r24, 0x02	; 2
     73aa:	61 e0       	ldi	r22, 0x01	; 1
     73ac:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-		CLCD_vSendString("1 : OK    2 : Cancel");
+    CLCD_vSendString("1 : OK    2 : Cancel");
     73b0:	87 e6       	ldi	r24, 0x67	; 103
     73b2:	91 e0       	ldi	r25, 0x01	; 1
     73b4:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		CLCD_vSetPosition(3, 1);
+    CLCD_vSetPosition(3, 1);
     73b8:	83 e0       	ldi	r24, 0x03	; 3
     73ba:	61 e0       	ldi	r22, 0x01	; 1
     73bc:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-		CLCD_vSendString("Cancel to Set");
+    CLCD_vSendString("Cancel to Set");
     73c0:	8c e7       	ldi	r24, 0x7C	; 124
     73c2:	91 e0       	ldi	r25, 0x01	; 1
     73c4:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		CLCD_vSetPosition(4, 1);
+    CLCD_vSetPosition(4, 1);
     73c8:	84 e0       	ldi	r24, 0x04	; 4
     73ca:	61 e0       	ldi	r22, 0x01	; 1
     73cc:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-		CLCD_vSendString("Alarm Again");
+    CLCD_vSendString("Alarm Again");
     73d0:	8f ed       	ldi	r24, 0xDF	; 223
     73d2:	91 e0       	ldi	r25, 0x01	; 1
     73d4:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		do
-		{
-			KPD_Press = KPD_u8GetPressed();
+    do
+    {
+      KPD_Press = KPD_u8GetPressed();
     73d8:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     73dc:	80 93 9a 03 	sts	0x039A, r24
-			//when choose invalid input
-			if (KPD_Press != NOTPRESSED && (KPD_Press != '1' && KPD_Press != '2'))
+      //when choose invalid input
+      if (KPD_Press != NOTPRESSED && (KPD_Press != '1' && KPD_Press != '2'))
     73e0:	80 91 9a 03 	lds	r24, 0x039A
     73e4:	8f 3f       	cpi	r24, 0xFF	; 255
     73e6:	09 f4       	brne	.+2      	; 0x73ea <Set_Alarm+0x736>
@@ -17593,10 +17593,10 @@ _delay_ms(double __ms)
     73f8:	82 33       	cpi	r24, 0x32	; 50
     73fa:	09 f4       	brne	.+2      	; 0x73fe <Set_Alarm+0x74a>
     73fc:	96 c0       	rjmp	.+300    	; 0x752a <Set_Alarm+0x876>
-			{
-				CLCD_vClearScreen();
+      {
+        CLCD_vClearScreen();
     73fe:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-				CLCD_vSendString("Wrong Choise");
+        CLCD_vSendString("Wrong Choise");
     7402:	8f e4       	ldi	r24, 0x4F	; 79
     7404:	91 e0       	ldi	r25, 0x01	; 1
     7406:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
@@ -17737,39 +17737,39 @@ _delay_ms(double __ms)
     74e8:	f1 f7       	brne	.-4      	; 0x74e6 <Set_Alarm+0x832>
     74ea:	9a 83       	std	Y+2, r25	; 0x02
     74ec:	89 83       	std	Y+1, r24	; 0x01
-				_delay_ms(500);
-				CLCD_vClearScreen();
+        _delay_ms(500);
+        CLCD_vClearScreen();
     74ee:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-				CLCD_vSendString("Set Alarm ?");
+        CLCD_vSendString("Set Alarm ?");
     74f2:	83 ed       	ldi	r24, 0xD3	; 211
     74f4:	91 e0       	ldi	r25, 0x01	; 1
     74f6:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-				CLCD_vSetPosition(2, 1);
+        CLCD_vSetPosition(2, 1);
     74fa:	82 e0       	ldi	r24, 0x02	; 2
     74fc:	61 e0       	ldi	r22, 0x01	; 1
     74fe:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-				CLCD_vSendString("1 : OK    2 : Cancel");
+        CLCD_vSendString("1 : OK    2 : Cancel");
     7502:	87 e6       	ldi	r24, 0x67	; 103
     7504:	91 e0       	ldi	r25, 0x01	; 1
     7506:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-				CLCD_vSetPosition(3, 1);
+        CLCD_vSetPosition(3, 1);
     750a:	83 e0       	ldi	r24, 0x03	; 3
     750c:	61 e0       	ldi	r22, 0x01	; 1
     750e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-				CLCD_vSendString("Cancel to Set");
+        CLCD_vSendString("Cancel to Set");
     7512:	8c e7       	ldi	r24, 0x7C	; 124
     7514:	91 e0       	ldi	r25, 0x01	; 1
     7516:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-				CLCD_vSetPosition(4, 1);
+        CLCD_vSetPosition(4, 1);
     751a:	84 e0       	ldi	r24, 0x04	; 4
     751c:	61 e0       	ldi	r22, 0x01	; 1
     751e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-				CLCD_vSendString("Alarm Again");
+        CLCD_vSendString("Alarm Again");
     7522:	8f ed       	ldi	r24, 0xDF	; 223
     7524:	91 e0       	ldi	r25, 0x01	; 1
     7526:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			}
-		}while (KPD_Press != '1' && KPD_Press != '2');
+      }
+    }while (KPD_Press != '1' && KPD_Press != '2');
     752a:	80 91 9a 03 	lds	r24, 0x039A
     752e:	81 33       	cpi	r24, 0x31	; 49
     7530:	29 f0       	breq	.+10     	; 0x753c <Set_Alarm+0x888>
@@ -17778,122 +17778,122 @@ _delay_ms(double __ms)
     7538:	09 f0       	breq	.+2      	; 0x753c <Set_Alarm+0x888>
     753a:	4e cf       	rjmp	.-356    	; 0x73d8 <Set_Alarm+0x724>
 
-		/*___________________________________________________________________________________________________________________*/
+    /*___________________________________________________________________________________________________________________*/
 
-		//When Alarm is Correct
-		if (KPD_Press == '1')
+    //When Alarm is Correct
+    if (KPD_Press == '1')
     753c:	80 91 9a 03 	lds	r24, 0x039A
     7540:	81 33       	cpi	r24, 0x31	; 49
     7542:	51 f5       	brne	.+84     	; 0x7598 <Set_Alarm+0x8e4>
-		{
-			CLCD_vSendCommand(CLCD_DISPLAYON_CURSOROFF);
+    {
+      CLCD_vSendCommand(CLCD_DISPLAYON_CURSOROFF);
     7544:	8c e0       	ldi	r24, 0x0C	; 12
     7546:	0e 94 6d 1d 	call	0x3ada	; 0x3ada <CLCD_vSendCommand>
-			CLCD_vClearScreen();
+      CLCD_vClearScreen();
     754a:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSendString("1 - set time");
+      CLCD_vSendString("1 - set time");
     754e:	83 ec       	ldi	r24, 0xC3	; 195
     7550:	90 e0       	ldi	r25, 0x00	; 0
     7552:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(2, 1);
+      CLCD_vSetPosition(2, 1);
     7556:	82 e0       	ldi	r24, 0x02	; 2
     7558:	61 e0       	ldi	r22, 0x01	; 1
     755a:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("2 - select mode");
+      CLCD_vSendString("2 - select mode");
     755e:	80 ed       	ldi	r24, 0xD0	; 208
     7560:	90 e0       	ldi	r25, 0x00	; 0
     7562:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(3, 1);
+      CLCD_vSetPosition(3, 1);
     7566:	83 e0       	ldi	r24, 0x03	; 3
     7568:	61 e0       	ldi	r22, 0x01	; 1
     756a:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("3 - Set Alarm");
+      CLCD_vSendString("3 - Set Alarm");
     756e:	85 e9       	ldi	r24, 0x95	; 149
     7570:	90 e0       	ldi	r25, 0x00	; 0
     7572:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(4, 1);
+      CLCD_vSetPosition(4, 1);
     7576:	84 e0       	ldi	r24, 0x04	; 4
     7578:	61 e0       	ldi	r22, 0x01	; 1
     757a:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("4 - Weather");
+      CLCD_vSendString("4 - Weather");
     757e:	83 ea       	ldi	r24, 0xA3	; 163
     7580:	90 e0       	ldi	r25, 0x00	; 0
     7582:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(4, 15);
+      CLCD_vSetPosition(4, 15);
     7586:	84 e0       	ldi	r24, 0x04	; 4
     7588:	6f e0       	ldi	r22, 0x0F	; 15
     758a:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("X:EXIT");
+      CLCD_vSendString("X:EXIT");
     758e:	8f ea       	ldi	r24, 0xAF	; 175
     7590:	90 e0       	ldi	r25, 0x00	; 0
     7592:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
     7596:	34 c0       	rjmp	.+104    	; 0x7600 <Set_Alarm+0x94c>
-		}
-		//When Alarm is not Correct
-		else if (KPD_Press == '2')
+    }
+    //When Alarm is not Correct
+    else if (KPD_Press == '2')
     7598:	80 91 9a 03 	lds	r24, 0x039A
     759c:	82 33       	cpi	r24, 0x32	; 50
     759e:	81 f5       	brne	.+96     	; 0x7600 <Set_Alarm+0x94c>
-		{
-			Set_Alarm();
+    {
+      Set_Alarm();
     75a0:	0e 94 5a 36 	call	0x6cb4	; 0x6cb4 <Set_Alarm>
     75a4:	2d c0       	rjmp	.+90     	; 0x7600 <Set_Alarm+0x94c>
 
-		}
-		/*___________________________________________________________________________________________________________________*/
-	}
-	//When Alarm is disaple you don't need to make sure the alarm set correct or not
-	else if (Alarm_Status == Alarm_DIS)
+    }
+    /*___________________________________________________________________________________________________________________*/
+  }
+  //When Alarm is disaple you don't need to make sure the alarm set correct or not
+  else if (Alarm_Status == Alarm_DIS)
     75a6:	80 91 95 03 	lds	r24, 0x0395
     75aa:	88 23       	and	r24, r24
     75ac:	49 f5       	brne	.+82     	; 0x7600 <Set_Alarm+0x94c>
-	{
-		CLCD_vSendCommand(CLCD_DISPLAYON_CURSOROFF);
+  {
+    CLCD_vSendCommand(CLCD_DISPLAYON_CURSOROFF);
     75ae:	8c e0       	ldi	r24, 0x0C	; 12
     75b0:	0e 94 6d 1d 	call	0x3ada	; 0x3ada <CLCD_vSendCommand>
-		CLCD_vClearScreen();
+    CLCD_vClearScreen();
     75b4:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-		CLCD_vSendString("1 - set time");
+    CLCD_vSendString("1 - set time");
     75b8:	83 ec       	ldi	r24, 0xC3	; 195
     75ba:	90 e0       	ldi	r25, 0x00	; 0
     75bc:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		CLCD_vSetPosition(2, 1);
+    CLCD_vSetPosition(2, 1);
     75c0:	82 e0       	ldi	r24, 0x02	; 2
     75c2:	61 e0       	ldi	r22, 0x01	; 1
     75c4:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-		CLCD_vSendString("2 - select mode");
+    CLCD_vSendString("2 - select mode");
     75c8:	80 ed       	ldi	r24, 0xD0	; 208
     75ca:	90 e0       	ldi	r25, 0x00	; 0
     75cc:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		CLCD_vSetPosition(3, 1);
+    CLCD_vSetPosition(3, 1);
     75d0:	83 e0       	ldi	r24, 0x03	; 3
     75d2:	61 e0       	ldi	r22, 0x01	; 1
     75d4:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-		CLCD_vSendString("3 - Set Alarm");
+    CLCD_vSendString("3 - Set Alarm");
     75d8:	85 e9       	ldi	r24, 0x95	; 149
     75da:	90 e0       	ldi	r25, 0x00	; 0
     75dc:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		CLCD_vSetPosition(4, 1);
+    CLCD_vSetPosition(4, 1);
     75e0:	84 e0       	ldi	r24, 0x04	; 4
     75e2:	61 e0       	ldi	r22, 0x01	; 1
     75e4:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-		CLCD_vSendString("4 - Weather");
+    CLCD_vSendString("4 - Weather");
     75e8:	83 ea       	ldi	r24, 0xA3	; 163
     75ea:	90 e0       	ldi	r25, 0x00	; 0
     75ec:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		CLCD_vSetPosition(4, 15);
+    CLCD_vSetPosition(4, 15);
     75f0:	84 e0       	ldi	r24, 0x04	; 4
     75f2:	6f e0       	ldi	r22, 0x0F	; 15
     75f4:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-		CLCD_vSendString("X:EXIT");
+    CLCD_vSendString("X:EXIT");
     75f8:	8f ea       	ldi	r24, 0xAF	; 175
     75fa:	90 e0       	ldi	r25, 0x00	; 0
     75fc:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	else
-	{
+  else
+  {
 
-	}
-	/*___________________________________________________________________________________________________________________*/
+  }
+  /*___________________________________________________________________________________________________________________*/
 }
     7600:	e3 96       	adiw	r28, 0x33	; 51
     7602:	0f b6       	in	r0, 0x3f	; 63
@@ -17918,84 +17918,84 @@ void Get_Temp()
     7618:	00 d0       	rcall	.+0      	; 0x761a <Get_Temp+0x8>
     761a:	cd b7       	in	r28, 0x3d	; 61
     761c:	de b7       	in	r29, 0x3e	; 62
-	volatile u8 LM35_Temp;
-	volatile u16 LM35_Volt;
-	CLCD_vClearScreen();
+  volatile u8 LM35_Temp;
+  volatile u16 LM35_Volt;
+  CLCD_vClearScreen();
     761e:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-	CLCD_vSendString("Press any key");
+  CLCD_vSendString("Press any key");
     7622:	82 ef       	ldi	r24, 0xF2	; 242
     7624:	90 e0       	ldi	r25, 0x00	; 0
     7626:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSetPosition(2, 1);
+  CLCD_vSetPosition(2, 1);
     762a:	82 e0       	ldi	r24, 0x02	; 2
     762c:	61 e0       	ldi	r22, 0x01	; 1
     762e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendString("To Exit");
+  CLCD_vSendString("To Exit");
     7632:	8b ee       	ldi	r24, 0xEB	; 235
     7634:	91 e0       	ldi	r25, 0x01	; 1
     7636:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	CLCD_vSetPosition(4, 10);
+  CLCD_vSetPosition(4, 10);
     763a:	84 e0       	ldi	r24, 0x04	; 4
     763c:	6a e0       	ldi	r22, 0x0A	; 10
     763e:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-	CLCD_vSendString("TEMP : ");
+  CLCD_vSendString("TEMP : ");
     7642:	83 ef       	ldi	r24, 0xF3	; 243
     7644:	91 e0       	ldi	r25, 0x01	; 1
     7646:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-	while (1)
-	{
-		//If Any key pressed will exit from Get_Temp Fuction
-		KPD_Press = KPD_u8GetPressed();
+  while (1)
+  {
+    //If Any key pressed will exit from Get_Temp Fuction
+    KPD_Press = KPD_u8GetPressed();
     764a:	0e 94 cc 19 	call	0x3398	; 0x3398 <KPD_u8GetPressed>
     764e:	80 93 9a 03 	sts	0x039A, r24
-		if (KPD_Press != NOTPRESSED)
+    if (KPD_Press != NOTPRESSED)
     7652:	80 91 9a 03 	lds	r24, 0x039A
     7656:	8f 3f       	cpi	r24, 0xFF	; 255
     7658:	69 f1       	breq	.+90     	; 0x76b4 <Get_Temp+0xa2>
-		{
-			CLCD_vClearScreen();
+    {
+      CLCD_vClearScreen();
     765a:	0e 94 92 1e 	call	0x3d24	; 0x3d24 <CLCD_vClearScreen>
-			CLCD_vSendString("1 - set time");
+      CLCD_vSendString("1 - set time");
     765e:	83 ec       	ldi	r24, 0xC3	; 195
     7660:	90 e0       	ldi	r25, 0x00	; 0
     7662:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(2, 1);
+      CLCD_vSetPosition(2, 1);
     7666:	82 e0       	ldi	r24, 0x02	; 2
     7668:	61 e0       	ldi	r22, 0x01	; 1
     766a:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("2 - select mode");
+      CLCD_vSendString("2 - select mode");
     766e:	80 ed       	ldi	r24, 0xD0	; 208
     7670:	90 e0       	ldi	r25, 0x00	; 0
     7672:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(3, 1);
+      CLCD_vSetPosition(3, 1);
     7676:	83 e0       	ldi	r24, 0x03	; 3
     7678:	61 e0       	ldi	r22, 0x01	; 1
     767a:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("3 - Set Alarm");
+      CLCD_vSendString("3 - Set Alarm");
     767e:	85 e9       	ldi	r24, 0x95	; 149
     7680:	90 e0       	ldi	r25, 0x00	; 0
     7682:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(4, 1);
+      CLCD_vSetPosition(4, 1);
     7686:	84 e0       	ldi	r24, 0x04	; 4
     7688:	61 e0       	ldi	r22, 0x01	; 1
     768a:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("4 - Weather");
+      CLCD_vSendString("4 - Weather");
     768e:	83 ea       	ldi	r24, 0xA3	; 163
     7690:	90 e0       	ldi	r25, 0x00	; 0
     7692:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-			CLCD_vSetPosition(4, 15);
+      CLCD_vSetPosition(4, 15);
     7696:	84 e0       	ldi	r24, 0x04	; 4
     7698:	6f e0       	ldi	r22, 0x0F	; 15
     769a:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-			CLCD_vSendString("X:EXIT");
+      CLCD_vSendString("X:EXIT");
     769e:	8f ea       	ldi	r24, 0xAF	; 175
     76a0:	90 e0       	ldi	r25, 0x00	; 0
     76a2:	0e 94 1a 1f 	call	0x3e34	; 0x3e34 <CLCD_vSendString>
-		}
+    }
 
-		/*___________________________________________________________________________________________________________________*/
+    /*___________________________________________________________________________________________________________________*/
 
-	}
+  }
 }
     76a6:	0f 90       	pop	r0
     76a8:	0f 90       	pop	r0
@@ -18004,12 +18004,12 @@ void Get_Temp()
     76ae:	cf 91       	pop	r28
     76b0:	df 91       	pop	r29
     76b2:	08 95       	ret
-		}
+    }
 
-		/*___________________________________________________________________________________________________________________*/
+    /*___________________________________________________________________________________________________________________*/
 
-		//Get value of Temp Meter
-		LM35_u8GetAnalogSignal(&LM350, &LM35_Volt);
+    //Get value of Temp Meter
+    LM35_u8GetAnalogSignal(&LM350, &LM35_Volt);
     76b4:	84 e7       	ldi	r24, 0x74	; 116
     76b6:	93 e0       	ldi	r25, 0x03	; 3
     76b8:	9e 01       	movw	r18, r28
@@ -18018,9 +18018,9 @@ void Get_Temp()
     76be:	b9 01       	movw	r22, r18
     76c0:	0e 94 2e 19 	call	0x325c	; 0x325c <LM35_u8GetAnalogSignal>
 
-		/* Check LM35_Volt */
-		/* if it more than 1000 that mean LM35_Temp is positive */
-		if (LM35_Volt >= 1000)
+    /* Check LM35_Volt */
+    /* if it more than 1000 that mean LM35_Temp is positive */
+    if (LM35_Volt >= 1000)
     76c4:	8a 81       	ldd	r24, Y+2	; 0x02
     76c6:	9b 81       	ldd	r25, Y+3	; 0x03
     76c8:	23 e0       	ldi	r18, 0x03	; 3
@@ -18028,8 +18028,8 @@ void Get_Temp()
     76cc:	92 07       	cpc	r25, r18
     76ce:	08 f4       	brcc	.+2      	; 0x76d2 <Get_Temp+0xc0>
     76d0:	69 c0       	rjmp	.+210    	; 0x77a4 <Get_Temp+0x192>
-		{
-			LM35_Temp = (LM35_Volt - 1000) / 10;
+    {
+      LM35_Temp = (LM35_Volt - 1000) / 10;
     76d2:	8a 81       	ldd	r24, Y+2	; 0x02
     76d4:	9b 81       	ldd	r25, Y+3	; 0x03
     76d6:	88 5e       	subi	r24, 0xE8	; 232
@@ -18040,48 +18040,48 @@ void Get_Temp()
     76e0:	0e 94 c3 3c 	call	0x7986	; 0x7986 <__udivmodhi4>
     76e4:	cb 01       	movw	r24, r22
     76e6:	89 83       	std	Y+1, r24	; 0x01
-			//Display Temp on LCD when it positive
-			if (LM35_Temp < 10)
+      //Display Temp on LCD when it positive
+      if (LM35_Temp < 10)
     76e8:	89 81       	ldd	r24, Y+1	; 0x01
     76ea:	8a 30       	cpi	r24, 0x0A	; 10
     76ec:	90 f4       	brcc	.+36     	; 0x7712 <Get_Temp+0x100>
-			{
-				CLCD_vSetPosition(4, 16);
+      {
+        CLCD_vSetPosition(4, 16);
     76ee:	84 e0       	ldi	r24, 0x04	; 4
     76f0:	60 e1       	ldi	r22, 0x10	; 16
     76f2:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-				CLCD_vSendData(LM35_Temp + 48);
+        CLCD_vSendData(LM35_Temp + 48);
     76f6:	89 81       	ldd	r24, Y+1	; 0x01
     76f8:	80 5d       	subi	r24, 0xD0	; 208
     76fa:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData(0xDF);
+        CLCD_vSendData(0xDF);
     76fe:	8f ed       	ldi	r24, 0xDF	; 223
     7700:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData('C');
+        CLCD_vSendData('C');
     7704:	83 e4       	ldi	r24, 0x43	; 67
     7706:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData(' ');
+        CLCD_vSendData(' ');
     770a:	80 e2       	ldi	r24, 0x20	; 32
     770c:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
     7710:	9c cf       	rjmp	.-200    	; 0x764a <Get_Temp+0x38>
-			}
-			else if (LM35_Temp < 100)
+      }
+      else if (LM35_Temp < 100)
     7712:	89 81       	ldd	r24, Y+1	; 0x01
     7714:	84 36       	cpi	r24, 0x64	; 100
     7716:	e0 f4       	brcc	.+56     	; 0x7750 <Get_Temp+0x13e>
-			{
-				CLCD_vSetPosition(4, 16);
+      {
+        CLCD_vSetPosition(4, 16);
     7718:	84 e0       	ldi	r24, 0x04	; 4
     771a:	60 e1       	ldi	r22, 0x10	; 16
     771c:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-				CLCD_vSendData((LM35_Temp / 10) + 48);
+        CLCD_vSendData((LM35_Temp / 10) + 48);
     7720:	89 81       	ldd	r24, Y+1	; 0x01
     7722:	9a e0       	ldi	r25, 0x0A	; 10
     7724:	69 2f       	mov	r22, r25
     7726:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     772a:	80 5d       	subi	r24, 0xD0	; 208
     772c:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData((LM35_Temp % 10) + 48);
+        CLCD_vSendData((LM35_Temp % 10) + 48);
     7730:	89 81       	ldd	r24, Y+1	; 0x01
     7732:	9a e0       	ldi	r25, 0x0A	; 10
     7734:	69 2f       	mov	r22, r25
@@ -18089,29 +18089,29 @@ void Get_Temp()
     773a:	89 2f       	mov	r24, r25
     773c:	80 5d       	subi	r24, 0xD0	; 208
     773e:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData(0xDF);
+        CLCD_vSendData(0xDF);
     7742:	8f ed       	ldi	r24, 0xDF	; 223
     7744:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData('C');
+        CLCD_vSendData('C');
     7748:	83 e4       	ldi	r24, 0x43	; 67
     774a:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
     774e:	7d cf       	rjmp	.-262    	; 0x764a <Get_Temp+0x38>
-			}
-			else if (LM35_Temp < 1000)
+      }
+      else if (LM35_Temp < 1000)
     7750:	89 81       	ldd	r24, Y+1	; 0x01
-			{
-				CLCD_vSetPosition(4, 16);
+      {
+        CLCD_vSetPosition(4, 16);
     7752:	84 e0       	ldi	r24, 0x04	; 4
     7754:	60 e1       	ldi	r22, 0x10	; 16
     7756:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-				CLCD_vSendData((LM35_Temp / 100) + 48);
+        CLCD_vSendData((LM35_Temp / 100) + 48);
     775a:	89 81       	ldd	r24, Y+1	; 0x01
     775c:	94 e6       	ldi	r25, 0x64	; 100
     775e:	69 2f       	mov	r22, r25
     7760:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     7764:	80 5d       	subi	r24, 0xD0	; 208
     7766:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData(((LM35_Temp / 10) % 10) + 48);
+        CLCD_vSendData(((LM35_Temp / 10) % 10) + 48);
     776a:	89 81       	ldd	r24, Y+1	; 0x01
     776c:	9a e0       	ldi	r25, 0x0A	; 10
     776e:	69 2f       	mov	r22, r25
@@ -18122,7 +18122,7 @@ void Get_Temp()
     777c:	89 2f       	mov	r24, r25
     777e:	80 5d       	subi	r24, 0xD0	; 208
     7780:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData((LM35_Temp % 10) + 48);
+        CLCD_vSendData((LM35_Temp % 10) + 48);
     7784:	89 81       	ldd	r24, Y+1	; 0x01
     7786:	9a e0       	ldi	r25, 0x0A	; 10
     7788:	69 2f       	mov	r22, r25
@@ -18130,19 +18130,19 @@ void Get_Temp()
     778e:	89 2f       	mov	r24, r25
     7790:	80 5d       	subi	r24, 0xD0	; 208
     7792:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData(0xDF);
+        CLCD_vSendData(0xDF);
     7796:	8f ed       	ldi	r24, 0xDF	; 223
     7798:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData('C');
+        CLCD_vSendData('C');
     779c:	83 e4       	ldi	r24, 0x43	; 67
     779e:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
     77a2:	53 cf       	rjmp	.-346    	; 0x764a <Get_Temp+0x38>
-		/*___________________________________________________________________________________________________________________*/
+    /*___________________________________________________________________________________________________________________*/
 
-		/* if it less than 1000 that mean LM35_Temp is negative */
-		else
-		{
-			LM35_Temp = (1000 - LM35_Volt) / 10;
+    /* if it less than 1000 that mean LM35_Temp is negative */
+    else
+    {
+      LM35_Temp = (1000 - LM35_Volt) / 10;
     77a4:	2a 81       	ldd	r18, Y+2	; 0x02
     77a6:	3b 81       	ldd	r19, Y+3	; 0x03
     77a8:	88 ee       	ldi	r24, 0xE8	; 232
@@ -18155,55 +18155,55 @@ void Get_Temp()
     77b6:	0e 94 c3 3c 	call	0x7986	; 0x7986 <__udivmodhi4>
     77ba:	cb 01       	movw	r24, r22
     77bc:	89 83       	std	Y+1, r24	; 0x01
-			//Display Temp on LCD when it negative
-			if (LM35_Temp < 10)
+      //Display Temp on LCD when it negative
+      if (LM35_Temp < 10)
     77be:	89 81       	ldd	r24, Y+1	; 0x01
     77c0:	8a 30       	cpi	r24, 0x0A	; 10
     77c2:	a8 f4       	brcc	.+42     	; 0x77ee <Get_Temp+0x1dc>
-			{
-				CLCD_vSetPosition(4, 16);
+      {
+        CLCD_vSetPosition(4, 16);
     77c4:	84 e0       	ldi	r24, 0x04	; 4
     77c6:	60 e1       	ldi	r22, 0x10	; 16
     77c8:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-				CLCD_vSendData('-');
+        CLCD_vSendData('-');
     77cc:	8d e2       	ldi	r24, 0x2D	; 45
     77ce:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData(LM35_Temp + 48);
+        CLCD_vSendData(LM35_Temp + 48);
     77d2:	89 81       	ldd	r24, Y+1	; 0x01
     77d4:	80 5d       	subi	r24, 0xD0	; 208
     77d6:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData(0xDF);
+        CLCD_vSendData(0xDF);
     77da:	8f ed       	ldi	r24, 0xDF	; 223
     77dc:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData('C');
+        CLCD_vSendData('C');
     77e0:	83 e4       	ldi	r24, 0x43	; 67
     77e2:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData(' ');
+        CLCD_vSendData(' ');
     77e6:	80 e2       	ldi	r24, 0x20	; 32
     77e8:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
     77ec:	2e cf       	rjmp	.-420    	; 0x764a <Get_Temp+0x38>
-			}
-			else if (LM35_Temp < 100)
+      }
+      else if (LM35_Temp < 100)
     77ee:	89 81       	ldd	r24, Y+1	; 0x01
     77f0:	84 36       	cpi	r24, 0x64	; 100
     77f2:	08 f0       	brcs	.+2      	; 0x77f6 <Get_Temp+0x1e4>
     77f4:	2a cf       	rjmp	.-428    	; 0x764a <Get_Temp+0x38>
-			{
-				CLCD_vSetPosition(4, 16);
+      {
+        CLCD_vSetPosition(4, 16);
     77f6:	84 e0       	ldi	r24, 0x04	; 4
     77f8:	60 e1       	ldi	r22, 0x10	; 16
     77fa:	0e 94 8e 20 	call	0x411c	; 0x411c <CLCD_vSetPosition>
-				CLCD_vSendData('-');
+        CLCD_vSendData('-');
     77fe:	8d e2       	ldi	r24, 0x2D	; 45
     7800:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData((LM35_Temp / 10) + 48);
+        CLCD_vSendData((LM35_Temp / 10) + 48);
     7804:	89 81       	ldd	r24, Y+1	; 0x01
     7806:	9a e0       	ldi	r25, 0x0A	; 10
     7808:	69 2f       	mov	r22, r25
     780a:	0e 94 b7 3c 	call	0x796e	; 0x796e <__udivmodqi4>
     780e:	80 5d       	subi	r24, 0xD0	; 208
     7810:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData((LM35_Temp % 10) + 48);
+        CLCD_vSendData((LM35_Temp % 10) + 48);
     7814:	89 81       	ldd	r24, Y+1	; 0x01
     7816:	9a e0       	ldi	r25, 0x0A	; 10
     7818:	69 2f       	mov	r22, r25
@@ -18211,10 +18211,10 @@ void Get_Temp()
     781e:	89 2f       	mov	r24, r25
     7820:	80 5d       	subi	r24, 0xD0	; 208
     7822:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData(0xDF);
+        CLCD_vSendData(0xDF);
     7826:	8f ed       	ldi	r24, 0xDF	; 223
     7828:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
-				CLCD_vSendData('C');
+        CLCD_vSendData('C');
     782c:	83 e4       	ldi	r24, 0x43	; 67
     782e:	0e 94 49 1d 	call	0x3a92	; 0x3a92 <CLCD_vSendData>
     7832:	0b cf       	rjmp	.-490    	; 0x764a <Get_Temp+0x38>
@@ -18230,62 +18230,62 @@ void ISR_TIMER2_OVF_MODE()
     7836:	cf 93       	push	r28
     7838:	cd b7       	in	r28, 0x3d	; 61
     783a:	de b7       	in	r29, 0x3e	; 62
-	/* it's pluse to make sure that ISR will execute each Second */
-	DIO_enumTogglePinVal(DIO_PORTA, DIO_PIN2);
+  /* it's pluse to make sure that ISR will execute each Second */
+  DIO_enumTogglePinVal(DIO_PORTA, DIO_PIN2);
     783c:	80 e0       	ldi	r24, 0x00	; 0
     783e:	62 e0       	ldi	r22, 0x02	; 2
     7840:	0e 94 29 10 	call	0x2052	; 0x2052 <DIO_enumTogglePinVal>
 
-	/*___________________________________________________________________________________________________________________*/
+  /*___________________________________________________________________________________________________________________*/
 
-	Time_Second++;
+  Time_Second++;
     7844:	80 91 97 03 	lds	r24, 0x0397
     7848:	8f 5f       	subi	r24, 0xFF	; 255
     784a:	80 93 97 03 	sts	0x0397, r24
 
-	if (Time_Second == 60)
+  if (Time_Second == 60)
     784e:	80 91 97 03 	lds	r24, 0x0397
     7852:	8c 33       	cpi	r24, 0x3C	; 60
     7854:	39 f4       	brne	.+14     	; 0x7864 <ISR_TIMER2_OVF_MODE+0x30>
-	{
-		Time_Second = 0;
+  {
+    Time_Second = 0;
     7856:	10 92 97 03 	sts	0x0397, r1
-		Time_Minute++;
+    Time_Minute++;
     785a:	80 91 96 03 	lds	r24, 0x0396
     785e:	8f 5f       	subi	r24, 0xFF	; 255
     7860:	80 93 96 03 	sts	0x0396, r24
-	}
-	if (Time_Minute == 60)
+  }
+  if (Time_Minute == 60)
     7864:	80 91 96 03 	lds	r24, 0x0396
     7868:	8c 33       	cpi	r24, 0x3C	; 60
     786a:	39 f4       	brne	.+14     	; 0x787a <ISR_TIMER2_OVF_MODE+0x46>
-	{
-		Time_Minute = 0;
+  {
+    Time_Minute = 0;
     786c:	10 92 96 03 	sts	0x0396, r1
-		Time_Hour++;
+    Time_Hour++;
     7870:	80 91 54 03 	lds	r24, 0x0354
     7874:	8f 5f       	subi	r24, 0xFF	; 255
     7876:	80 93 54 03 	sts	0x0354, r24
-	}
+  }
 
-	/*___________________________________________________________________________________________________________________*/
+  /*___________________________________________________________________________________________________________________*/
 
-	/* Check Time condition */
-	if (Time_Mode == Time_Mode12Hours)
+  /* Check Time condition */
+  if (Time_Mode == Time_Mode12Hours)
     787a:	80 91 55 03 	lds	r24, 0x0355
     787e:	81 33       	cpi	r24, 0x31	; 49
     7880:	f9 f4       	brne	.+62     	; 0x78c0 <ISR_TIMER2_OVF_MODE+0x8c>
-	{
-		if (Time_Hour == 13)
+  {
+    if (Time_Hour == 13)
     7882:	80 91 54 03 	lds	r24, 0x0354
     7886:	8d 30       	cpi	r24, 0x0D	; 13
     7888:	19 f4       	brne	.+6      	; 0x7890 <ISR_TIMER2_OVF_MODE+0x5c>
-		{
-			Time_Hour = 1;
+    {
+      Time_Hour = 1;
     788a:	81 e0       	ldi	r24, 0x01	; 1
     788c:	80 93 54 03 	sts	0x0354, r24
-		}
-		if (Time_Hour == 12 && Time_Minute == 0 && Time_Second == 0)
+    }
+    if (Time_Hour == 12 && Time_Minute == 0 && Time_Second == 0)
     7890:	80 91 54 03 	lds	r24, 0x0354
     7894:	8c 30       	cpi	r24, 0x0C	; 12
     7896:	09 f0       	breq	.+2      	; 0x789a <ISR_TIMER2_OVF_MODE+0x66>
@@ -18298,8 +18298,8 @@ void ISR_TIMER2_OVF_MODE()
     78a8:	88 23       	and	r24, r24
     78aa:	09 f0       	breq	.+2      	; 0x78ae <ISR_TIMER2_OVF_MODE+0x7a>
     78ac:	3e c0       	rjmp	.+124    	; 0x792a <ISR_TIMER2_OVF_MODE+0xf6>
-		{
-			TOG_BIT(PORTA_REG, DIO_PIN3);   //Toggle LED that displays AM or PM
+    {
+      TOG_BIT(PORTA_REG, DIO_PIN3);   //Toggle LED that displays AM or PM
     78ae:	ab e3       	ldi	r26, 0x3B	; 59
     78b0:	b0 e0       	ldi	r27, 0x00	; 0
     78b2:	eb e3       	ldi	r30, 0x3B	; 59
@@ -18309,32 +18309,32 @@ void ISR_TIMER2_OVF_MODE()
     78ba:	89 27       	eor	r24, r25
     78bc:	8c 93       	st	X, r24
     78be:	35 c0       	rjmp	.+106    	; 0x792a <ISR_TIMER2_OVF_MODE+0xf6>
-		}
-	}
+    }
+  }
 
-	else if (Time_Mode == Time_Mode24Hours)
+  else if (Time_Mode == Time_Mode24Hours)
     78c0:	80 91 55 03 	lds	r24, 0x0355
     78c4:	82 33       	cpi	r24, 0x32	; 50
     78c6:	89 f5       	brne	.+98     	; 0x792a <ISR_TIMER2_OVF_MODE+0xf6>
-	{
-		if (Time_Hour == 24)
+  {
+    if (Time_Hour == 24)
     78c8:	80 91 54 03 	lds	r24, 0x0354
     78cc:	88 31       	cpi	r24, 0x18	; 24
     78ce:	11 f4       	brne	.+4      	; 0x78d4 <ISR_TIMER2_OVF_MODE+0xa0>
-		{
-			Time_Hour = 0;
+    {
+      Time_Hour = 0;
     78d0:	10 92 54 03 	sts	0x0354, r1
-		}
-		else
-		{
+    }
+    else
+    {
 
-		}
-		if (Time_Hour < 12)
+    }
+    if (Time_Hour < 12)
     78d4:	80 91 54 03 	lds	r24, 0x0354
     78d8:	8c 30       	cpi	r24, 0x0C	; 12
     78da:	40 f4       	brcc	.+16     	; 0x78ec <ISR_TIMER2_OVF_MODE+0xb8>
-		{
-			SET_BIT(PORTA_REG, DIO_PIN3);   //Turn ON Led To Display AM
+    {
+      SET_BIT(PORTA_REG, DIO_PIN3);   //Turn ON Led To Display AM
     78dc:	ab e3       	ldi	r26, 0x3B	; 59
     78de:	b0 e0       	ldi	r27, 0x00	; 0
     78e0:	eb e3       	ldi	r30, 0x3B	; 59
@@ -18343,8 +18343,8 @@ void ISR_TIMER2_OVF_MODE()
     78e6:	88 60       	ori	r24, 0x08	; 8
     78e8:	8c 93       	st	X, r24
     78ea:	1f c0       	rjmp	.+62     	; 0x792a <ISR_TIMER2_OVF_MODE+0xf6>
-		}
-		else if (Time_Hour == 12 && Time_Minute == 0 && Time_Second == 0)
+    }
+    else if (Time_Hour == 12 && Time_Minute == 0 && Time_Second == 0)
     78ec:	80 91 54 03 	lds	r24, 0x0354
     78f0:	8c 30       	cpi	r24, 0x0C	; 12
     78f2:	81 f4       	brne	.+32     	; 0x7914 <ISR_TIMER2_OVF_MODE+0xe0>
@@ -18354,8 +18354,8 @@ void ISR_TIMER2_OVF_MODE()
     78fc:	80 91 97 03 	lds	r24, 0x0397
     7900:	88 23       	and	r24, r24
     7902:	41 f4       	brne	.+16     	; 0x7914 <ISR_TIMER2_OVF_MODE+0xe0>
-		{
-			CLR_BIT(PORTA_REG, DIO_PIN3);   //Turn OFF Led To Display PM
+    {
+      CLR_BIT(PORTA_REG, DIO_PIN3);   //Turn OFF Led To Display PM
     7904:	ab e3       	ldi	r26, 0x3B	; 59
     7906:	b0 e0       	ldi	r27, 0x00	; 0
     7908:	eb e3       	ldi	r30, 0x3B	; 59
@@ -18364,13 +18364,13 @@ void ISR_TIMER2_OVF_MODE()
     790e:	87 7f       	andi	r24, 0xF7	; 247
     7910:	8c 93       	st	X, r24
     7912:	0b c0       	rjmp	.+22     	; 0x792a <ISR_TIMER2_OVF_MODE+0xf6>
-		}
-		else if (Time_Hour > 12)
+    }
+    else if (Time_Hour > 12)
     7914:	80 91 54 03 	lds	r24, 0x0354
     7918:	8d 30       	cpi	r24, 0x0D	; 13
     791a:	38 f0       	brcs	.+14     	; 0x792a <ISR_TIMER2_OVF_MODE+0xf6>
-		{
-			CLR_BIT(PORTA_REG, DIO_PIN3);   //Turn OFF Led To Display PM
+    {
+      CLR_BIT(PORTA_REG, DIO_PIN3);   //Turn OFF Led To Display PM
     791c:	ab e3       	ldi	r26, 0x3B	; 59
     791e:	b0 e0       	ldi	r27, 0x00	; 0
     7920:	eb e3       	ldi	r30, 0x3B	; 59
@@ -18379,9 +18379,9 @@ void ISR_TIMER2_OVF_MODE()
     7926:	87 7f       	andi	r24, 0xF7	; 247
     7928:	8c 93       	st	X, r24
 
-	}
+  }
 
-	/*___________________________________________________________________________________________________________________*/
+  /*___________________________________________________________________________________________________________________*/
 
 }
     792a:	cf 91       	pop	r28

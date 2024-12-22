@@ -3,7 +3,7 @@ APP_Layer/Real Time Clock.o APP_Layer/Real\ Time\ Clock.o:  \
   ../APP_Layer/STD_TYPES.h \
   ../APP_Layer/../MCAL_Layer/TIMER/TIMER_interface.h \
   ../APP_Layer/../MCAL_Layer/DIO/DIO_interface.h \
-  ../APP_Layer/../MCAL_Layer/DIO/DIO_private.h \
+  ../APP_Layer/../MCAL_Layer/DIO/DIO_private.h\ \  \
   ../APP_Layer/../MCAL_Layer/GIE/GIE_interface.h \
   ../APP_Layer/../MCAL_Layer/ADC/ADC_interface.h \
   ../APP_Layer/../HAL_Layer/BCD_TO_SSD/BCD_To_SSD_interface.h \
@@ -20,7 +20,7 @@ APP_Layer/Real Time Clock.o APP_Layer/Real\ Time\ Clock.o:  \
 
 ../APP_Layer/../MCAL_Layer/DIO/DIO_interface.h:
 
-../APP_Layer/../MCAL_Layer/DIO/DIO_private.h:
+../APP_Layer/../MCAL_Layer/DIO/DIO_private.h\ \ :
 
 ../APP_Layer/../MCAL_Layer/GIE/GIE_interface.h:
 
